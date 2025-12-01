@@ -25,7 +25,8 @@ const Navbar = () => {
             </a>
           ))}
 
-          <button className="btn-primary">Get Started</button>
+       <a href="/login" className="btn-primary">Get Started</a>
+
         </div>
 
         <button className="menu-btn" onClick={() => setIsOpen(!isOpen)}>
@@ -44,7 +45,8 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
-          <button className="btn-primary">Get Started</button>
+         <a href="/login" className="btn-primary">Get Started</a>
+
         </div>
       )}
     </nav>

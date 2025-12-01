@@ -1,0 +1,54 @@
+.dashboard-wrapper {
+  padding: 50px 40px;
+  background: #faf7ff;  /* Same as hero-section bg */
+  min-height: 100vh;
+}
+
+.dash-title {
+  font-size: 38px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 40px;
+  background: linear-gradient(90deg, #6e00ff, #ff007b);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* 4 fixed cards in one row */
+.dash-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+/* Each card */
+.dash-card {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0px 12px 35px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+}
+
+/* Gradient top bar */
+.dash-grad {
+  height: 100px;
+  width: 100%;
+  background: linear-gradient(90deg, #6e00ff, #ff007b);
+}
+
+/* Card title text */
+.dash-card-title {
+  padding: 25px 18px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  color: #333;
+}
+
+/* Hover effect */
+.dash-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 18px 45px rgba(110, 0, 255, 0.35);
+}

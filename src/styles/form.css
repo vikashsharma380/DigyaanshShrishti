@@ -1,0 +1,64 @@
+.form-wrapper {
+  padding: 50px;
+  background: #faf7ff;
+  min-height: 100vh;
+}
+
+.form-title {
+  font-size: 32px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 40px;
+  background: linear-gradient(90deg, #6e00ff, #ff007b);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.form-grid input {
+  padding: 14px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  font-size: 17px;
+}
+
+.form-grid input:focus {
+  border-color: #6e00ff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(110, 0, 255, 0.2);
+}
+
+.btn-primary {
+  margin-top: 30px;
+  padding: 14px 28px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #6e00ff, #ff007b);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.letter-template {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 25px 30px;
+  background: white;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.letter-template p, 
+.letter-template li {
+  font-size: 15px;
+  line-height: 1.55;
+}
+

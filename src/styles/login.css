@@ -1,0 +1,155 @@
+/* Background with gradient + blurred circles */
+.login-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0e7ff, #f0f9ff);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft glowing circles */
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+}
+
+.circle1 {
+  width: 380px;
+  height: 380px;
+  background: #60a5fa;
+  top: -80px;
+  left: -60px;
+}
+
+.circle2 {
+  width: 320px;
+  height: 320px;
+  background: #818cf8;
+  bottom: -90px;
+  right: -60px;
+}
+
+/* Center Wrapper */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  min-height: 100vh;
+}
+
+/* Premium Glass Card */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 45px;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 22px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.14);
+  animation: fadeSlide 0.7s ease;
+  text-align: center;
+}
+
+/* Titles */
+.login-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.login-subtitle {
+  color: #64748b;
+  margin-bottom: 30px;
+  font-size: 15px;
+}
+
+/* Floating Labels */
+.input-group {
+  position: relative;
+  margin-bottom: 27px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 16px 12px;
+  padding-top: 22px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  font-size: 15px;
+  transition: 0.25s;
+}
+
+.input-group input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+  background: #ffffff;
+  outline: none;
+}
+
+.input-group label {
+  position: absolute;
+  left: 14px;
+  top: 15px;
+  color: #94a3b8;
+  pointer-events: none;
+  transition: 0.22s ease;
+  font-size: 14px;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label {
+  top: 5px;
+  font-size: 12px;
+  color: #2563eb;
+}
+
+/* Button */
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  margin-top: 8px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
+
+/* Links */
+.forgot,
+.signup {
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.forgot a,
+.signup a {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* Animation */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.error {
+  color: #dc2626;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
