@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
 
 export default function Login() {
@@ -6,18 +7,18 @@ export default function Login() {
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
+
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Fixed ID & Password
     const validEmail = "admin@digi.com";
     const validPassword = "123456";
 
     if (email === validEmail && pass === validPassword) {
       setError("");
       alert("Login Successful!");
-    window.location.href = "/dashboard";
- // redirect (change if needed)
+      navigate("/dashboard");   // PERFECT NAVIGATION
     } else {
       setError("Invalid email or password");
     }
