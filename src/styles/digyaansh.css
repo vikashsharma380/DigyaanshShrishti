@@ -1,0 +1,192 @@
+/* Basic reset */
+/* * { box-sizing: border-box; } */
+body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:#222; }
+
+/* Container for the whole component */
+.appointment-container { max-width: 1100px; margin: 0 auto; }
+
+/* Form area */
+.form-wrapper {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+.form-wrapper h3 { margin: 0 0 10px 0; color:#003d86; }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+.form-grid input {
+  padding: 20px 16px;
+  border: 1px solid #d0d6db;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Action button */
+.actions { margin-top: 12px; }
+.btn-primary {
+  background: #003d86;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* PDF wrapper: A4 like width (for preview) */
+.pdf-wrapper { background: #ddd; padding: 20px; display:flex; flex-direction:column; gap: 18px; align-items:center; }
+
+/* Each PDF page (A4 portrait proportion) */
+.pdf-page {
+  width: 794px; /* visually similar to A4 at 96dpi */
+  min-height: 1122px;
+  background: #fff;
+  padding: 26px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  position: relative;
+  page-break-after: always; /* crucial for html2pdf to split pages */
+}
+
+/* Header */
+.pdf-header {
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  border-bottom: 2px solid #e6e6e6;
+  padding-bottom: 10px;
+}
+.pdf-header.small { padding-bottom:6px; }
+.left-logo { width:90px; }
+.logo-img { width: 90px; height: auto; }
+.header-text { flex:1; text-align:center; }
+.company-name { color:#003d86; font-weight:900; font-size:22px; }
+.company-meta { font-size:14px; color:#333; margin-top:4px; font-weight:700; }
+
+/* QR on right */
+.qr-box { width:120px; text-align:right; }
+.qr-img { width:100px; height:100px; object-fit:contain; }
+
+/* ref/date */
+.ref-date { display:flex; justify-content:space-between; margin:14px 0; font-size:13px; color:#444;  }
+
+/* Heading center */
+.center-heading { text-align:center; text-decoration:underline; margin:6px 0 12px; }
+
+/* Employee details */
+.employee-details p { margin:6px 0; font-size:15px; }
+
+/* Letter body */
+.letter-body { margin-top:8px; line-height:1.8; font-size:17px; color:#222; font-weight: 600; }
+.letter-body ol { margin-left:18px; }
+
+/* Signatures row */
+.signatures {
+  display:flex;
+  justify-content:space-between;
+  margin-top:180px;
+  font-weight:600;
+}
+
+/* Footer */
+.pdf-footer {
+  position:absolute;
+  bottom:16px;
+  left:26px;
+  right:26px;
+  background: #003d86;
+  color: #fff;
+  padding:8px 12px;
+  font-size:12px;
+  border-radius:6px;
+  text-align:center;
+}
+.pdf-footer .small { font-size:11px; margin-top:4px; color: rgba(255,255,255,0.9); }
+
+/* Page 2 styling */
+.rules-heading { color:#003d86; text-decoration:underline; margin-top:8px; text-align: center; }
+.rules-list { margin-top:12px; line-height:1.8; font-size:17px; font-weight: 600; }
+.final-sign { margin-top:250px; text-align:right; font-weight:700; }
+
+/* Print-specific tweaks */
+@media print {
+  body { background: white; }
+  .pdf-wrapper { padding: 0; }
+  .pdf-page { box-shadow: none; margin: 0 auto; }
+  .page-break { page-break-after: always; }
+}
+
+
+/* FORM CONTAINER */
+.form-wrapper {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* GRID SYSTEM */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+/* INPUT + SELECT COMMON STYLE */
+.form-grid input,
+.form-grid select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background: white;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* INPUT FOCUS EFFECT */
+.form-grid input:focus,
+.form-grid select:focus {
+  border-color: #0066ff;
+  box-shadow: 0 0 0 2px rgba(0,102,255,0.2);
+}
+
+/* BUTTON */
+.btn-primary {
+  background: #0052d4;
+  border: none;
+  padding: 10px 18px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 15px;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #003c9d;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

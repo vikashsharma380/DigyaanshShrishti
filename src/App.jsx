@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import Login from "./components/Login"; // NEW LOGIN PAGE
 import Dashboard from "./components/Dashboard"; // NEW DASHBOARD PAGE
 import GISAppointmentForm from "./components/GISAppointmentForm"; // Example form component
+import DigyaanshForm from "./components/DigyaanshForm"; // Digyaansh form component
 // Home page ko ek component bana diya
 function Home() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/form/gis-appointment" element={<GISAppointmentForm />} />
+        <Route path="/form/digyaansh-appointment" element={<DigyaanshForm />} />
       </Routes>
     </BrowserRouter>
   );

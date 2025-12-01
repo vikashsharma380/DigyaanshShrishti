@@ -8,10 +8,13 @@ export default function GISAppointmentForm() {
     name: "",
     father: "",
     address: "",
-    // editable big fields
-    subject: `विषय - जिला शिक्षा पदाधिकारी पूर्वी चंपारण पत्रांक – 1820 दिनांक 08-05-2024 के तहत संविदा के आधार पर प्रखंड के मध्य/माध्यमिक विद्यालय के लिए जिला - पूर्वी चंपारण, प्रखंड – BRC  के विद्यालय GMS जितौड़ा BRC मधुबन के विद्यालय में रात्रि प्रहरी के पद पर नियुक्ति के संबंध में।`,
-    intro: `महोदय/महोदया,
-उपयुक्त विषय  के संबंध में कहना है कि जिला शिक्षा पदाधिकारी पूर्वी चंपारण पत्रक - 1820 दिनांक – 08-05-2024 के तहत संविदा के आधार पर मध्य या माध्यमिक विद्यालय के लिए जिला - पूर्वी चंपारण, प्रखंड – BRC मधुबन के विद्यालय GMS जितौड़ा BRC मधुबन के विद्यालय  के  लिए रात्रि प्रहरी के पद पर कंपनी द्वारा कौशल जांच के पश्चात आपका योगदान हेतु नियोजन GIS World Hospitality Services Pvt. Ltd. द्वारा निम्न शर्तों एवं बंधेज पर सुनिश्चित किया जाता है|`,
+    doeDate: "", // DEO letter date (08-05-2024)
+    school: "", // GMS / GMSS name
+    area: "",
+    block: "",
+    // user-editable overrides (if user manually edits subject/intro)
+    subject: "",
+    intro: "",
     terms: [
       `यह नियुक्ति संविदा के आधार पर विभाग द्वारा तय सीमा तक के लिए की जा रही है इस कार्य हेतु आपको प्रति माह  विभाग द्वारा अनुमोदित दर लागू नियम एवं शर्तों के अधीन देय होगा।`,
       `आपके कार्य कुशलता पूर्ण मूल्यांकन के पश्चात आपके संविदा की अवधि का विस्तार किया जा सकता है परंतु संविदा अवधि विस्तार के संबंध में GIS World Hospitality Services Pvt. Ltd का निर्णय अंतिम होगा|`,
@@ -22,26 +25,34 @@ export default function GISAppointmentForm() {
       `यदि संविदा की अवधि के पहले ही किसी अप्रत्याशित एवं परिहार के कर्म से GIS World Hospitality Services Pvt. Ltd द्वारा संचालित कार्यक्रम समाप्त हो जाता है तो उसके साथ ही या संविदा भी स्वतंत्रता समाप्त हो जाएगी।`,
       `आपके अपने कर्तव्यों के प्रति समर्पण तथा संचालित कार्यक्रमों के उद्देश्यों की समाप्ति हेतु सत्य निष्ठा सहित पूर्व पूर्ण प्रतिद्धता अपेक्षित है|`,
       `रात्रि प्रहरी के सेवा के दौरान विद्यालय में यदि किसी प्रकार की चोरी अथवा सुरक्षा में चूक होती है तो इसकी सारी जिम्मेवारी कार्यरत रात्रि प्रहरी की होगी तथा चोरी हुई सामान के समतुल्य मूल्य की कटौती की जाएगी और कटौती की गई राशि से चोरी सामान के प्रतिपूर्ति की जाएगी एवं समतुल्य राशि 15 दिनों के अंदर कार्यरत रात्रि प्रहरी को चुकानी पड़ेगी अन्यथा कानूनी कार्यवाही के द्वारा राशि वसूल की जाएगीl कार्य अवधि में अपना मोबाइल फोन हमेशा ऑन रखेंगेl यदि आप अपना मोबाइल नंबर बदलते हैं, तो इसकी सूचना अपने जिले के कंपनी कार्यालय मोतिहारी को अभिलंब देना होगा।`,
-      `यदि उपर्युक्त शर्तेमान्य हो तो नियुक्ति पत्र की एक हस्ताक्षर प्रति कार्यालय को समर्पित कर संबंधित स्कूल में अपना योगदान देना सुनिश्चित करना चाहेंगे पत्र प्राप्ति के 45 दिन के अंदर योगदान नहीं करने पर आपका नियुक्ति स्वत: रद्द मानी जाएगी।`
-    ]
+      `यदि उपर्युक्त शर्तेमान्य हो तो नियुक्ति पत्र की एक हस्ताक्षर प्रति कार्यालय को समर्पित कर संबंधित स्कूल में अपना योगदान देना सुनिश्चित करना चाहेंगे पत्र प्राप्ति के 45 दिन के अंदर योगदान नहीं करने पर आपका नियुक्ति स्वत: रद्द मानी जाएगी।`,
+    ],
   });
 
   // generic input handler for simple inputs
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // handle contentEditable changes
+  // handle contentEditable changes (subject / intro / terms)
   const handleEditable = (key, value) => {
-    setData({ ...data, [key]: value });
+    setData((prev) => ({ ...prev, [key]: value }));
   };
 
-  // handle term edit
   const handleTermEdit = (index, value) => {
-    const newTerms = [...data.terms];
-    newTerms[index] = value;
-    setData({ ...data, terms: newTerms });
+    setData((prev) => {
+      const terms = [...prev.terms];
+      terms[index] = value;
+      return { ...prev, terms };
+    });
   };
+
+  // computed template subject & intro (used when user didn't overwrite)
+  const templateSubject = `विषय - जिला शिक्षा पदाधिकारी पूर्वी चंपारण पत्रांक – 1820 दिनांक ${data.doeDate || "08-05-2024"} के तहत संविदा के आधार पर प्रखंड के मध्य/माध्यमिक विद्यालय के लिए जिला - पूर्वी चंपारण, प्रखंड – BRC ${data.block || "मधुबन"} के विद्यालय ${data.school || "GMS जितौड़ा"} ${data.area ? data.area : ""} BRC ${data.block || "मधुबन"} मधुबन के विद्यालय में रात्रि प्रहरी के पद पर नियुक्ति के संबंध में।`;
+
+  const templateIntro = `महोदय/महोदया,
+उपयुक्त विषय  के संबंध में कहना है कि जिला शिक्षा पदाधिकारी पूर्वी चंपारण पत्रक - 1820 दिनांक – ${data.doeDate || "08-05-2024"} के तहत संविदा के आधार पर मध्य या माध्यमिक विद्यालय के लिए जिला - पूर्वी चंपारण, प्रखंड – BRC ${data.block || "मधुबन"} के विद्यालय ${data.school || "GMS जितौड़ा"} ${data.area ? data.area : ""} BRC ${data.block || "मधुबन"} मधुबन के विद्यालय  के  लिए रात्रि प्रहरी के पद पर कंपनी द्वारा कौशल जांच के पश्चात आपका योगदान हेतु नियोजन GIS World Hospitality Services Pvt. Ltd. द्वारा निम्न शर्तों एवं बंधेज पर सुनिश्चित किया जाता है|`;
 
   const generatePDF = () => {
     const element = document.getElementById("pdf-wrapper");
@@ -51,51 +62,52 @@ export default function GISAppointmentForm() {
       image: { type: "jpeg", quality: 1 },
       html2canvas: { scale: 3, scrollY: 0 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      pagebreak: { mode: ["css", "legacy"] }
+      pagebreak: { mode: ["css", "legacy"] },
     };
     window.html2pdf().set(opt).from(element).save();
   };
 
   return (
-    <div style={{ padding: 12 }}>
+    <div className="form-wrapper">
       {/* INPUT FORM */}
-    <div className="input-grid">
-  <input name="refNumber" className="input-box" placeholder="पत्रांक No." onChange={handleChange} />
-  <input name="date" type="date" className="input-box" onChange={handleChange} />
-  <input name="name" className="input-box" placeholder="Employee Name" onChange={handleChange} />
-  <input name="father" className="input-box" placeholder="Father's Name (S/O)" onChange={handleChange} />
-  <input name="address" className="input-box" placeholder="Address" onChange={handleChange} />
-  <input name="block" className="input-box" placeholder="Block" onChange={handleChange} />
-</div>
+      <div className="form-grid">
+        <input name="refNumber" placeholder="पत्रांक No." onChange={handleChange} />
+        <input name="date" type="date" placeholder="Letter Date" onChange={handleChange} />
+        <input name="doeDate" type="date" placeholder="D.E.O Letter Date (उदा: 08-05-2024)" onChange={handleChange} />
+        <input name="name" placeholder="Employee Name" onChange={handleChange} />
+        <input name="father" placeholder="Father's Name (S/O)" onChange={handleChange} />
+        <input name="address" placeholder="Address" onChange={handleChange} />
+        <input name="school" placeholder="GMS/GMSS School Name" onChange={handleChange} />
+        <input name="area" placeholder="Area" onChange={handleChange} />
+        <input name="block" placeholder="Block (BRC)" onChange={handleChange} />
+      </div>
 
-
-
-    
+      
 
       <button className="btn-primary" onClick={generatePDF}>Generate PDF</button>
 
       {/* ---------------- PDF WRAPPER (2 Pages) -------------- */}
-      <div id="pdf-wrapper" style={{ marginTop: 12 }}>
+      <div id="pdf-wrapper" style={{ marginTop: 16 }}>
 
         {/* PAGE 1 */}
         <div className="pdf-page">
           {/* HEADER */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <img src="/images.png" width="80" alt="left logo" />
-            <div style={{ textAlign: "center", maxWidth: "58%" }}>
-              <div style={{ fontWeight: 700 }}>GIS WORLD HOSPITALITY SERVICES PVT. LTD.</div>
+            <img src="/images.png" width="120" alt="left logo" />
+            <div style={{ textAlign: "center", maxWidth: "100%" }}>
+              <div style={{ fontWeight:700, fontSize: 16 }}> <h1>GIS WORLD HOSPITALITY SERVICES PVT. LTD.</h1></div>
               <div>We Lead because, We understand needs.</div>
               <div>A-56, Shreenath Plaza, FC Road, Pune – 411005</div>
               <div>Website: www.secure-isgroup.com</div>
               <div>Email: info@secure-isgroup.com</div>
             </div>
-            <img src="/images.png" width="80" alt="right logo" />
+           
           </div>
 
           <hr />
 
           {/* REF + DATE */}
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
             <div><b>पत्रांक:</b> GWHSPL/EC/NG/{data.refNumber}</div>
             <div><b>दिनांक:</b> {data.date}</div>
           </div>
@@ -111,7 +123,7 @@ export default function GISAppointmentForm() {
             Address – {data.address || <i>(address)</i>}
           </p>
 
-          {/* SUBJECT — editable */}
+          {/* SUBJECT — editable (uses user override if present else template) */}
           <div
             className="editable"
             contentEditable
@@ -119,7 +131,7 @@ export default function GISAppointmentForm() {
             onInput={(e) => handleEditable("subject", e.currentTarget.innerText)}
             style={{ fontWeight: 700, marginBottom: 8 }}
           >
-            {data.subject}
+            {data.subject ? data.subject : templateSubject}
           </div>
 
           {/* INTRO PARAGRAPH — editable */}
@@ -130,16 +142,13 @@ export default function GISAppointmentForm() {
             onInput={(e) => handleEditable("intro", e.currentTarget.innerText)}
             style={{ whiteSpace: "pre-wrap", marginBottom: 8 }}
           >
-            {data.intro}
+            {data.intro ? data.intro : templateIntro}
           </div>
 
-          {/* TERMS 1-3 shown here (editable inline) */}
+          {/* TERMS 1-3 editable */}
           <div>
             {data.terms.slice(0, 3).map((t, i) => (
-              <div
-                key={i}
-                style={{ marginBottom: 6 }}
-              >
+              <div key={i} style={{ marginBottom: 6 }}>
                 <b>{i + 1}.</b>{" "}
                 <span
                   className="editable"
@@ -159,7 +168,7 @@ export default function GISAppointmentForm() {
 
         {/* PAGE 2 */}
         <div className="pdf-page">
-          {/* header same */}
+          {/* HEADER SAME */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <img src="/images.png" width="80" alt="left logo" />
             <div style={{ textAlign: "center", maxWidth: "58%" }}>
@@ -194,7 +203,7 @@ export default function GISAppointmentForm() {
             })}
           </div>
 
-          <div style={{ marginTop: 14 }}>
+          <div style={{ marginTop: 18 }}>
             <div>Employee Signature: _______________________</div>
             <div style={{ marginTop: 8 }}>
               Authorized Signatory<br />
