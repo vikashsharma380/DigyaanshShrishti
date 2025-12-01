@@ -74,7 +74,7 @@ export default function DeepakExperience() {
 
           {/* HEADER */}
           <header className="pdf-header">
-            <img src="/images.png" className="logo-img" alt="logo" />
+            <img src="/Screenshot 2025-12-01 163717.png" className="logo-img" alt="logo" />
             <div className="header-text">
               <div className="company-name" contentEditable>
                 DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
