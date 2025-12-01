@@ -17,12 +17,12 @@ export default function GISAppointmentForm() {
     intro: "",
     terms: [
       `यह नियुक्ति संविदा के आधार पर विभाग द्वारा तय सीमा तक के लिए की जा रही है इस कार्य हेतु आपको प्रति माह  विभाग द्वारा अनुमोदित दर लागू नियम एवं शर्तों के अधीन देय होगा।`,
-      `आपके कार्य कुशलता पूर्ण मूल्यांकन के पश्चात आपके संविदा की अवधि का विस्तार किया जा सकता है परंतु संविदा अवधि विस्तार के संबंध में GIS World Hospitality Services Pvt. Ltd का निर्णय अंतिम होगा|`,
+      `आपके कार्य कुशलता पूर्ण मूल्यांकन के पश्चात आपके संविदा की अवधि का विस्तार किया जा सकता है परंतु संविदा अवधि विस्तार के संबंध में RAIDER SECURITY SERVICES PVT. LTD. का निर्णय अंतिम होगा|`,
       `संविदा की अवधि की समाप्ति के पूर्व भी अग्रिम सूचना देकर इस संविदा को समाप्त किया जा सकता है इस संबंध में नियुक्ता का निर्णय अंतिम होगा अथवा संस्था प्रबंधन जिला समन्वयक एवं संबंधित जिला शिक्षा पदाधिकारी के अनुशंसा पर अथवा आपका कार्य असंतोष जनक पाए जाने पर अनुशासनहीनता बरतने वरीय पदाधिकारी के आदेश की अवहेलना एवं अवांछित गतिविधियों में सम्मिलित पाए जाने की स्थिति में नियुक्ता द्वारा बगैर किसी पूर्व सूचना के तत्काल प्रभाव से आपको पद से पदमुक्त किया जा सकता है`,
       `आपकी कार्य अवधि संबंधित जिला के संचालन अवधि के अनुरूप होगी अपने कार्यालय से संस्था के द्वारा उपलब्ध कराए गए MIS सॉफ्टवेयर एप्लीकेशन के माध्यम से अपने उपस्थिति दर्ज करना अनिवार्य होगा यदि निर्धारित समय में MIS सॉफ्टवेयर एप्लीकेशन के माध्यम से आप अपनी उपस्थिति दर्ज नहीं करते हैं तो ऐसी स्थिति में अनुशासनिक कार्यवाही करते हुए आपकी सेवा समाप्त की जा सकती है।`,
       `आपको संविदा अवधि में मात्र 16 आकस्मिक छुट्टियां रविवार एवं राष्ट्रीय छुट्टियों को छोड़कर देय होगी किसी भी तरह का अवकाश का उपयोग अपने संबंधित वरीय पदाधिकारी की पूर्वानुमानित एवं स्वीकृत से ही की जा सकती है साथ ही अवकाश में जाने के पूर्व एवं लौट के पश्चात इसकी सूचना जिले के जिला कार्यक्रम पदाधिकारी एवं संस्था प्रबंधक को देना अनिवार्य होगा।`,
       `संविदा अवधि में यदि आप अपने पद से त्यागपत्र देंगे तो इसकी अग्रिम में लिखित सूचना एक माह पूर्व अपने जिला के जिला कार्यक्रम पदाधिकारी एवं संस्था प्रबंधक को देना अनिवार्य होगा अन्यथा आपका बकाया भुगतान नियुक्ता द्वारा देय नहीं होगा।`,
-      `यदि संविदा की अवधि के पहले ही किसी अप्रत्याशित एवं परिहार के कर्म से GIS World Hospitality Services Pvt. Ltd द्वारा संचालित कार्यक्रम समाप्त हो जाता है तो उसके साथ ही या संविदा भी स्वतंत्रता समाप्त हो जाएगी।`,
+      `यदि संविदा की अवधि के पहले ही किसी अप्रत्याशित एवं परिहार के कर्म से RAIDER SECURITY SERVICES PVT. LTD. द्वारा संचालित कार्यक्रम समाप्त हो जाता है तो उसके साथ ही या संविदा भी स्वतंत्रता समाप्त हो जाएगी।`,
       `आपके अपने कर्तव्यों के प्रति समर्पण तथा संचालित कार्यक्रमों के उद्देश्यों की समाप्ति हेतु सत्य निष्ठा सहित पूर्व पूर्ण प्रतिद्धता अपेक्षित है|`,
       `रात्रि प्रहरी के सेवा के दौरान विद्यालय में यदि किसी प्रकार की चोरी अथवा सुरक्षा में चूक होती है तो इसकी सारी जिम्मेवारी कार्यरत रात्रि प्रहरी की होगी तथा चोरी हुई सामान के समतुल्य मूल्य की कटौती की जाएगी और कटौती की गई राशि से चोरी सामान के प्रतिपूर्ति की जाएगी एवं समतुल्य राशि 15 दिनों के अंदर कार्यरत रात्रि प्रहरी को चुकानी पड़ेगी अन्यथा कानूनी कार्यवाही के द्वारा राशि वसूल की जाएगीl कार्य अवधि में अपना मोबाइल फोन हमेशा ऑन रखेंगेl यदि आप अपना मोबाइल नंबर बदलते हैं, तो इसकी सूचना अपने जिले के कंपनी कार्यालय मोतिहारी को अभिलंब देना होगा।`,
       `यदि उपर्युक्त शर्तेमान्य हो तो नियुक्ति पत्र की एक हस्ताक्षर प्रति कार्यालय को समर्पित कर संबंधित स्कूल में अपना योगदान देना सुनिश्चित करना चाहेंगे पत्र प्राप्ति के 45 दिन के अंदर योगदान नहीं करने पर आपका नियुक्ति स्वत: रद्द मानी जाएगी।`,
@@ -52,7 +52,7 @@ export default function GISAppointmentForm() {
   const templateSubject = ` विषय - जिला शिक्षा पदाधिकारी पूर्वी चंपारण पत्रांक – 1820 दिनांक ${data.doeDate || "08-05-2024"} के तहत संविदा के आधार पर प्रखंड के मध्य/माध्यमिक विद्यालय के लिए जिला - पूर्वी चंपारण, प्रखंड – BRC ${data.block || "मधुबन"} के विद्यालय ${data.school || "GMS जितौड़ा"} ${data.area ? data.area : ""} BRC ${data.block || "मधुबन"} मधुबन के विद्यालय में रात्रि प्रहरी के पद पर नियुक्ति के संबंध में।`;
 
   const templateIntro = `महोदय/महोदया,
-उपयुक्त विषय  के संबंध में कहना है कि जिला शिक्षा पदाधिकारी पूर्वी चंपारण पत्रक - 1820 दिनांक – ${data.doeDate || "08-05-2024"} के तहत संविदा के आधार पर मध्य या माध्यमिक विद्यालय के लिए जिला - पूर्वी चंपारण, प्रखंड – BRC ${data.block || "मधुबन"} के विद्यालय ${data.school || "GMS जितौड़ा"} ${data.area ? data.area : ""} BRC ${data.block || "मधुबन"} मधुबन के विद्यालय  के  लिए रात्रि प्रहरी के पद पर कंपनी द्वारा कौशल जांच के पश्चात आपका योगदान हेतु नियोजन GIS World Hospitality Services Pvt. Ltd. द्वारा निम्न शर्तों एवं बंधेज पर सुनिश्चित किया जाता है|`;
+उपयुक्त विषय  के संबंध में कहना है कि जिला शिक्षा पदाधिकारी पूर्वी चंपारण पत्रक - 1820 दिनांक – ${data.doeDate || "08-05-2024"} के तहत संविदा के आधार पर मध्य या माध्यमिक विद्यालय के लिए जिला - पूर्वी चंपारण, प्रखंड – BRC ${data.block || "मधुबन"} के विद्यालय ${data.school || "GMS जितौड़ा"} ${data.area ? data.area : ""} BRC ${data.block || "मधुबन"} मधुबन के विद्यालय  के  लिए रात्रि प्रहरी के पद पर कंपनी द्वारा कौशल जांच के पश्चात आपका योगदान हेतु नियोजनRAIDER SECURITY SERVICES PVT. LTD.. द्वारा निम्न शर्तों एवं बंधेज पर सुनिश्चित किया जाता है|`;
 
   const generatePDF = () => {
     const element = document.getElementById("pdf-wrapper");
@@ -93,13 +93,15 @@ export default function GISAppointmentForm() {
         <div className="pdf-page">
           {/* HEADER */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <img src="/images.png" width="120" alt="left logo" />
-            <div style={{ textAlign: "center", maxWidth: "100%" }}>
-              <div style={{ fontWeight:700, fontSize: 16 }}> <h1>GIS WORLD HOSPITALITY SERVICES PVT. LTD.</h1></div>
-              <div style={{ fontWeight:700, fontSize: 16 }}>We Lead because, We understand needs.</div>
-              <div style={{ fontWeight:700, fontSize: 16 }} >A-56, Shreenath Plaza, FC Road, Pune – 411005</div>
+            <img src="/Screenshot 2025-12-01 152833.png" width="150" alt="left logo" />
+            <div style={{ textAlign: "center", maxWidth: "90%" }}>
+              <div style={{ fontWeight:700, fontSize: 16 }}> <h1>RAIDER SECURITY SERVICES PVT. LTD.</h1></div>
+              <div style={{ fontWeight:700, fontSize: 16 }}>2nd Floor,Malti Complex,Near HDFC Bank,Bariyatu
+      Road,Booty Moe, Ranchi-834009,Jharkhand
+</div>
+              {/* <div style={{ fontWeight:700, fontSize: 16 }} >A-56, Shreenath Plaza, FC Road, Pune – 411005</div>
               <div style={{ fontWeight:700, fontSize: 16 }} >Website: www.secure-isgroup.com</div>
-              <div style={{ fontWeight:700, fontSize: 16 }}>Email: info@secure-isgroup.com</div>
+              <div style={{ fontWeight:700, fontSize: 16 }}>Email: info@secure-isgroup.com</div> */}
             </div>
            
           </div>
@@ -108,7 +110,7 @@ export default function GISAppointmentForm() {
 
           {/* REF + DATE */}
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-            <div><b>पत्रांक:</b> GWHSPL/EC/{data.refNumber}</div>
+            <div><b>पत्रांक:</b> RSSPL/EC/{data.refNumber}</div>
             <div><b>दिनांक:</b> {data.date}</div>
           </div>
 
@@ -171,13 +173,15 @@ export default function GISAppointmentForm() {
         <div className="pdf-page">
           {/* HEADER SAME */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <img src="/images.png" width="120" alt="left logo" />
-            <div style={{ textAlign: "center", maxWidth: "100%" }}>
-              <div style={{ fontWeight:600, fontSize: 16 }}> <h1>GIS WORLD HOSPITALITY SERVICES PVT. LTD.</h1></div>
-              <div style={{ fontWeight:700, fontSize: 16 }}>We Lead because, We understand needs.</div>
-              <div style={{ fontWeight:700, fontSize: 16 }}>A-56, Shreenath Plaza, FC Road, Pune – 411005</div>
+            <img src="/Screenshot 2025-12-01 152833.png" width="150" alt="left logo" />
+            <div style={{ textAlign: "center", maxWidth: "90%" }}>
+              <div style={{ fontWeight:600, fontSize: 16 }}> <h1>RAIDER SECURITY SERVICES PVT. LTD.</h1></div>
+              2nd Floor,Malti Complex,Near HDFC Bank,Bariyatu
+      Road,Booty Moe, Ranchi-834009,Jharkhand
+
+              {/* <div style={{ fontWeight:700, fontSize: 16 }}>A-56, Shreenath Plaza, FC Road, Pune – 411005</div>
               <div style={{ fontWeight:700, fontSize: 16 }}>Website: www.secure-isgroup.com</div>
-              <div style={{ fontWeight:700, fontSize: 16 }}>Email: info@secure-isgroup.com</div>
+              <div style={{ fontWeight:700, fontSize: 16 }}>Email: info@secure-isgroup.com</div> */}
             </div>
            
           </div>
@@ -209,7 +213,7 @@ export default function GISAppointmentForm() {
             <div>Employee Signature</div>
             <div style={{ marginTop: 8,  display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
                     Authorized Signatory<br />
-              GIS WORLD HOSPITALITY SERVICES PVT. LTD.
+             RAIDER SECURITY SERVICES PVT. LTD..
             </div>
           </div>
         </div>

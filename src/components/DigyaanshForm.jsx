@@ -99,15 +99,34 @@ export default function DigyaanshAppointmentForm() {
           </header>
 
           {/* REF & DATE */}
-          <div className="ref-date">
-            <div contentEditable onInput={(e)=>handleEditable("ref", e.target.innerText)}>
-              REF: {data.ref}
-            </div>
-            <div  contentEditable onInput={(e)=>handleEditable("date", e.target.innerText)}>
-              Date: {data.date}
-            </div>
-             <img src="/images.png" className="qr-img" alt="qr" />
-          </div>
+        <div className="ref-date">
+
+  <div className="ref-left">
+    <div
+      contentEditable
+      onInput={(e) => handleEditable("ref", e.target.innerText)}
+    >
+      REF: {data.ref}
+    </div>
+  </div>
+
+  <div className="qr-section">
+    <div
+      className="date-text"
+      contentEditable
+      onInput={(e) => handleEditable("date", e.target.innerText)}
+    >
+      Date: {data.date}
+    </div>
+
+    <img
+      src="/WhatsApp Image 2025-12-01 at 2.39.49 PM.png"
+      className="qr-img"
+      alt="qr"
+    />
+  </div>
+
+</div>
 
           <h2 className="center-heading">JOINING LETTER</h2>
 

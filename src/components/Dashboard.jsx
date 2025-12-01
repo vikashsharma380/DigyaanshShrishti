@@ -11,6 +11,9 @@ export default function Dashboard() {
     { title: "Digyaansh – Appointment Letter", link: "/form/digyaansh-appointment" },
     { title: "Digyaansh – Leaving Letter", link: "/form/digyaansh-leaving" },
 
+    // ⭐ NEW ADDED CARD ⭐
+    { title: "Digyaansh – Experience Certificate", link: "/form/digyaansh-experience" },
+
     { title: "Raider Security – Appointment Letter", link: "/form/raider-appointment" },
     { title: "Raider Security – Leaving Letter", link: "/form/raider-leaving" },
   ];
