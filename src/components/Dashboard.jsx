@@ -5,8 +5,8 @@ export default function Dashboard() {
     { title: "GIS World – Appointment Letter", link: "/form/gis-appointment" },
     { title: "GIS World – Leaving Letter", link: "/form/gis-leaving" },
 
-    { title: "Destiny IT – Appointment Letter", link: "/form/destiny-appointment" },
-    { title: "Destiny IT – Leaving Letter", link: "/form/destiny-leaving" },
+    // { title: "Destiny IT – Appointment Letter", link: "/form/destiny-appointment" },
+    // { title: "Destiny IT – Leaving Letter", link: "/form/destiny-leaving" },
 
     { title: "Digyaansh – Appointment Letter", link: "/form/digyaansh-appointment" },
     { title: "Digyaansh – Leaving Letter", link: "/form/digyaansh-leaving" },
