@@ -25,6 +25,14 @@ export default function DigyaanshAppointmentForm() {
   const handleEditable = (key, value) => {
     setData((p) => ({ ...p, [key]: value }));
   };
+const formatDate = (dateStr) => {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  let day = String(d.getDate()).padStart(2, "0");
+  let month = String(d.getMonth() + 1).padStart(2, "0");
+  let year = d.getFullYear();
+  return `${day}-${month}-${year}`;
+};
 
   const generatePDF = () => {
     const element = document.getElementById("pdf-wrapper");
@@ -138,16 +146,15 @@ export default function DigyaanshAppointmentForm() {
               </div>
             </div>
           </header>
-
+<div className="header-divider"></div>   
           {/* REF & DATE */}
           <div className="ref-date">
             <div className="ref-left">
-              <div>REF: {data.ref}</div>
+              <div>REF: {formatDate(data.ref)}</div>
             </div>
 
             <div className="qr-section">
-              <div>Date: {data.date}</div>
-
+              <div>Date: {formatDate(data.date)}</div>
               <img
                 src="/WhatsApp Image 2025-12-01 at 2.39.49 PM.png"
                 className="qr-img"
@@ -203,9 +210,9 @@ export default function DigyaanshAppointmentForm() {
           <div className="signatures">
             <div>Employee Signature</div>
            
-            <div  className="Authorized">
-               <div>Authorized Signatory</div>
-            DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
+             <div className="Authorized" >
+               <div className="Authorized-sign">DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.</div>
+            Authorized Signatory
           </div>
           </div>
 
@@ -233,7 +240,7 @@ export default function DigyaanshAppointmentForm() {
               </div>
             </div>
           </header>
-
+<div className="header-divider"></div>   
           <h2 className="rules-heading">नियम एवं शर्तें :-</h2>
 
           <ol className="rules-list">
@@ -280,8 +287,8 @@ export default function DigyaanshAppointmentForm() {
             <div>Employee Signature</div>
            
             <div className="Authorized" >
-               <div>Authorized Signatory</div>
-            DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
+               <div className="Authorized-sign">DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.</div>
+            Authorized Signatory
           </div>
           </div>
           <footer className="pdf-footer" contentEditable>
