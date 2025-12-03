@@ -2,12 +2,12 @@ import "../styles/about.css";
 
 const AboutSection = () => {
   const highlights = [
-    "Experienced team of developers and designers",
-    "Agile methodology for faster delivery",
-    "24/7 support and maintenance",
-    "Transparent communication throughout projects",
-    "Scalable and future-proof solutions",
-    "Client-centric approach in every project",
+    "Professional Housekeeping & Facility Management",
+    "Complete IT Support & Technical Solutions",
+    "Advanced Security & Surveillance Services",
+    "Civil Construction & Infrastructure Work",
+    "Government-Approved BSDM Skill Programs",
+    "Skilled & Unskilled Manpower Supply",
   ];
 
   return (
@@ -19,10 +19,11 @@ const AboutSection = () => {
           <div className="about-middle"></div>
 
           <div className="about-inner">
-            <h1 className="about-years">5+</h1>
+            <h1 className="about-years">3+</h1>
             <h3 className="about-heading">Years of Excellence</h3>
             <p>
-              Delivering innovative digital solutions to businesses worldwide
+              Delivering reliable multi-industry services with quality,
+              commitment, and trust.
             </p>
           </div>
 
@@ -38,13 +39,15 @@ const AboutSection = () => {
 
           <h2 className="about-title">
             Your Trusted{" "}
-            <span className="highlight-accent">Digital Partner</span>
+            <span className="highlight-accent">Service Partner</span>
           </h2>
 
           <p className="about-text">
-            At Digyaanshshrishti, we believe in the power of technology to
-            transform businesses. Our dedicated team combines creativity with
-            technical expertise to deliver solutions that exceed expectations.
+            We are a multi-service solutions company providing professional
+            support across housekeeping, security, IT, construction, manpower,
+            and skill development. With a strong commitment to quality and a
+            trained workforce, we ensure reliable and efficient services for
+            businesses, organisations, and government projects.
           </p>
 
           <div className="about-grid">

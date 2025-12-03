@@ -2,9 +2,23 @@ import "../styles/dashboard.css";
 
 export default function Dashboard() {
   const cards = [
-    { title: "Digyaansh – Appointment Letter", link: "/form/digyaansh-appointment" },
+    // { title: "GIS World – Appointment Letter", link: "/form/gis-appointment" },
+    // { title: "GIS World – Leaving Letter", link: "/form/gis-leaving" },
+
+    // { title: "Destiny IT – Appointment Letter", link: "/form/destiny-appointment" },
+    // { title: "Destiny IT – Leaving Letter", link: "/form/destiny-leaving" },
+
+    {
+      title: "Digyaansh – Appointment Letter",
+      link: "/form/digyaansh-appointment",
+    },
     { title: "Digyaansh – Leaving Letter", link: "/form/digyaansh-leaving" },
-    { title: "Digyaansh – Experience Certificate", link: "/form/digyaansh-experience" },
+
+    // ⭐ NEW ADDED CARD ⭐
+    {
+      title: "Digyaansh – Experience Certificate",
+      link: "/form/digyaansh-experience",
+    },
 
     // ⭐ NEW — Create User Card ⭐
     { title: "Create User", link: "/form/create-user" },

@@ -10,10 +10,12 @@ const Footer = () => {
     ],
 
     services: [
-      { name: "Web Development", href: "#services" },
-      { name: "Mobile Apps", href: "#services" },
-      { name: "UI/UX Design", href: "#services" },
-      { name: "Digital Marketing", href: "#services" },
+      { name: "Housekeeping Management", href: "#services" },
+      { name: "Information Technology", href: "#services" },
+      { name: "Security & Surveillance", href: "#services" },
+      { name: "Construction Services", href: "#services" },
+      { name: "BSDM Projects", href: "#services" },
+      { name: "Manpower Supply", href: "#services" },
     ],
 
     support: [
@@ -33,8 +35,9 @@ const Footer = () => {
         <div className="footer-about">
           <h2 className="footer-logo">Digyaanshshrishti</h2>
           <p>
-            Transforming businesses through innovative digital solutions. Your
-            trusted partner in the digital age.
+            Providing professional services across housekeeping, IT,
+            construction, manpower, security, and government skill development.
+            Delivering reliability, trust, and excellence in every project.
           </p>
 
           <div className="footer-social">
@@ -88,7 +91,9 @@ const Footer = () => {
         <p>
           © {new Date().getFullYear()} Digyaanshshrishti. All rights reserved.
         </p>
-        <p>Crafted with passion for digital excellence</p>
+        <p>
+          Committed to quality, reliability & professional service excellence.
+        </p>
       </div>
     </footer>
   );

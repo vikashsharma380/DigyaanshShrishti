@@ -1,14 +1,16 @@
-
 * {
-  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-family: "Noto Sans Devanagari", sans-serif;
 }
 
 /* Basic reset */
 /* * { box-sizing: border-box; } */
-body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:#222; }
+/* body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:#222; } */
 
 /* Container for the whole component */
-.appointment-container { max-width: 1100px; margin: 0 auto; }
+.appointment-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
 
 /* Form area */
 .form-wrapper {
@@ -16,9 +18,12 @@ body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:
   padding: 16px;
   border-radius: 8px;
   margin-bottom: 18px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
-.form-wrapper h3 { margin: 0 0 10px 0; color:#003d86; }
+.form-wrapper h3 {
+  margin: 0 0 10px 0;
+  color: #003d86;
+}
 
 .form-grid {
   display: grid;
@@ -33,7 +38,9 @@ body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:
 }
 
 /* Action button */
-.actions { margin-top: 12px; }
+.actions {
+  margin-top: 12px;
+}
 .btn-primary {
   background: #003d86;
   color: #fff;
@@ -64,48 +71,94 @@ body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:
   page-break-after: auto;
 }
 
-
 /* Header */
 .pdf-header {
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   gap: 12px;
   border-bottom: 2px solid #e6e6e6;
   padding-bottom: 10px;
 }
-.pdf-header.small { padding-bottom:6px; }
-.left-logo { width:90px; }
-.logo-img { width: 90px; height: auto; }
-.header-text { flex:1; text-align:center; }
-.company-name { color:#003d86; font-weight:900; font-size:22px; }
-.company-meta { font-size:14px; color:#333; margin-top:4px; font-weight:700; }
+.pdf-header.small {
+  padding-bottom: 6px;
+}
+.left-logo {
+  width: 90px;
+}
+.logo-img {
+  width: 90px;
+  height: auto;
+}
+.header-text {
+  flex: 1;
+  text-align: center;
+}
+.company-name {
+  color: #003d86;
+  font-weight: 900;
+  font-size: 22px;
+}
+.company-meta {
+  font-size: 14px;
+  color: #333;
+  margin-top: 4px;
+  font-weight: 700;
+}
 
 /* QR on right */
-.qr-box { width:120px; text-align:right; }
-.qr-img { width:100px; height:100px; object-fit:contain; }
+.qr-box {
+  width: 120px;
+  text-align: right;
+}
+.qr-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
 
 /* ref/date */
-.ref-date { display:flex; justify-content:space-between; margin:14px 0; font-size:13px; color:#444;  }
+.ref-date {
+  display: flex;
+  justify-content: space-between;
+  margin: 14px 0;
+  font-size: 13px;
+  color: #444;
+}
 
 /* Heading center */
-.center-heading { text-align:center; text-decoration:underline; margin:6px 0 12px; }
+.center-heading {
+  text-align: center;
+  text-decoration: underline;
+  margin: 6px 0 12px;
+}
 
 /* Employee details */
-.employee-details p { margin:6px 0; font-size:15px; }
+.employee-details p {
+  margin: 6px 0;
+  font-size: 15px;
+}
 
 /* Letter body */
-.letter-body { margin-top:8px; line-height:1.8; font-size:17px; color:#222; font-weight: 600; }
-.letter-body ol { margin-left:18px; }
+.letter-body {
+  margin-top: 8px;
+  line-height: 1.8;
+  font-size: 17px;
+  color: #222;
+  font-weight: 600;
+}
+.letter-body ol {
+  margin-left: 18px;
+}
 
 /* Signatures row */
 .signatures {
-  display:flex;
-  justify-content:space-between;
-  margin-top:50px;
-  font-weight:600;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+  font-weight: 600;
 }
 .Authorized {
-  text-align:center;
+  text-align: center;
 }
 
 /* Footer */
@@ -119,21 +172,47 @@ body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:
   text-align: center;
 }
 
-.pdf-footer .small { font-size:11px; margin-top:4px; color: rgba(255,255,255,0.9); }
+.pdf-footer .small {
+  font-size: 11px;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.9);
+}
 
 /* Page 2 styling */
-.rules-heading { color:#003d86; text-decoration:underline; margin-top:8px; text-align: center; }
-.rules-list { margin-top:12px; line-height:1.8; font-size:17px; font-weight: 600; }
-.final-sign { margin-top:160px; text-align:right; font-weight:700; }
+.rules-heading {
+  color: #003d86;
+  text-decoration: underline;
+  margin-top: 8px;
+  text-align: center;
+}
+.rules-list {
+  margin-top: 12px;
+  line-height: 1.8;
+  font-size: 17px;
+  font-weight: 600;
+}
+.final-sign {
+  margin-top: 160px;
+  text-align: right;
+  font-weight: 700;
+}
 
 /* Print-specific tweaks */
 @media print {
-  body { background: white; }
-  .pdf-wrapper { padding: 0; }
-  .pdf-page { box-shadow: none; margin: 0 auto; }
-  .page-break { page-break-after: always; }
+  body {
+    background: white;
+  }
+  .pdf-wrapper {
+    padding: 0;
+  }
+  .pdf-page {
+    box-shadow: none;
+    margin: 0 auto;
+  }
+  .page-break {
+    page-break-after: always;
+  }
 }
-
 
 /* FORM CONTAINER */
 .form-wrapper {
@@ -141,7 +220,7 @@ body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* GRID SYSTEM */
@@ -169,7 +248,7 @@ body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:
 .form-grid input:focus,
 .form-grid select:focus {
   border-color: #0066ff;
-  box-shadow: 0 0 0 2px rgba(0,102,255,0.2);
+  box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.2);
 }
 
 /* BUTTON */
@@ -230,7 +309,9 @@ body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:
   page-break-after: auto;
 }
 
-.pdf-page, .letter-body, .rules-list {
+.pdf-page,
+.letter-body,
+.rules-list {
   page-break-inside: avoid;
 }
 
