@@ -33,7 +33,9 @@ const Footer = () => {
       <div className="footer-container">
         {/* LOGO + DESCRIPTION */}
         <div className="footer-about">
-          <h2 className="footer-logo">Digyaanshshrishti</h2>
+          <h2 className="footer-logo">
+            DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
+          </h2>
           <p>
             Providing professional services across housekeeping, IT,
             construction, manpower, security, and government skill development.
@@ -89,7 +91,8 @@ const Footer = () => {
       {/* BOTTOM COPYRIGHT */}
       <div className="footer-bottom">
         <p>
-          © {new Date().getFullYear()} Digyaanshshrishti. All rights reserved.
+          © {new Date().getFullYear()} DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
+          All rights reserved.
         </p>
         <p>
           Committed to quality, reliability & professional service excellence.

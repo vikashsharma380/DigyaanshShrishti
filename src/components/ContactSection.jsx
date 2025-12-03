@@ -51,7 +51,11 @@ const ContactSection = () => {
       <style>{`
         .contact {
           padding: 120px 0;
-          background: linear-gradient(140deg, #6e00ff, #ff007b);
+          background: linear-gradient(140deg, rgba(196, 193, 200, 0.95), rgba(16, 15, 16, 0.95)), 
+                      url('https://safetycounselling.com/wp-content/uploads/2022/07/The-Major-Pluses-of-OSHA-General-Industry-and-OSHA-10-and-30-Contruction-Training-for-Employers-and-Employees-by-Safety-Counselling-505-881-1112-scaled.jpg');
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
           color: white;
           position: relative;
           overflow: hidden;
