@@ -1,3 +1,8 @@
+
+* {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
 /* Basic reset */
 /* * { box-sizing: border-box; } */
 body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:#222; }
@@ -39,19 +44,26 @@ body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:
   font-weight: 600;
 }
 
-/* PDF wrapper: A4 like width (for preview) */
-.pdf-wrapper { background: #ddd; padding: 20px; display:flex; flex-direction:column; gap: 18px; align-items:center; }
-
-/* Each PDF page (A4 portrait proportion) */
-.pdf-page {
-  width: 794px; /* visually similar to A4 at 96dpi */
-  min-height: 1122px;
-  background: #fff;
-  padding: 26px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  position: relative;
-  page-break-after: always; /* crucial for html2pdf to split pages */
+/* A4 Page Setup */
+.pdf-wrapper {
+  width: 210mm;
+  margin: 0 auto;
 }
+
+.pdf-page {
+  width: 210mm;
+  height: 297mm;
+  padding: 15mm;
+  box-sizing: border-box;
+  background: #fff;
+  page-break-after: always;
+  overflow: hidden;
+}
+
+.pdf-page:last-child {
+  page-break-after: auto;
+}
+
 
 /* Header */
 .pdf-header {
@@ -89,29 +101,27 @@ body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:
 .signatures {
   display:flex;
   justify-content:space-between;
-  margin-top:180px;
+  margin-top:90px;
   font-weight:600;
 }
 
 /* Footer */
 .pdf-footer {
-  position:absolute;
-  bottom:16px;
-  left:26px;
-  right:26px;
+  margin-top: 30px;
   background: #003d86;
   color: #fff;
-  padding:8px 12px;
-  font-size:12px;
-  border-radius:6px;
-  text-align:center;
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  text-align: center;
 }
+
 .pdf-footer .small { font-size:11px; margin-top:4px; color: rgba(255,255,255,0.9); }
 
 /* Page 2 styling */
 .rules-heading { color:#003d86; text-decoration:underline; margin-top:8px; text-align: center; }
 .rules-list { margin-top:12px; line-height:1.8; font-size:17px; font-weight: 600; }
-.final-sign { margin-top:250px; text-align:right; font-weight:700; }
+.final-sign { margin-top:180px; text-align:right; font-weight:700; }
 
 /* Print-specific tweaks */
 @media print {
@@ -189,4 +199,41 @@ body { font-family: "Arial", sans-serif; background:#f0f0f0; margin:20px; color:
   .form-grid {
     grid-template-columns: 1fr;
   }
+}
+.pdf-page {
+  page-break-inside: avoid !important;
+}
+
+* {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+.pdf-wrapper {
+  width: 210mm;
+  margin: 0 auto;
+}
+
+.pdf-page {
+  width: 210mm;
+  height: 297mm;
+  padding: 12mm 15mm;
+  background: #fff;
+  box-sizing: border-box;
+  page-break-after: always;
+  overflow: hidden;
+}
+
+.pdf-page:last-child {
+  page-break-after: auto;
+}
+
+.pdf-page, .letter-body, .rules-list {
+  page-break-inside: avoid;
+}
+
+.edit-box {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
 }

@@ -138,7 +138,7 @@ export default function DeepakExperience() {
 
           <div className="signatures">
             <div>For, Digyaansh Shrishti Maintenance Pvt. Ltd.<br />Managing Director</div>
-            <div>For, Digyaansh Shrishti Maintenance Pvt. Ltd.<br />Managing Director</div>
+            {/* <div>For, Digyaansh Shrishti Maintenance Pvt. Ltd.<br />Managing Director</div> */}
           </div>
 
           <footer className="pdf-footer" contentEditable>
