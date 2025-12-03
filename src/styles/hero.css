@@ -4,7 +4,7 @@
   padding-top: 120px;
   display: flex;
   align-items: center;
-  background: linear-gradient(180deg, #faf7ff, #ffffff);
+  background-image: url("https://www.vocantas.com/wp-content/uploads/2023/01/1920-human-resources-and-manpower-planning.jpg");
 }
 
 .hero-container {
@@ -29,7 +29,7 @@
   padding: 8px 16px;
   display: inline-flex;
   border-radius: 20px;
-  color: #7a00ff;
+  color: #100d13e4;
   font-size: 14px;
   font-weight: 500;
 }
@@ -42,14 +42,14 @@
 }
 
 .highlight {
-  background: linear-gradient(90deg, #6e00ff, #ff007b);
+  background: linear-gradient(90deg, #f0f0f1, #ff007b);
   -webkit-background-clip: text;
   color: transparent;
 }
 
 .hero-subtext {
   font-size: 18px;
-  color: #666;
+  color: #040303;
   max-width: 500px;
 }
 
@@ -68,6 +68,7 @@
   border: none;
   cursor: pointer;
   text-decoration: none;
+  margin-left: 10px;
 }
 
 .btn-outline.big {
@@ -92,12 +93,12 @@
 
 .hero-stats h3 {
   font-size: 32px;
-  color: #6e00ff;
+  color: #000000;
 }
 
 .hero-stats p {
   font-size: 14px;
-  color: #666;
+  color: #eeeaea;
 }
 
 /* Right side graphics */
