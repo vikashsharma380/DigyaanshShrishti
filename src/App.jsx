@@ -10,7 +10,7 @@ import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
-
+import CreateUserForm from "./components/Form/CreateUserForm";
 import GISAppointmentForm from "./components/GISAppointmentForm";
 import DigyaanshForm from "./components/DigyaanshForm";
 import RaiderAppointmentForm from "./components/RaiderAppointmentForm";
@@ -49,6 +49,7 @@ function App() {
           path="/form/digyaansh-experience"
           element={<DeepakExperience />}
         />
+        <Route path="/form/create-user" element={<CreateUserForm />} />
       </Routes>
     </BrowserRouter>
   );
