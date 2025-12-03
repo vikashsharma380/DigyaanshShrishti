@@ -154,13 +154,16 @@
 .signatures {
   display: flex;
   justify-content: space-between;
-  margin-top: 90px;
+  margin-top: 50px;
   font-weight: 600;
+}
+.Authorized {
+  text-align: center;
 }
 
 /* Footer */
 .pdf-footer {
-  margin-top: 30px;
+  margin-top: 60px;
   background: #003d86;
   color: #fff;
   padding: 10px;
@@ -189,7 +192,7 @@
   font-weight: 600;
 }
 .final-sign {
-  margin-top: 180px;
+  margin-top: 160px;
   text-align: right;
   font-weight: 700;
 }
