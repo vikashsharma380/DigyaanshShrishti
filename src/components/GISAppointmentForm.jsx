@@ -95,11 +95,11 @@ export default function GISAppointmentForm() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <img src="/images.png" width="120" alt="left logo" />
             <div style={{ textAlign: "center", maxWidth: "100%" }}>
-              <div style={{ fontWeight:700, fontSize: 16 }}> <h1>GIS WORLD HOSPITALITY SERVICES PVT. LTD.</h1></div>
-              <div style={{ fontWeight:700, fontSize: 16 }}>We Lead because, We understand needs.</div>
-              <div style={{ fontWeight:700, fontSize: 16 }} >A-56, Shreenath Plaza, FC Road, Pune – 411005</div>
-              <div style={{ fontWeight:700, fontSize: 16 }} >Website: www.secure-isgroup.com</div>
-              <div style={{ fontWeight:700, fontSize: 16 }}>Email: info@secure-isgroup.com</div>
+              <div style={{  fontSize: 16 }}> <h1>GIS WORLD HOSPITALITY SERVICES PVT. LTD.</h1></div>
+              <div style={{  fontSize: 16 }}>We Lead because, We understand needs.</div>
+              <div style={{  fontSize: 16 }} >A-56, Shreenath Plaza, FC Road, Pune – 411005</div>
+              <div style={{  fontSize: 16 }} >Website: www.secure-isgroup.com</div>
+              <div style={{      fontSize: 16 }}>Email: info@secure-isgroup.com</div>
             </div>
            
           </div>
@@ -129,7 +129,7 @@ export default function GISAppointmentForm() {
             contentEditable
             suppressContentEditableWarning
             onInput={(e) => handleEditable("subject", e.currentTarget.innerText)}
-            style={{ fontWeight: 600, marginBottom: 8 }}
+            style={{  marginBottom: 8 }}
           >
             {data.subject ? data.subject : templateSubject}
           </div>
@@ -149,14 +149,14 @@ export default function GISAppointmentForm() {
           <div style={{ marginTop: 50, fontSize: 16 }}>
            {data.terms.slice(0, 3).map((t, i) => (
   <div key={i} style={{ marginBottom: 6 }}>
-    <b>{i + 1}.</b>{" "}
+   {i + 1}.{" "}
     <span
       className="editable"
       contentEditable
       suppressContentEditableWarning
       onInput={(e) => handleTermEdit(i, e.currentTarget.innerText)}
     >
-      <b>{t}</b>
+      {t}
     </span>
   </div>
 ))}
@@ -173,11 +173,11 @@ export default function GISAppointmentForm() {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <img src="/images.png" width="120" alt="left logo" />
             <div style={{ textAlign: "center", maxWidth: "100%" }}>
-              <div style={{ fontWeight:600, fontSize: 16 }}> <h1>GIS WORLD HOSPITALITY SERVICES PVT. LTD.</h1></div>
-              <div style={{ fontWeight:700, fontSize: 16 }}>We Lead because, We understand needs.</div>
-              <div style={{ fontWeight:700, fontSize: 16 }}>A-56, Shreenath Plaza, FC Road, Pune – 411005</div>
-              <div style={{ fontWeight:700, fontSize: 16 }}>Website: www.secure-isgroup.com</div>
-              <div style={{ fontWeight:700, fontSize: 16 }}>Email: info@secure-isgroup.com</div>
+              <div style={{  fontSize: 16 }}> <h1>GIS WORLD HOSPITALITY SERVICES PVT. LTD.</h1></div>
+              <div style={{  fontSize: 16 }}>We Lead because, We understand needs.</div>
+              <div style={{  fontSize: 16 }}>A-56, Shreenath Plaza, FC Road, Pune – 411005</div>
+              <div style={{  fontSize: 16 }}>Website: www.secure-isgroup.com</div>
+              <div style={{  fontSize: 16 }}>Email: info@secure-isgroup.com</div>
             </div>
            
           </div>
@@ -190,14 +190,14 @@ export default function GISAppointmentForm() {
   const index = idx + 3;
   return (
     <div key={index} style={{ marginBottom: 8 }}>
-      <b>{index + 1}.</b>{" "}
+    {index + 1}.{" "}
       <span
         className="editable"
         contentEditable
         suppressContentEditableWarning
         onInput={(e) => handleTermEdit(index, e.currentTarget.innerText)}
       >
-        <b>{t}</b>
+      {t}
       </span>
     </div>
   );
@@ -205,7 +205,7 @@ export default function GISAppointmentForm() {
 
           </div>
 
-          <div style={{ marginTop: 100, display: "flex", justifyContent: "space-between", fontWeight: 700 }}>
+          <div style={{ marginTop: 100, display: "flex", justifyContent: "space-between" }}>
             <div>Employee Signature</div>
             <div style={{ marginTop: 8,  display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
                     Authorized Signatory<br />
