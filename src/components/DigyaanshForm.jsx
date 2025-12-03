@@ -204,14 +204,21 @@ export default function DigyaanshAppointmentForm() {
           {/* SIGN */}
           <div className="signatures">
             <div>Employee Signature</div>
-            <div>Authorized Signatory</div>
+           
+            <div  className="Authorized">
+               <div>Authorized Signatory</div>
+            DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
+          </div>
           </div>
 
           {/* FOOTER */}
-          <footer className="pdf-footer">
-            Contact Us: 7004062960 | Email: digyaanshshrishti@gmail.com
+         <footer className="pdf-footer" contentEditable>
+            Contact Us: 7004062960 | Email: digyaanshshrishti@gmail.com  
             <br />
-            Office: Sadhu Sadan, Motihari, Bihar - 845401
+            Only For Verification: 97095 25410 (Mon-Sat) (10AM–6PM)
+            <br />
+            Office Address: Sadhu Sadan Near Bapudham Station to Janpul Road,
+            Ward 22, Shantipuri, Motihari, East Champaran, Bihar - 845401
           </footer>
         </div>
 
@@ -271,13 +278,21 @@ export default function DigyaanshAppointmentForm() {
             </li>
           </ol>
 
-          <div className="final-sign">
+             <div className="signatures">
+            <div>Employee Signature</div>
+           
+            <div className="Authorized" >
+               <div>Authorized Signatory</div>
             DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
           </div>
-          <footer className="pdf-footer">
-            Contact Us: 7004062960 | Email: digyaanshshrishti@gmail.com
+          </div>
+          <footer className="pdf-footer" contentEditable>
+            Contact Us: 7004062960 | Email: digyaanshshrishti@gmail.com  
             <br />
-            Office: Sadhu Sadan, Motihari, Bihar - 845401
+            Only For Verification: 97095 25410 (Mon-Sat) (10AM–6PM)
+            <br />
+            Office Address: Sadhu Sadan Near Bapudham Station to Janpul Road,
+            Ward 22, Shantipuri, Motihari, East Champaran, Bihar - 845401
           </footer>
         </div>
       </div>
