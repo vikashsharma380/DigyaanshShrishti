@@ -14,7 +14,8 @@ const ContactSection = () => {
     },
     {
       title: "Office",
-      value: "Sadhu Sadan, Motihari, Bihar - 845401",
+      value:
+        "Office Address: Sadhu Sadan Near Bapudham Station to Janpul Road, Ward 22, Shantipuri, Motihari, East Champaran, Bihar - 845401",
       link: "#",
     },
     {
@@ -51,7 +52,11 @@ const ContactSection = () => {
       <style>{`
         .contact {
           padding: 120px 0;
-          background: linear-gradient(140deg, #6e00ff, #ff007b);
+          background: linear-gradient(140deg, rgba(196, 193, 200, 0.66), rgba(16, 15, 16, 0.58)), 
+                      url('https://safetycounselling.com/wp-content/uploads/2022/07/The-Major-Pluses-of-OSHA-General-Industry-and-OSHA-10-and-30-Contruction-Training-for-Employers-and-Employees-by-Safety-Counselling-505-881-1112-scaled.jpg');
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
           color: white;
           position: relative;
           overflow: hidden;
@@ -91,7 +96,7 @@ const ContactSection = () => {
           margin: auto;
           padding: 0 20px;
           position: relative;
-          z-index: 1;
+          z-index: 1;        
         }
 
         /* HEADER */
@@ -177,6 +182,7 @@ const ContactSection = () => {
           backdrop-filter: blur(10px);
           position: relative;
           overflow: hidden;
+          color:black;
         }
 
         .info-box::before {
@@ -554,16 +560,6 @@ const ContactSection = () => {
                   </div>
                 </a>
               ))}
-
-              <div className="trusted-by">
-                <p>Trusted by businesses worldwide</p>
-                <div className="trusted-logos">
-                  <div className="logo-box"></div>
-                  <div className="logo-box"></div>
-                  <div className="logo-box"></div>
-                  <div className="logo-box"></div>
-                </div>
-              </div>
             </div>
 
             {/* Right Side Form */}

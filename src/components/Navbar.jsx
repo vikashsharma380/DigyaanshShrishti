@@ -15,7 +15,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-container">
         <a href="#home" className="logo">
-          Digyaanshshrishti
+          DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
         </a>
 
         <div className="nav-links">
@@ -25,8 +25,9 @@ const Navbar = () => {
             </a>
           ))}
 
-       <a href="/login" className="btn-primary">Get Started</a>
-
+          <a href="/login" className="btn-primary">
+            Get Started
+          </a>
         </div>
 
         <button className="menu-btn" onClick={() => setIsOpen(!isOpen)}>
@@ -45,8 +46,9 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
-         <a href="/login" className="btn-primary">Get Started</a>
-
+          <a href="/login" className="btn-primary">
+            Get Started
+          </a>
         </div>
       )}
     </nav>
