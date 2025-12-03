@@ -8,11 +8,17 @@ export default function Dashboard() {
     // { title: "Destiny IT – Appointment Letter", link: "/form/destiny-appointment" },
     // { title: "Destiny IT – Leaving Letter", link: "/form/destiny-leaving" },
 
-    { title: "Digyaansh – Appointment Letter", link: "/form/digyaansh-appointment" },
+    {
+      title: "Digyaansh – Appointment Letter",
+      link: "/form/digyaansh-appointment",
+    },
     { title: "Digyaansh – Leaving Letter", link: "/form/digyaansh-leaving" },
 
     // ⭐ NEW ADDED CARD ⭐
-    { title: "Digyaansh – Experience Certificate", link: "/form/digyaansh-experience" },
+    {
+      title: "Digyaansh – Experience Certificate",
+      link: "/form/digyaansh-experience",
+    },
 
     // { title: "Raider Security – Appointment Letter", link: "/form/raider-appointment" },
     // { title: "Raider Security – Leaving Letter", link: "/form/raider-leaving" },

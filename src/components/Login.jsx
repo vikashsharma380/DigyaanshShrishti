@@ -18,7 +18,7 @@ export default function Login() {
     if (email === validEmail && pass === validPassword) {
       setError("");
       alert("Login Successful!");
-      navigate("/dashboard");   // PERFECT NAVIGATION
+      navigate("/dashboard"); // PERFECT NAVIGATION
     } else {
       setError("Invalid email or password");
     }
@@ -36,9 +36,9 @@ export default function Login() {
 
           <form className="login-form" onSubmit={handleLogin}>
             <div className="input-group">
-              <input 
-                type="email" 
-                required 
+              <input
+                type="email"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -46,9 +46,9 @@ export default function Login() {
             </div>
 
             <div className="input-group">
-              <input 
-                type="password" 
-                required 
+              <input
+                type="password"
+                required
                 value={pass}
                 onChange={(e) => setPass(e.target.value)}
               />

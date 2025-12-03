@@ -142,13 +142,11 @@ export default function DigyaanshAppointmentForm() {
           {/* REF & DATE */}
           <div className="ref-date">
             <div className="ref-left">
-             <div>REF: {data.ref}</div>
-
+              <div>REF: {data.ref}</div>
             </div>
 
             <div className="qr-section">
-             <div>Date: {data.date}</div>
-
+              <div>Date: {data.date}</div>
 
               <img
                 src="/WhatsApp Image 2025-12-01 at 2.39.49 PM.png"
