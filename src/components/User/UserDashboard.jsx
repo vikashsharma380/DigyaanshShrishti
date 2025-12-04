@@ -36,7 +36,7 @@ export default function UserDashboard() {
 
   // ---------------- FETCH BLOCKWISE DATA ----------------
   useEffect(() => {
-    fetch(`http://localhost:5000/api/sweeper/supervisor-data/${user.id}`)
+    fetch(`https://digyaanshshrishti.onrender.com/api/sweeper/supervisor-data/${user.id}`)
       .then((res) => res.json())
       .then((out) => {
         const cleanData = out.filter((d) => d && d.block); // SAFE
@@ -80,7 +80,7 @@ export default function UserDashboard() {
 
   const saveEdit = async () => {
     const res = await fetch(
-      `http://localhost:5000/api/sweeper/update/${editingId}`,
+      `https://digyaanshshrishti.onrender.com/api/sweeper/update/${editingId}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -109,7 +109,7 @@ export default function UserDashboard() {
       salary: Number(addForm.salary) || 0,
     };
 
-    const res = await fetch("http://localhost:5000/api/sweeper/add", {
+    const res = await fetch("https://digyaanshshrishti.onrender.com/api/sweeper/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
