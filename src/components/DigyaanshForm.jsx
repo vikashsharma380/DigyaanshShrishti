@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import "../styles/digyaansh.css";
 
 export default function DigyaanshAppointmentForm() {
@@ -14,6 +14,26 @@ export default function DigyaanshAppointmentForm() {
     designation: "Trainer",
     letterBody: "",
   });
+const saveToDatabase = async () => {
+  const body = {
+    ref: data.ref,
+    name: data.name,
+    date: data.date
+  };
+
+  const res = await fetch("http://localhost:5000/api/appointments/add", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  const result = await res.json();
+  if (result.success) {
+    alert("Appointment Saved!");
+  } else {
+    alert("Error: " + result.message);
+  }
+};
 
   // handle input fields
   const handleChange = (e) => {
@@ -34,24 +54,54 @@ const formatDate = (dateStr) => {
   return `${day}-${month}-${year}`;
 };
 
-  const generatePDF = () => {
-    const element = document.getElementById("pdf-wrapper");
-    const opt = {
-      margin: 0,
-      filename: `${data.name || "Appointment"}.pdf`,
-      image: { type: "jpeg", quality: 1 },
-      html2canvas: {
-        scale: 3,
-        letterRendering: true,
-        useCORS: true,
-        scrollY: 0,
-      },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      pagebreak: { mode: ["avoid-all", "css"] },
-    };
+const generatePDF = async () => {
+  // Step 1: Save to database before generating PDF
+  await fetch("http://localhost:5000/api/appointments/add", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      ref: data.ref,
+      name: data.name,
+      date: data.date
+    }),
+  });
 
-    window.html2pdf().set(opt).from(element).save();
+  // Step 2: Generate PDF
+  const element = document.getElementById("pdf-wrapper");
+  const opt = {
+    margin: 0,
+    filename: `${data.name || "Appointment"}.pdf`,
+    image: { type: "jpeg", quality: 1 },
+    html2canvas: {
+      scale: 3,
+      letterRendering: true,
+      useCORS: true,
+      scrollY: 0,
+    },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    pagebreak: { mode: ["avoid-all", "css"] },
   };
+
+  window.html2pdf().set(opt).from(element).save();
+};
+
+
+// Refresh list after saving
+fetchList();
+
+
+useEffect(() => {
+  fetchList();
+}, []);
+
+const [list, setList] = useState([]);
+const fetchList = async () => {
+  const res = await fetch("http://localhost:5000/api/appointments/list");
+  const result = await res.json();
+  if (result.success) {
+    setList(result.list);
+  }
+};
 
   return (
     <div className="appointment-container">
@@ -125,6 +175,30 @@ const formatDate = (dateStr) => {
           Generate PDF
         </button>
       </div>
+      <div className="list-box">
+  <h3>Saved Appointments</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Ref No.</th>
+        <th>Name</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {list.map((item, index) => (
+        <tr key={index}>
+          <td>{item.ref}</td>
+          <td>{item.name}</td>
+          <td>{item.date}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
 
       {/* ========= PDF PREVIEW AREA ========= */}
       <div id="pdf-wrapper" className="pdf-wrapper">
@@ -302,5 +376,7 @@ const formatDate = (dateStr) => {
         </div>
       </div>
     </div>
+
+    
   );
 }

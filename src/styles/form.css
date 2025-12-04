@@ -176,5 +176,31 @@
   display: none !important;
 }
 .Authorized-sign {
-  margin-bottom: 60px;
+  margin-bottom: 80px;
+}
+
+
+.list-box {
+  width: 300px;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin: 20px;
+}
+
+.list-box table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.list-box th,
+.list-box td {
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.list-box th {
+  background: #eee;
 }

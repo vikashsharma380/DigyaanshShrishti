@@ -38,6 +38,30 @@ export default function Dashboard() {
       desc: "Add new user account",
       count: 3,
     },
+    {
+      title: "Upload Sweeper Data",
+      link: "/upload-excel",
+      icon: "📤",
+      color: "from-purple-500 to-purple-600",
+      desc: "Bulk upload data",
+      count: 0,
+    },
+    {
+      title: "View Sweeper Data",
+      link: "/admin/sweeper-data",
+      icon: "📊",
+      color: "from-pink-500 to-pink-600",
+      desc: "Analyze records",
+      count: 0,
+    },
+    {
+      title: "View Users",
+      link: "/users",
+      icon: "👥",
+      color: "from-teal-500 to-teal-600",
+      desc: "Manage user accounts",
+      count: 2,
+    },
   ];
 
   const recentActivities = [
@@ -409,67 +433,7 @@ export default function Dashboard() {
           margin: 0 auto;
         }
 
-        /* STATS */
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 24px;
-          margin-bottom: 40px;
-        }
-
-        .stat-card {
-          background: linear-gradient(135deg, rgba(148, 163, 184, 0.05), rgba(148, 163, 184, 0.02));
-          border: 1px solid rgba(148, 163, 184, 0.1);
-          border-radius: 16px;
-          padding: 24px;
-          backdrop-filter: blur(10px);
-          transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-          border-color: rgba(99, 102, 241, 0.3);
-          box-shadow: 0 0 30px rgba(99, 102, 241, 0.1);
-          transform: translateY(-4px);
-        }
-
-        .stat-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 12px;
-        }
-
-        .stat-icon {
-          font-size: 32px;
-        }
-
-        .stat-change {
-          font-size: 12px;
-          font-weight: 600;
-          padding: 4px 8px;
-          border-radius: 6px;
-        }
-
-        .stat-change.positive {
-          background: rgba(34, 197, 94, 0.1);
-          color: #070908ff;
-        }
-
-        .stat-change.negative {
-          background: rgba(239, 68, 68, 0.1);
-          color: #951515ff;
-        }
-
-        .stat-label {
-          color: rgba(0, 0, 0, 0.6);
-          font-size: 14px;
-          margin-bottom: 8px;
-        }
-
-        .stat-value {
-          font-size: 28px;
-          font-weight: 800;
-        }
+      
 
         /* QUICK ACTIONS */
         .section-title {
@@ -854,6 +818,8 @@ export default function Dashboard() {
 
         {/* CONTENT */}
         <div className="content">
+          {/* STATS */}
+
           {/* QUICK ACTIONS */}
           <h2 className="section-title">Quick Actions</h2>
           <div className="actions-grid">

@@ -1,26 +1,47 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    const validEmail = "admin@digi.com";
-    const validPassword = "123456";
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
 
-    if (email === validEmail && pass === validPassword) {
-      setError("");
+        email,
+        password: pass,
+      });
+
+      const { token, user } = res.data;
+
+      // Save token + user
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      setLoading(false);
       alert("Login Successful!");
-      navigate("/dashboard"); // PERFECT NAVIGATION
-    } else {
-      setError("Invalid email or password");
+
+      // ⭐ Redirect based on designation
+      if (user.designation === "Admin") {
+        navigate("/dashboard");
+      } else {
+        navigate("/userdashboard");
+      }
+    } catch (err) {
+      setLoading(false);
+      const msg = err?.response?.data?.message || "Login failed";
+      setError(msg);
     }
   };
 
@@ -57,8 +78,8 @@ export default function Login() {
 
             {error && <p className="error">{error}</p>}
 
-            <button className="btn-primary login-btn" type="submit">
-              Login →
+            <button className="btn-primary login-btn" type="submit" disabled={loading}>
+              {loading ? "Logging in..." : "Login →"}
             </button>
           </form>
         </div>
