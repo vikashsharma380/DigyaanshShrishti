@@ -25,7 +25,7 @@ export default function UserDashboard() {
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [addForm, setAddForm] = useState({
-    block: user.block || "",   // SAFE
+    block: user.block || "", // SAFE
     schoolName: "",
     sweeperName: "",
     toilets: "",
@@ -36,7 +36,9 @@ export default function UserDashboard() {
 
   // ---------------- FETCH BLOCKWISE DATA ----------------
   useEffect(() => {
-    fetch(`https://digyaanshshrishti.onrender.com/api/sweeper/supervisor-data/${user.id}`)
+    fetch(
+      `https://digyaanshshrishti.onrender.com/api/sweeper/supervisor-data/${user.id}`
+    )
       .then((res) => res.json())
       .then((out) => {
         const cleanData = out.filter((d) => d && d.block); // SAFE
@@ -91,9 +93,7 @@ export default function UserDashboard() {
     const out = await res.json();
 
     if (out.success) {
-      const newData = data.map((d) =>
-        d._id === editingId ? out.updated : d
-      );
+      const newData = data.map((d) => (d._id === editingId ? out.updated : d));
 
       setData(newData);
       setEditingId(null);
@@ -109,11 +109,14 @@ export default function UserDashboard() {
       salary: Number(addForm.salary) || 0,
     };
 
-    const res = await fetch("https://digyaanshshrishti.onrender.com/api/sweeper/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    const res = await fetch(
+      "https://digyaanshshrishti.onrender.com/api/sweeper/add",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }
+    );
 
     const out = await res.json();
 
@@ -136,20 +139,20 @@ export default function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
-
       {/* TOPBAR */}
       <div className="topbar">
         <h1 className="title">User Dashboard</h1>
 
         <div className="profile">
           <span>👤 {user?.name}</span>
-          <button className="logout-btn" onClick={handleLogout}>Logout</button>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </div>
 
       {/* CONTENT */}
       <div className="content">
-
         {/* Filters */}
         <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
           <input
@@ -166,15 +169,21 @@ export default function UserDashboard() {
           >
             <option value="">Filter Block</option>
 
-            {[...new Set(
-              data.filter((d) => d && d.block).map((d) => d.block)
-            )].map((b) => (
-              <option key={b} value={b}>{b}</option>
+            {[
+              ...new Set(data.filter((d) => d && d.block).map((d) => d.block)),
+            ].map((b) => (
+              <option key={b} value={b}>
+                {b}
+              </option>
             ))}
           </select>
 
-          <button className="btn" onClick={downloadExcel}>📥 Download Excel</button>
-          <button className="btn" onClick={() => setShowAddForm(true)}>➕ Add Sweeper</button>
+          <button className="btn" onClick={downloadExcel}>
+            📥 Download Excel
+          </button>
+          <button className="btn" onClick={() => setShowAddForm(true)}>
+            ➕ Add Sweeper
+          </button>
         </div>
 
         {/* TABLE */}
@@ -200,15 +209,75 @@ export default function UserDashboard() {
 
                 {editingId === row._id ? (
                   <>
-                    <td><input value={editForm.block} onChange={(e) => setEditForm({ ...editForm, block: e.target.value })} /></td>
-                    <td><input value={editForm.schoolName} onChange={(e) => setEditForm({ ...editForm, schoolName: e.target.value })} /></td>
-                    <td><input value={editForm.sweeperName} onChange={(e) => setEditForm({ ...editForm, sweeperName: e.target.value })} /></td>
-                    <td><input value={editForm.toilets} onChange={(e) => setEditForm({ ...editForm, toilets: e.target.value })} /></td>
-                    <td><input value={editForm.accountNumber} onChange={(e) => setEditForm({ ...editForm, accountNumber: e.target.value })} /></td>
-                    <td><input value={editForm.ifsc} onChange={(e) => setEditForm({ ...editForm, ifsc: e.target.value })} /></td>
-                    <td><input value={editForm.salary} onChange={(e) => setEditForm({ ...editForm, salary: e.target.value })} /></td>
+                    <td>
+                      <input
+                        value={editForm.block}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, block: e.target.value })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editForm.schoolName}
+                        onChange={(e) =>
+                          setEditForm({
+                            ...editForm,
+                            schoolName: e.target.value,
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editForm.sweeperName}
+                        onChange={(e) =>
+                          setEditForm({
+                            ...editForm,
+                            sweeperName: e.target.value,
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editForm.toilets}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, toilets: e.target.value })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editForm.accountNumber}
+                        onChange={(e) =>
+                          setEditForm({
+                            ...editForm,
+                            accountNumber: e.target.value,
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editForm.ifsc}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, ifsc: e.target.value })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editForm.salary}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, salary: e.target.value })
+                        }
+                      />
+                    </td>
 
-                    <td><button onClick={saveEdit}>💾 Save</button></td>
+                    <td>
+                      <button onClick={saveEdit}>💾 Save</button>
+                    </td>
                   </>
                 ) : (
                   <>
@@ -219,7 +288,9 @@ export default function UserDashboard() {
                     <td>{row.accountNumber}</td>
                     <td>{row.ifsc}</td>
                     <td>{row.salary}</td>
-                    <td><button onClick={() => startEdit(row)}>✏️ Edit</button></td>
+                    <td>
+                      <button onClick={() => startEdit(row)}>✏️ Edit</button>
+                    </td>
                   </>
                 )}
               </tr>
@@ -239,7 +310,9 @@ export default function UserDashboard() {
 
                   <input
                     value={addForm[key]}
-                    onChange={(e) => setAddForm({ ...addForm, [key]: e.target.value })}
+                    onChange={(e) =>
+                      setAddForm({ ...addForm, [key]: e.target.value })
+                    }
                     readOnly={key === "block"}
                     style={{ background: key === "block" ? "#eee" : "white" }}
                   />
@@ -251,7 +324,6 @@ export default function UserDashboard() {
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

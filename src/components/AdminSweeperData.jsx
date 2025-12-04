@@ -11,6 +11,26 @@ export default function AdminSweeperData() {
 
   const [editingId, setEditingId] = useState(null);
   const [editRow, setEditRow] = useState({});
+const deleteSweeper = async (id) => {
+  if (!window.confirm("Delete this sweeper?")) return;
+
+  const res = await fetch(
+    `https://digyaanshshrishti.onrender.com/api/sweeper/delete/${id}`,
+    { method: "DELETE" }
+  );
+
+  const out = await res.json();
+
+  if (out.success) {
+    alert("Deleted!");
+
+    const remaining = data.filter((d) => d._id !== id);
+    setData(remaining);
+    setFiltered(remaining);
+  } else {
+    alert("Failed!");
+  }
+};
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [addForm, setAddForm] = useState({
@@ -277,6 +297,20 @@ export default function AdminSweeperData() {
                         Edit
                       </button>
                     </td>
+                    <td>
+  <button
+    onClick={() => deleteSweeper(item._id)}
+    style={{
+      padding: "5px 10px",
+      background: "red",
+      color: "white",
+      borderRadius: "6px",
+    }}
+  >
+    Delete
+  </button>
+</td>
+
                   </tr>
                 )
               )}
