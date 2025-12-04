@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import "./App.css";
-
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import ServicesSection from "./components/ServicesSection";
@@ -45,18 +44,14 @@ function App() {
         <Route path="/userdashboard" element={<UserDashboard />} />
 
         {/* Forms */}
-       
+
         <Route path="/form/digyaansh-appointment" element={<DigyaanshForm />} />
-        
 
+        <Route path="/users" element={<UserList />} />
 
+        <Route path="/admin/sweeper-data" element={<AdminSweeperData />} />
 
-<Route path="/users" element={<UserList />} />
-
-
-<Route path="/admin/sweeper-data" element={<AdminSweeperData />} />
-
-<Route path="/upload-excel" element={<ExcelUpload />} />
+        <Route path="/upload-excel" element={<ExcelUpload />} />
 
         {/* ⭐ NEW ROUTE FIX ⭐ */}
         <Route
