@@ -6,22 +6,26 @@ const ContactSection = () => {
       title: "Phone",
       value: "7004062960",
       link: "tel:7004062960",
+      icon: "📞",
     },
     {
       title: "Email",
       value: "digyaanshshrishti@gmail.com",
       link: "mailto:digyaanshshrishti@gmail.com",
+      icon: "📧",
     },
     {
       title: "Office",
       value:
         "Office Address: Sadhu Sadan Near Bapudham Station to Janpul Road, Ward 22, Shantipuri, Motihari, East Champaran, Bihar - 845401",
       link: "#",
+      icon: "📍",
     },
     {
       title: "CIN No.",
       value: "U63992BR2024PTC068371",
       link: "#",
+      icon: "📄",
     },
   ];
 
@@ -182,7 +186,7 @@ const ContactSection = () => {
           backdrop-filter: blur(10px);
           position: relative;
           overflow: hidden;
-          color:black;
+          color: rgba(1, 1, 1, 0.77);
         }
 
         .info-box::before {
@@ -216,6 +220,10 @@ const ContactSection = () => {
           flex-shrink: 0;
           transition: all 0.4s ease;
           box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 28px;
         }
 
         .info-box:hover .info-icon {
@@ -553,7 +561,7 @@ const ContactSection = () => {
             <div className="contact-info">
               {contactInfo.map((item, index) => (
                 <a key={index} href={item.link} className="info-box">
-                  <div className="info-icon"></div>
+                  <div className="info-icon">{item.icon}</div>
                   <div>
                     <span className="info-title">{item.title}</span>
                     <p className="info-value">{item.value}</p>
