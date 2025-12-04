@@ -23,7 +23,7 @@ export default function ExcelUpload() {
   };
 
   const sendToBackend = async () => {
-    const res = await fetch("http://localhost:5000/api/sweeper/upload-excel", {
+    const res = await fetch("https://digyaanshshrishti.onrender.com/api/sweeper/upload-excel", {
 
       method: "POST",
       headers: { "Content-Type": "application/json" },

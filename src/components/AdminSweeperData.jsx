@@ -28,7 +28,7 @@ export default function AdminSweeperData() {
 
   // Load all data
   useEffect(() => {
-    fetch("http://localhost:5000/api/sweeper/all-data")
+    fetch("https://digyaanshshrishti.onrender.com/api/sweeper/all-data")
       .then((res) => res.json())
       .then((out) => {
         const clean = out.filter((i) => i && i.block);
@@ -61,7 +61,7 @@ export default function AdminSweeperData() {
 
   // Save updated data
   const saveEdit = async () => {
-    const res = await fetch(`http://localhost:5000/api/sweeper/update/${editingId}`, {
+    const res = await fetch(`https://digyaanshshrishti.onrender.com/api/sweeper/update/${editingId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(editRow),
@@ -105,7 +105,7 @@ export default function AdminSweeperData() {
       salary: Number(addForm.salary) || 0,
     };
 
-    const res = await fetch("http://localhost:5000/api/sweeper/add", {
+    const res = await fetch("https://digyaanshshrishti.onrender.com/api//sweeper/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
