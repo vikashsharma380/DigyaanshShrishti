@@ -3,7 +3,7 @@
 ------------------------------------ */
 .form-wrapper {
   width: 100%;
-  max-width: 650px;
+  max-width: 900px;
   margin: 45px auto;
   background: linear-gradient(135deg, #ffffff, #f4f7ff);
   padding: 35px 32px;
@@ -94,5 +94,16 @@
 
   .form-title {
     font-size: 24px;
+  }
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 25px;
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
   }
 }
