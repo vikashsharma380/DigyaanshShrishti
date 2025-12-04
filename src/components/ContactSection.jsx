@@ -389,7 +389,7 @@ const ContactSection = () => {
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           border: none;
           cursor: pointer;
-          background: linear-gradient(140deg, #6e00ff, #ff007b);
+          background: black;
           color: white;
           letter-spacing: 0.5px;
           position: relative;

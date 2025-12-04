@@ -50,7 +50,7 @@ const ServicesSection = () => {
         <div className="services-header">
           <span className="services-tag">Our Services</span>
           <h2 className="services-title">
-            Solutions That <span className="highlight">Transform</span>
+            Solutions That <span> Transform</span>
           </h2>
           <p className="services-subtext">
             We offer industry-grade professional services tailored to your
