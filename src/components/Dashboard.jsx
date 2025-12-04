@@ -7,7 +7,7 @@ export default function Dashboard() {
 
   const quickActions = [
     {
-      title: "Digyaansh – Appointment Letter",
+      title: " Appointment Letter",
       link: "/form/digyaansh-appointment",
       icon: "📋",
       color: "from-blue-500 to-blue-600",
@@ -15,7 +15,7 @@ export default function Dashboard() {
       count: 12,
     },
     {
-      title: "Digyaansh – Leaving Letter",
+      title: " Leaving Letter",
       link: "/form/digyaansh-leaving",
       icon: "🚪",
       color: "from-red-500 to-red-600",
@@ -23,7 +23,7 @@ export default function Dashboard() {
       count: 5,
     },
     {
-      title: "Digyaansh – Experience Certificate",
+      title: " Experience Certificate",
       link: "/form/digyaansh-experience",
       icon: "🏆",
       color: "from-amber-500 to-amber-600",
@@ -37,37 +37,6 @@ export default function Dashboard() {
       color: "from-green-500 to-green-600",
       desc: "Add new user account",
       count: 3,
-    },
-  ];
-
-  const stats = [
-    {
-      label: "Total Users",
-      value: "2,543",
-      change: "+12.5%",
-      icon: "👥",
-      color: "black",
-    },
-    {
-      label: "Active Forms",
-      value: "156",
-      change: "+8.2%",
-      icon: "📄",
-      color: "green",
-    },
-    {
-      label: "Pending Tasks",
-      value: "24",
-      change: "-3.1%",
-      icon: "⏱️",
-      color: "amber",
-    },
-    {
-      label: "Success Rate",
-      value: "98.5%",
-      change: "+2.3%",
-      icon: "📊",
-      color: "purple",
     },
   ];
 
@@ -830,8 +799,10 @@ export default function Dashboard() {
       {/* SIDEBAR */}
       <div className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
         <div className="sidebar-header">
-          <div className="sidebar-logo">D</div>
-          <span className="sidebar-title">Digyaansh</span>
+          <a href="/" className="sidebar-title">
+            DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
+          </a>
+
           <button
             className="sidebar-toggle"
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -883,26 +854,6 @@ export default function Dashboard() {
 
         {/* CONTENT */}
         <div className="content">
-          {/* STATS */}
-          <div className="stats-grid">
-            {stats.map((stat, idx) => (
-              <div key={idx} className="stat-card">
-                <div className="stat-header">
-                  <div className="stat-icon">{stat.icon}</div>
-                  <div
-                    className={`stat-change ${
-                      stat.change.includes("-") ? "negative" : "positive"
-                    }`}
-                  >
-                    {stat.change}
-                  </div>
-                </div>
-                <div className="stat-label">{stat.label}</div>
-                <div className="stat-value">{stat.value}</div>
-              </div>
-            ))}
-          </div>
-
           {/* QUICK ACTIONS */}
           <h2 className="section-title">Quick Actions</h2>
           <div className="actions-grid">

@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import "./App.css";
-
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import ServicesSection from "./components/ServicesSection";
@@ -42,7 +41,10 @@ function App() {
         {/* Forms */}
         <Route path="/form/gis-appointment" element={<GISAppointmentForm />} />
         <Route path="/form/digyaansh-appointment" element={<DigyaanshForm />} />
-        <Route path="/form/raider-appointment" element={<RaiderAppointmentForm />} />
+        <Route
+          path="/form/raider-appointment"
+          element={<RaiderAppointmentForm />}
+        />
 
         {/* ⭐ NEW ROUTE FIX ⭐ */}
         <Route
