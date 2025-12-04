@@ -1,4 +1,4 @@
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../styles/digyaansh.css";
 
 export default function DigyaanshAppointmentForm() {
@@ -14,26 +14,29 @@ export default function DigyaanshAppointmentForm() {
     designation: "Trainer",
     letterBody: "",
   });
-const saveToDatabase = async () => {
-  const body = {
-    ref: data.ref,
-    name: data.name,
-    date: data.date
+  const saveToDatabase = async () => {
+    const body = {
+      ref: data.ref,
+      name: data.name,
+      date: data.date,
+    };
+
+    const res = await fetch(
+      "https://digyaanshshrishti.onrender.com/api/appointments/add",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      }
+    );
+
+    const result = await res.json();
+    if (result.success) {
+      alert("Appointment Saved!");
+    } else {
+      alert("Error: " + result.message);
+    }
   };
-
-  const res = await fetch("https://digyaanshshrishti.onrender.com/api/appointments/add", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-
-  const result = await res.json();
-  if (result.success) {
-    alert("Appointment Saved!");
-  } else {
-    alert("Error: " + result.message);
-  }
-};
 
   // handle input fields
   const handleChange = (e) => {
@@ -45,62 +48,60 @@ const saveToDatabase = async () => {
   const handleEditable = (key, value) => {
     setData((p) => ({ ...p, [key]: value }));
   };
-const formatDate = (dateStr) => {
-  if (!dateStr) return "";
-  const d = new Date(dateStr);
-  let day = String(d.getDate()).padStart(2, "0");
-  let month = String(d.getMonth() + 1).padStart(2, "0");
-  let year = d.getFullYear();
-  return `${day}-${month}-${year}`;
-};
-
-const generatePDF = async () => {
-  // Step 1: Save to database before generating PDF
-  await fetch("https://digyaanshshrishti.onrender.com/api/appointments/add", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      ref: data.ref,
-      name: data.name,
-      date: data.date
-    }),
-  });
-
-  // Step 2: Generate PDF
-  const element = document.getElementById("pdf-wrapper");
-  const opt = {
-    margin: 0,
-    filename: `${data.name || "Appointment"}.pdf`,
-    image: { type: "jpeg", quality: 1 },
-    html2canvas: {
-      scale: 3,
-      letterRendering: true,
-      useCORS: true,
-      scrollY: 0,
-    },
-    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    pagebreak: { mode: ["avoid-all", "css"] },
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    let day = String(d.getDate()).padStart(2, "0");
+    let month = String(d.getMonth() + 1).padStart(2, "0");
+    let year = d.getFullYear();
+    return `${day}-${month}-${year}`;
   };
 
-  window.html2pdf().set(opt).from(element).save();
-};
+  const generatePDF = async () => {
+    // Step 1: Save to database before generating PDF
+    await fetch("https://digyaanshshrishti.onrender.com/api/appointments/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ref: data.ref,
+        name: data.name,
+        date: data.date,
+      }),
+    });
 
+    // Step 2: Generate PDF
+    const element = document.getElementById("pdf-wrapper");
+    const opt = {
+      margin: 0,
+      filename: `${data.name || "Appointment"}.pdf`,
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: {
+        scale: 3,
+        letterRendering: true,
+        useCORS: true,
+        scrollY: 0,
+      },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      pagebreak: { mode: ["avoid-all", "css"] },
+    };
 
+    window.html2pdf().set(opt).from(element).save();
+  };
 
+  useEffect(() => {
+    fetchList();
+  }, []);
 
-
-useEffect(() => {
-  fetchList();
-}, []);
-
-const [list, setList] = useState([]);
-const fetchList = async () => {
-  const res = await fetch("https://digyaanshshrishti.onrender.com/api/appointments/list");
-  const result = await res.json();
-  if (result.success) {
-    setList(result.list);
-  }
-};
+  const [list, setList] = useState([]);
+  const fetchList = async () => {
+    const res = await fetch(
+      "https://digyaanshshrishti.onrender.com/api/appointments/list"
+    );
+    const result = await res.json();
+    if (result.success) {
+      setList(result.list);
+    }
+  };
 
   return (
     <div className="appointment-container">
@@ -143,6 +144,7 @@ const fetchList = async () => {
             placeholder="Date of Joining"
             onChange={handleChange}
           />
+          <input name="project" placeholder="Project" onChange={handleChange} />
           <input
             name="designation"
             placeholder="Designation"
@@ -175,29 +177,28 @@ const fetchList = async () => {
         </button>
       </div>
       <div className="list-box">
-  <h3>Saved Appointments</h3>
+        <h3>Saved Appointments</h3>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Ref No.</th>
-        <th>Name</th>
-        <th>Date</th>
-      </tr>
-    </thead>
+        <table>
+          <thead>
+            <tr>
+              <th>Ref No.</th>
+              <th>Name</th>
+              <th>Date</th>
+            </tr>
+          </thead>
 
-    <tbody>
-      {list.map((item, index) => (
-        <tr key={index}>
-          <td>{item.ref}</td>
-          <td>{item.name}</td>
-          <td>{item.date}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
-
+          <tbody>
+            {list.map((item, index) => (
+              <tr key={index}>
+                <td>{item.ref}</td>
+                <td>{item.name}</td>
+                <td>{item.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* ========= PDF PREVIEW AREA ========= */}
       <div id="pdf-wrapper" className="pdf-wrapper">
@@ -211,7 +212,7 @@ const fetchList = async () => {
               alt="logo"
             />
             <div className="header-text">
-              <div className="company-name">
+              <div className="company-name ">
                 DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
               </div>
               <div className="company-meta">
@@ -219,15 +220,21 @@ const fetchList = async () => {
               </div>
             </div>
           </header>
-<div className="header-divider"></div>   
+          <div className="header-divider"></div>
           {/* REF & DATE */}
           <div className="ref-date">
             <div className="ref-left">
-              <div>REF: {formatDate(data.ref)}</div>
+              <div>
+                {" "}
+                <b>REF: {data.ref}</b>
+              </div>
             </div>
 
             <div className="qr-section">
-              <div>Date: {formatDate(data.date)}</div>
+              <div>
+                {" "}
+                <b> Date: {formatDate(data.date)}</b>
+              </div>
               <img
                 src="/WhatsApp Image 2025-12-01 at 2.39.49 PM.png"
                 className="qr-img"
@@ -240,7 +247,10 @@ const fetchList = async () => {
 
           {/* EMP DETAILS */}
           <div className="employee-details">
-            <p>Employe Name – {data.name || "__________"}</p>
+            <p>
+              {" "}
+              <b>Employe Name – {data.name || "__________"} </b>
+            </p>
             <p>S/O – {data.father || "__________"}</p>
             <p>Address – {data.address || "__________"}</p>
 
@@ -262,12 +272,13 @@ const fetchList = async () => {
             Dear {data.name || "__________"},
             <br />
             <br />
-            हमें आपको BSDM प्रोजेक्ट के {data.designation} पद की नियुक्ति प्रदान
-            करते हुए हर्ष हो रहा है। आपकी ज्वाइनिंग तिथि{" "}
-            {data.deo || "__________"} से मानी जाएगी।
+            हमें आपको<b> {data.project || "__________"}</b> के <b> {data.designation} </b>पद की
+            नियुक्ति प्रदान करते हुए प्रसन्नता हो रही है। DIGYAANSH SHRISHTI
+            MAINTENANCE PVT. LTD.,प्रभावी तिथि {data.deo || "__________"} यह
+            नियुक्ति कुछ नियमो और शर्तों पर निर्भर है जो नीचे दी गयी हैं :-
             <br />
             <br />
-            1) आप {data.designation || "__________"} के रूप में कार्य करेंगे|,
+            1) आप <b> {data.designation || "__________"}</b> के रूप में कार्य करेंगे|,
             आप अपने कर्तव्यों के लिए जिम्मेदार होंगे|,यह कंपनी की नीतियों के
             अधीन होगा।
             <br />
@@ -281,17 +292,19 @@ const fetchList = async () => {
 
           {/* SIGN */}
           <div className="signatures">
-            <div>Employee Signature</div>
-           
-             <div className="Authorized" >
-               <div className="Authorized-sign">DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.</div>
-            Authorized Signatory
-          </div>
+            <div className="emply">Employee Signature</div>
+
+            <div className="Authorized">
+              <div className="Authorized-sign">
+                DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
+              </div>
+              Authorized Signatory
+            </div>
           </div>
 
           {/* FOOTER */}
-         <footer className="pdf-footer" contentEditable>
-            Contact Us: 7004062960 | Email: digyaanshshrishti@gmail.com  
+          <footer className="pdf-footer  footer1" contentEditable>
+            Contact Us: 7004062960 | Email: digyaanshshrishti@gmail.com
             <br />
             Only For Verification: 97095 25410 (Mon-Sat) (10AM–6PM)
             <br />
@@ -313,7 +326,7 @@ const fetchList = async () => {
               </div>
             </div>
           </header>
-<div className="header-divider"></div>   
+          <div className="header-divider"></div>
           <h2 className="rules-heading">नियम एवं शर्तें :-</h2>
 
           <ol className="rules-list">
@@ -356,16 +369,18 @@ const fetchList = async () => {
             </li>
           </ol>
 
-             <div className="signatures">
-            <div>Employee Signature</div>
-           
-            <div className="Authorized" >
-               <div className="Authorized-sign">DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.</div>
-            Authorized Signatory
+          <div className="signatures">
+           <div className="emply">Employee Signature</div>
+
+            <div className="Authorized">
+              <div className="Authorized-sign">
+                DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
+              </div>
+              Authorized Signatory
+            </div>
           </div>
-          </div>
-          <footer className="pdf-footer" contentEditable>
-            Contact Us: 7004062960 | Email: digyaanshshrishti@gmail.com  
+          <footer className="pdf-footer " contentEditable>
+            Contact Us: 7004062960 | Email: digyaanshshrishti@gmail.com
             <br />
             Only For Verification: 97095 25410 (Mon-Sat) (10AM–6PM)
             <br />
@@ -375,7 +390,5 @@ const fetchList = async () => {
         </div>
       </div>
     </div>
-
-    
   );
 }

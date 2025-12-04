@@ -63,13 +63,10 @@
   padding: 15mm;
   box-sizing: border-box;
   background: #fff;
-  page-break-after: always;
+
   overflow: hidden;
 }
 
-.pdf-page:last-child {
-  page-break-after: auto;
-}
 
 /* Header */
 .pdf-header {
@@ -92,17 +89,20 @@
 .header-text {
   flex: 1;
   text-align: center;
+ 
+ 
 }
 .company-name {
   color: #003d86;
   font-weight: 900;
-  font-size: 22px;
+
+  font-size: 24px;
 }
 .company-meta {
   font-size: 14px;
   color: #333;
   margin-top: 4px;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 /* QR on right */
@@ -122,14 +122,17 @@
   justify-content: space-between;
   margin: 14px 0;
   font-size: 13px;
-  color: #444;
+  color: black;
+  
 }
-
+.ref-left{
+  font-weight: 600;
+}
 /* Heading center */
 .center-heading {
   text-align: center;
   text-decoration: underline;
-  margin: 6px 0 12px;
+
 }
 
 /* Employee details */
@@ -142,14 +145,16 @@
 .letter-body {
   margin-top: 8px;
   line-height: 1.8;
-  font-size: 17px;
+  font-size: 15px;
   color: #222;
-  font-weight: 600;
+  font-weight: 400;
 }
 .letter-body ol {
   margin-left: 18px;
 }
-
+.emply{
+  margin-top: 35px;
+}
 /* Signatures row */
 .signatures {
   display: flex;
@@ -159,11 +164,15 @@
 }
 .Authorized {
   text-align: center;
+  line-height: 90px;
+}
+.footer1{
+  margin-top: 40px;
 }
 
 /* Footer */
 .pdf-footer {
-  margin-top: 60px;
+ 
   background: #003d86;
   color: #fff;
   padding: 10px;
@@ -189,7 +198,7 @@
   margin-top: 12px;
   line-height: 1.8;
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 400;
 }
 .final-sign {
   margin-top: 160px;
@@ -208,9 +217,6 @@
   .pdf-page {
     box-shadow: none;
     margin: 0 auto;
-  }
-  .page-break {
-    page-break-after: always;
   }
 }
 
@@ -282,14 +288,16 @@
     grid-template-columns: 1fr;
   }
 }
-.pdf-page {
+/* .pdf-page {
   page-break-inside: avoid !important;
-}
+} */
 
 * {
   -webkit-print-color-adjust: exact !important;
   print-color-adjust: exact !important;
 }
+/* ---------------- FIXED PDF PAGE CSS ---------------- */
+
 .pdf-wrapper {
   width: 210mm;
   margin: 0 auto;
@@ -301,23 +309,43 @@
   padding: 12mm 15mm;
   background: #fff;
   box-sizing: border-box;
-  page-break-after: always;
   overflow: hidden;
+
+  /* FIX: avoid blank page */
+
+  page-break-inside: avoid;
+  -webkit-page-break-inside: avoid;
+  break-inside: avoid;
 }
 
-.pdf-page:last-child {
-  page-break-after: auto;
-}
+/* .pdf-page:last-child {
+  page-break-after: auto !important;
+} */
 
-.pdf-page,
 .letter-body,
 .rules-list {
   page-break-inside: avoid;
 }
+
 
 .edit-box {
   width: 100%;
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 6px;
+}
+.header-divider{
+  border-bottom: 5px solid #000000;
+
+}
+
+/* FIX HTML2PDF BLANK PAGE BUG */
+.pdf-wrapper {
+  page-break-inside: avoid !important;
+}
+
+.pdf-page {
+  page-break-inside: avoid !important;
+  break-inside: avoid-page !important;
+  -webkit-region-break-inside: avoid !important;
 }
