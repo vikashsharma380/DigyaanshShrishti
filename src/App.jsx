@@ -17,6 +17,7 @@ import RaiderAppointmentForm from "./components/RaiderAppointmentForm";
 import UserDashboard from "./components/User/UserDashboard";
 import ExcelUpload from "./components/ExcelUpload";
 import AdminSweeperData from "./components/AdminSweeperData";
+import UserList from "./components/UserList";
 
 // ⭐ Experience Certificate Component
 import DeepakExperience from "./components/ExperienceCertificate";
@@ -48,6 +49,9 @@ function App() {
         <Route path="/form/digyaansh-appointment" element={<DigyaanshForm />} />
         <Route path="/form/raider-appointment" element={<RaiderAppointmentForm />} />
 
+
+
+<Route path="/users" element={<UserList />} />
 
 
 <Route path="/admin/sweeper-data" element={<AdminSweeperData />} />

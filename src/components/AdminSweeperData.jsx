@@ -13,7 +13,7 @@ export default function AdminSweeperData() {
 
   // Load all data
   useEffect(() => {
-    fetch(" http://localhost:5000/api/sweeper/all-data")
+    fetch("http://localhost:5000/api/sweeper/all-data")
       .then((res) => res.json())
       .then((out) => {
         setData(out);

@@ -1,6 +1,6 @@
 import express from "express";
 import Sweeper from "../models/sweeper.js";
-import User from "../models/user.js";
+import User from "../models/User.js";
 
 const router = express.Router();
 

@@ -54,44 +54,13 @@ export default function Dashboard() {
       desc: "Analyze records",
       count: 0,
     },
-    {       title: "View Users",
+    {
+      title: "View Users",
       link: "/users",
       icon: "👥",
       color: "from-teal-500 to-teal-600",
       desc: "Manage user accounts",
       count: 2,
-
-    }
-  ];
-
-  const stats = [
-    {
-      label: "Total Users",
-      value: "2,543",
-      change: "+12.5%",
-      icon: "👥",
-      color: "black",
-    },
-    {
-      label: "Active Forms",
-      value: "156",
-      change: "+8.2%",
-      icon: "📄",
-      color: "green",
-    },
-    {
-      label: "Pending Tasks",
-      value: "24",
-      change: "-3.1%",
-      icon: "⏱️",
-      color: "amber",
-    },
-    {
-      label: "Success Rate",
-      value: "98.5%",
-      change: "+2.3%",
-      icon: "📊",
-      color: "purple",
     },
   ];
 
@@ -464,67 +433,7 @@ export default function Dashboard() {
           margin: 0 auto;
         }
 
-        /* STATS */
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 24px;
-          margin-bottom: 40px;
-        }
-
-        .stat-card {
-          background: linear-gradient(135deg, rgba(148, 163, 184, 0.05), rgba(148, 163, 184, 0.02));
-          border: 1px solid rgba(148, 163, 184, 0.1);
-          border-radius: 16px;
-          padding: 24px;
-          backdrop-filter: blur(10px);
-          transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-          border-color: rgba(99, 102, 241, 0.3);
-          box-shadow: 0 0 30px rgba(99, 102, 241, 0.1);
-          transform: translateY(-4px);
-        }
-
-        .stat-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 12px;
-        }
-
-        .stat-icon {
-          font-size: 32px;
-        }
-
-        .stat-change {
-          font-size: 12px;
-          font-weight: 600;
-          padding: 4px 8px;
-          border-radius: 6px;
-        }
-
-        .stat-change.positive {
-          background: rgba(34, 197, 94, 0.1);
-          color: #070908ff;
-        }
-
-        .stat-change.negative {
-          background: rgba(239, 68, 68, 0.1);
-          color: #951515ff;
-        }
-
-        .stat-label {
-          color: rgba(0, 0, 0, 0.6);
-          font-size: 14px;
-          margin-bottom: 8px;
-        }
-
-        .stat-value {
-          font-size: 28px;
-          font-weight: 800;
-        }
+      
 
         /* QUICK ACTIONS */
         .section-title {
@@ -908,24 +817,6 @@ export default function Dashboard() {
         {/* CONTENT */}
         <div className="content">
           {/* STATS */}
-          <div className="stats-grid">
-            {stats.map((stat, idx) => (
-              <div key={idx} className="stat-card">
-                <div className="stat-header">
-                  <div className="stat-icon">{stat.icon}</div>
-                  <div
-                    className={`stat-change ${
-                      stat.change.includes("-") ? "negative" : "positive"
-                    }`}
-                  >
-                    {stat.change}
-                  </div>
-                </div>
-                <div className="stat-label">{stat.label}</div>
-                <div className="stat-value">{stat.value}</div>
-              </div>
-            ))}
-          </div>
 
           {/* QUICK ACTIONS */}
           <h2 className="section-title">Quick Actions</h2>
