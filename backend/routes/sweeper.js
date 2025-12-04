@@ -98,6 +98,19 @@ router.post("/add", async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 });
+// DELETE SWEEPER
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const deleted = await Sweeper.findByIdAndDelete(req.params.id);
+
+    if (!deleted)
+      return res.json({ success: false, message: "Not found" });
+
+    res.json({ success: true, message: "Deleted!" });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+});
 
 
 

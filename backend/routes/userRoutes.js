@@ -45,4 +45,32 @@ router.get("/list", async (req, res) => {
         res.json({ success: false, message: err.message });
     }
 });
+
+// DELETE USER
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.json({ success: false, message: "User not found" });
+
+    res.json({ success: true, message: "User deleted!" });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+});
+
+// EDIT USER
+router.put("/update/:id", async (req, res) => {
+  try {
+    const updated = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
+    if (!updated) return res.json({ success: false, message: "User not found" });
+
+    res.json({ success: true, updated });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+});
+
 export default router;
