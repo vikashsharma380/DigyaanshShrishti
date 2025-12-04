@@ -11,8 +11,7 @@ const HeroSection = () => {
           </div>
 
           <h1 className="hero-title">
-            Delivering <span className="highlight">Quality Services</span> You
-            Can Trust
+            Delivering <span>Quality Services</span> You Can Trust
           </h1>
 
           <p className="hero-subtext">

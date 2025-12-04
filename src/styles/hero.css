@@ -25,11 +25,11 @@
 
 /* Badge */
 .badge {
-  background: rgba(120, 0, 255, 0.1);
+  background: rgba(0, 82, 212, 0.1);
   padding: 8px 16px;
   display: inline-flex;
   border-radius: 20px;
-  color: #100d13e4;
+  color: #003b88;
   font-size: 14px;
   font-weight: 500;
 }
@@ -42,7 +42,7 @@
 }
 
 .highlight {
-  background: linear-gradient(90deg, #f0f0f1, #000000);
+  background: linear-gradient(90deg, #0052d4, #6fb1fc);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -64,7 +64,7 @@
   padding: 14px 28px;
   border-radius: 10px;
   font-size: 18px;
-  background: linear-gradient(90deg, #6e00ff, #ff007b);
+  background: linear-gradient(90deg, #0052d4, #4364f7, #6fb1fc);
   color: white;
   border: none;
   cursor: pointer;
@@ -99,7 +99,7 @@
 
 .hero-stats p {
   font-size: 14px;
-  color: #eeeaea;
+  color: #b5b5b5;
 }
 
 /* Right side graphics */
@@ -118,7 +118,7 @@
 .box1 {
   width: 120px;
   height: 120px;
-  background: linear-gradient(45deg, #6e00ff, #ff007b);
+  background: linear-gradient(45deg, #0052d4, #6fb1fc);
   top: 50px;
   right: 50px;
 }
@@ -126,7 +126,7 @@
 .box2 {
   width: 90px;
   height: 90px;
-  background: rgba(255, 0, 150, 0.4);
+  background: rgba(0, 82, 212, 0.35);
   left: 30px;
   top: 150px;
 }
@@ -134,7 +134,7 @@
 .box3 {
   width: 160px;
   height: 160px;
-  border: 1px solid #ccc;
+  border: 1px solid #0052d4;
   background: white;
   bottom: 40px;
   right: 80px;
@@ -143,8 +143,8 @@
 .box4 {
   width: 70px;
   height: 70px;
-  background: #6e00ff;
-  opacity: 0.6;
+  background: #4364f7;
+  opacity: 0.7;
   bottom: 180px;
   left: 40px;
 }
@@ -170,7 +170,7 @@
   width: 50px;
   height: 50px;
   border-radius: 12px;
-  background: linear-gradient(90deg, #6e00ff, #ff007b);
+  background: linear-gradient(90deg, #0052d4, #6fb1fc);
   margin-bottom: 10px;
 }
 
