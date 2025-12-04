@@ -86,8 +86,7 @@ const generatePDF = async () => {
 };
 
 
-// Refresh list after saving
-fetchList();
+
 
 
 useEffect(() => {

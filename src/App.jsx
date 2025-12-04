@@ -10,9 +10,9 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import CreateUserForm from "./components/Form/CreateUserForm";
-import GISAppointmentForm from "./components/GISAppointmentForm";
+
 import DigyaanshForm from "./components/DigyaanshForm";
-import RaiderAppointmentForm from "./components/RaiderAppointmentForm";
+
 import UserDashboard from "./components/User/UserDashboard";
 import ExcelUpload from "./components/ExcelUpload";
 import AdminSweeperData from "./components/AdminSweeperData";
@@ -44,21 +44,14 @@ function App() {
         <Route path="/userdashboard" element={<UserDashboard />} />
 
         {/* Forms */}
-        <Route path="/form/gis-appointment" element={<GISAppointmentForm />} />
+
         <Route path="/form/digyaansh-appointment" element={<DigyaanshForm />} />
-        <Route
-          path="/form/raider-appointment"
-          element={<RaiderAppointmentForm />}
-        />
 
+        <Route path="/users" element={<UserList />} />
 
+        <Route path="/admin/sweeper-data" element={<AdminSweeperData />} />
 
-<Route path="/users" element={<UserList />} />
-
-
-<Route path="/admin/sweeper-data" element={<AdminSweeperData />} />
-
-<Route path="/upload-excel" element={<ExcelUpload />} />
+        <Route path="/upload-excel" element={<ExcelUpload />} />
 
         {/* ⭐ NEW ROUTE FIX ⭐ */}
         <Route
