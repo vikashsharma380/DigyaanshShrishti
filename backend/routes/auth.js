@@ -1,5 +1,5 @@
 import express from "express";
-import User from "../models/user.js";
+import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
 const router = express.Router();
@@ -31,6 +31,7 @@ router.post("/login", async (req, res) => {
         email: user.email,
         name: user.name,
         designation: user.designation,
+        block: user.block,
       },
     });
   } catch (err) {
