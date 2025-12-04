@@ -16,6 +16,27 @@ export default function UserDashboard() {
 
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
+// ---------------- DELETE SWEEPER ----------------
+const deleteSweeper = async (id) => {
+  if (!window.confirm("Delete this sweeper?")) return;
+
+  const res = await fetch(
+    `https://digyaanshshrishti.onrender.com/api/sweeper/delete/${id}`,
+    { method: "DELETE" }
+  );
+
+  const out = await res.json();
+
+  if (out.success) {
+    alert("Deleted!");
+
+    const updated = data.filter((d) => d._id !== id);
+    setData(updated);
+    setFiltered(updated);
+  } else {
+    alert("Failed!");
+  }
+};
 
   const [search, setSearch] = useState("");
   const [blockFilter, setBlockFilter] = useState("");
@@ -220,6 +241,15 @@ export default function UserDashboard() {
                     <td>{row.ifsc}</td>
                     <td>{row.salary}</td>
                     <td><button onClick={() => startEdit(row)}>✏️ Edit</button></td>
+                    <td>
+  <button
+    onClick={() => deleteSweeper(row._id)}
+    style={{ background: "red", color: "white", padding: "5px 10px", borderRadius: "6px" }}
+  >
+    🗑 Delete
+  </button>
+</td>
+
                   </>
                 )}
               </tr>
