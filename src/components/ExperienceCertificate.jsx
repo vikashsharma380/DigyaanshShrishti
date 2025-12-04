@@ -128,6 +128,7 @@ export default function DeepakExperience() {
               </div>
             </div>
           </header>
+          <div className="header-divider"></div>
 
           {/* REF/DATE */}
           <div className="ref-date">
@@ -160,11 +161,11 @@ export default function DeepakExperience() {
           <h2 className="center-heading">EMPLOYEE EXPERIENCE CERTIFICATE</h2>
 
           {/* EMPLOYEE DETAILS */}
-          <div className="employee-details">
+          {/* <div className="employee-details">
             <p contentEditable>Employee Name – {data.name}</p>
             <p contentEditable>S/O – {data.father}</p>
             <p contentEditable>Address – {data.address}</p>
-          </div>
+          </div> */}
 
           {/* CERTIFICATE BODY */}
           <div className="letter-body" contentEditable>
@@ -176,7 +177,10 @@ export default function DeepakExperience() {
             <br />
             During his working period we found him sincere, honest, hardworking,
             and dedicated with a professional attitude. He maintained accuracy
-            and integrity in all financial matters with our entire satisfaction.
+            and integrity in all financial matters with our entire
+            satisfaction.He is amiable in nature and character is well. We have
+            no objection to allow him in any better position and have no
+            liabilities in our company.
             <br />
             <br />
             <b>His Basic Pay is ₹ {data.salary}/- only.</b>
@@ -187,10 +191,13 @@ export default function DeepakExperience() {
           </div>
 
           <div className="signatures">
-            <div>
+            <div contentEditable className="Authorized">
               For, Digyaansh Shrishti Maintenance Pvt. Ltd.
               <br />
-              Managing Director
+              <div contentEditable className="sign">
+                {" "}
+                Managing Director
+              </div>
             </div>
             {/* <div>For, Digyaansh Shrishti Maintenance Pvt. Ltd.<br />Managing Director</div> */}
           </div>
