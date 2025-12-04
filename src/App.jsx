@@ -14,6 +14,9 @@ import CreateUserForm from "./components/Form/CreateUserForm";
 import GISAppointmentForm from "./components/GISAppointmentForm";
 import DigyaanshForm from "./components/DigyaanshForm";
 import RaiderAppointmentForm from "./components/RaiderAppointmentForm";
+import UserDashboard from "./components/User/UserDashboard";
+import ExcelUpload from "./components/ExcelUpload";
+import AdminSweeperData from "./components/AdminSweeperData";
 
 // ⭐ Experience Certificate Component
 import DeepakExperience from "./components/ExperienceCertificate";
@@ -38,11 +41,18 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/userdashboard" element={<UserDashboard />} />
 
         {/* Forms */}
         <Route path="/form/gis-appointment" element={<GISAppointmentForm />} />
         <Route path="/form/digyaansh-appointment" element={<DigyaanshForm />} />
         <Route path="/form/raider-appointment" element={<RaiderAppointmentForm />} />
+
+
+
+<Route path="/admin/sweeper-data" element={<AdminSweeperData />} />
+
+<Route path="/upload-excel" element={<ExcelUpload />} />
 
         {/* ⭐ NEW ROUTE FIX ⭐ */}
         <Route
