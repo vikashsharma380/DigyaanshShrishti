@@ -1,114 +1,118 @@
 import { useEffect, useState } from "react";
+import * as XLSX from "xlsx";
 
-export default function UserList() {
+export default function AdminUsersExcelView() {
   const [users, setUsers] = useState([]);
-  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/admin/get-users")
+    fetch("http://localhost:5000/api/users/list")
       .then((res) => res.json())
-      .then((data) => setUsers(data))
-      .catch((err) => console.log("Error fetching users:", err));
+      .then((out) => {
+        if (out.success) setUsers(out.users);
+      });
   }, []);
 
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(search.toLowerCase())
-  );
+  // ----------------------------
+  // EXPORT TO EXCEL FUNCTION
+  // ----------------------------
+  const downloadExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(users);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+
+    XLSX.writeFile(workbook, "Users_List.xlsx");
+  };
 
   return (
-    <div className="min-h-screen p-10 text-white">
+    <div className="p-10 min-h-screen bg-gray-100">
       <style>{`
-        .users-table {
+        table {
           width: 100%;
           border-collapse: collapse;
-          background: rgba(255,255,255,0.04);
-          border-radius: 12px;
-          overflow: hidden;
-        }
-        th {
-          background: rgba(255,255,255,0.08);
-          padding: 12px;
-          text-align: left;
+          background: white;
           font-size: 14px;
-          color: #cbd5e1;
-        }
-        td {
-          padding: 12px;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        tr:hover {
-          background: rgba(255,255,255,0.06);
         }
 
-        .status {
-          padding: 5px 10px;
-          border-radius: 6px;
-          font-size: 12px;
-          font-weight: 600;
-          color:white;
-        }
-        .active { background: #22c55e55; }
-        .inactive { background: #ef444455; }
-
-        .search-box {
-          width: 300px;
+        th, td {
+          border: 1px solid #d1d5db;
           padding: 10px;
-          border-radius: 10px;
-          background: rgba(255,255,255,0.08);
-          border: 1px solid rgba(255,255,255,0.15);
+          text-align: left;
+        }
+
+        th {
+          background: #f3f4f6;
+          font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+          background: #f9fafb;
+        }
+
+        .download-btn {
+          background: #198754;
+          padding: 10px 20px;
+          border-radius: 6px;
           color: white;
+          cursor: pointer;
+          border: none;
+          font-size: 15px;
+          margin-bottom: 20px;
         }
       `}</style>
 
-      <h2 className="text-3xl font-bold mb-6">All Users</h2>
+      <h1 className="text-3xl font-bold mb-6">Users (Excel Format View)</h1>
 
-      {/* SEARCH INPUT */}
-      <input
-        type="text"
-        className="search-box mb-4"
-        placeholder="Search user..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <button className="download-btn" onClick={downloadExcel}>
+        Download Excel ⬇️
+      </button>
 
-      {/* USERS TABLE */}
-      <table className="users-table">
+      <table>
         <thead>
           <tr>
-            <th>Sl.No</th>
+            <th>SL</th>
             <th>Name</th>
+            <th>Father</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>Mobile</th>
             <th>Email</th>
-            <th>Role</th>
+            <th>Aadhaar</th>
+            <th>District</th>
+            <th>Block</th>
+            <th>Designation</th>
+            <th>Address</th>
+            <th>Account No.</th>
+            <th>IFSC</th>
+            <th>Bank Name</th>
             <th>Status</th>
-            <th>Joined</th>
+            <th>CreatedAt</th>
           </tr>
         </thead>
 
         <tbody>
-          {filteredUsers.length === 0 ? (
-            <tr>
-              <td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>
-                No users found.
-              </td>
+          {users.map((u, i) => (
+            <tr key={u._id}>
+              <td>{i + 1}</td>
+              <td>{u.name}</td>
+              <td>{u.fatherName}</td>
+              <td>{u.gender}</td>
+              <td>{u.dob}</td>
+              <td>{u.mobile}</td>
+              <td>{u.email}</td>
+              <td>{u.aadhaar}</td>
+              <td>{u.district}</td>
+              <td>{u.block}</td>
+              <td>{u.designation}</td>
+              <td>{u.address}</td>
+
+              <td>{u.bankDetails?.accountNumber}</td>
+              <td>{u.bankDetails?.ifscCode}</td>
+              <td>{u.bankDetails?.bankName}</td>
+
+              <td>{u.access}</td>
+              <td>{u.createdAt?.slice(0, 10)}</td>
             </tr>
-          ) : (
-            filteredUsers.map((u, i) => (
-              <tr key={i}>
-                <td>{i + 1}</td>
-                <td>{u.name}</td>
-                <td>{u.email}</td>
-                <td>{u.role}</td>
-
-                <td>
-                  <span className={`status ${u.status.toLowerCase()}`}>
-                    {u.status}
-                  </span>
-                </td>
-
-                <td>{u.createdAt?.slice(0, 10) || "—"}</td>
-              </tr>
-            ))
-          )}
+          ))}
         </tbody>
       </table>
     </div>

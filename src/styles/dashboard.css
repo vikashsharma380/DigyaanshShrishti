@@ -356,3 +356,37 @@
 .data-table tr:nth-child(even) {
   background: #f5f5f5;
 }
+
+.excel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: white;
+  color: black;
+}
+
+/* Excel-style border */
+.excel-table th,
+.excel-table td {
+  border: 1px solid #b4b4b4;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Excel header style */
+.excel-table th {
+  background: #d9ead3; /* light green like Excel */
+  font-weight: bold;
+  color: #000;
+  border: 1px solid #999;
+}
+
+/* Hover row effect like Excel */
+.excel-table tr:hover {
+  background: #f3f3f3;
+}
+
+/* Zebra rows like Excel */
+.excel-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
