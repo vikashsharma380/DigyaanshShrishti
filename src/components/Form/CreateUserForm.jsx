@@ -40,79 +40,188 @@ export default function CreateUserForm() {
   };
 
   // SUBMIT FORM
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const res = await fetch("https://digyaanshshrishti.onrender.com/api/users/create", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-
-  const result = await res.json();
-
-  if (result.success) {
-    alert(
-      `User Created!\nUser ID: ${result.userId}\nPassword: ${result.password}`
+    const res = await fetch(
+      "https://digyaanshshrishti.onrender.com/api/users/create",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
     );
-  } else {
-    alert("Error: " + result.message);
-  }
-};
 
+    const result = await res.json();
+
+    if (result.success) {
+      alert(
+        `User Created!\nUser ID: ${result.userId}\nPassword: ${result.password}`
+      );
+    } else {
+      alert("Error: " + result.message);
+    }
+  };
 
   return (
     <div className="form-wrapper">
       <h2 className="form-title">Create New User</h2>
 
       <form className="form-container" onSubmit={handleSubmit}>
-        
-        <label>Name:</label>
-        <input name="name" value={data.name} onChange={handleChange} required />
+        <div className="form-grid">
+          <div>
+            <label>Name:</label>
+            <input
+              name="name"
+              value={data.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <label>Father Name:</label>
-        <input name="fatherName" value={data.fatherName} onChange={handleChange} required />
+          <div>
+            <label>Father Name:</label>
+            <input
+              name="fatherName"
+              value={data.fatherName}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <label>District:</label>
-        <input name="district" value={data.district} onChange={handleChange} required />
+          <div>
+            <label>District:</label>
+            <input
+              name="district"
+              value={data.district}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <label>Block:</label>
-        <input name="block" value={data.block} onChange={handleChange} required />
+          <div>
+            <label>Block:</label>
+            <input
+              name="block"
+              value={data.block}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <label>Designation:</label>
-        <input name="designation" value={data.designation} onChange={handleChange} required />
+          <div>
+            <label>Designation:</label>
+            <input
+              name="designation"
+              value={data.designation}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <label>Aadhaar:</label>
-        <input name="aadhaar" maxLength="12" value={data.aadhaar} onChange={handleChange} required />
-        <label>Mobile:</label>
-        <input name="mobile" maxLength="10" value={data.mobile} onChange={handleChange} required />
-        <label>Email:</label>
-        <input name="email" value={data.email} onChange={handleChange} required />
-        <label>Address:</label>
-        <input name="address" value={data.address} onChange={handleChange} required />
-        <label>Gender:</label>
-        <select name="gender" value={data.gender} onChange={handleChange} required>
-          <option value="">Select Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-        <label>Date of Birth:</label>
-        <input type="date" name="dob" value={data.dob} onChange={handleChange} required />
+          <div>
+            <label>Aadhaar:</label>
+            <input
+              name="aadhaar"
+              maxLength="12"
+              value={data.aadhaar}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div>
+            <label>Mobile:</label>
+            <input
+              name="mobile"
+              maxLength="10"
+              value={data.mobile}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div>
+            <label>Email:</label>
+            <input
+              name="email"
+              value={data.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div>
+            <label>Address:</label>
+            <input
+              name="address"
+              value={data.address}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div>
+            <label>Gender:</label>
+            <select
+              name="gender"
+              value={data.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Date of Birth:</label>
+            <input
+              type="date"
+              name="dob"
+              value={data.dob}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
 
         {/* BANK DETAILS */}
         <h3 style={{ marginTop: "20px" }}>Bank Details</h3>
 
-        <label>Account Number:</label>
-        <input name="accountNumber" value={data.bankDetails.accountNumber} onChange={handleBankChange} />
+        <div className="form-grid">
+          <div>
+            <label>Account Number:</label>
+            <input
+              name="accountNumber"
+              value={data.bankDetails.accountNumber}
+              onChange={handleBankChange}
+            />
+          </div>
 
-        <label>IFSC Code:</label>
-        <input name="ifscCode" value={data.bankDetails.ifscCode} onChange={handleBankChange} />
+          <div>
+            <label>IFSC Code:</label>
+            <input
+              name="ifscCode"
+              value={data.bankDetails.ifscCode}
+              onChange={handleBankChange}
+            />
+          </div>
 
-        <label>Bank Name:</label>
-        <input name="bankName" value={data.bankDetails.bankName} onChange={handleBankChange} />
+          <div>
+            <label>Bank Name:</label>
+            <input
+              name="bankName"
+              value={data.bankDetails.bankName}
+              onChange={handleBankChange}
+            />
+          </div>
+        </div>
 
-        <button className="submit-btn" type="submit">Create User</button>
-
+        <button className="submit-btn" type="submit">
+          Create User
+        </button>
       </form>
     </div>
   );
