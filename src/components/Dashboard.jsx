@@ -38,6 +38,30 @@ export default function Dashboard() {
       desc: "Add new user account",
       count: 3,
     },
+    {
+      title: "Upload Sweeper Data",
+      link: "/upload-excel",
+      icon: "📤",
+      color: "from-purple-500 to-purple-600",
+      desc: "Bulk upload data",
+      count: 0,
+    },
+    {
+      title: "View Sweeper Data",
+      link: "/admin/sweeper-data",
+      icon: "📊",
+      color: "from-pink-500 to-pink-600",
+      desc: "Analyze records",
+      count: 0,
+    },
+    {       title: "View Users",
+      link: "/users",
+      icon: "👥",
+      color: "from-teal-500 to-teal-600",
+      desc: "Manage user accounts",
+      count: 2,
+
+    }
   ];
 
   const stats = [
