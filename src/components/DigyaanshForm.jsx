@@ -21,7 +21,7 @@ const saveToDatabase = async () => {
     date: data.date
   };
 
-  const res = await fetch("http://localhost:5000/api/appointments/add", {
+  const res = await fetch("https://digyaanshshrishti.onrender.com/api/appointments/add", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -56,7 +56,7 @@ const formatDate = (dateStr) => {
 
 const generatePDF = async () => {
   // Step 1: Save to database before generating PDF
-  await fetch("http://localhost:5000/api/appointments/add", {
+  await fetch("https://digyaanshshrishti.onrender.com/api/appointments/add", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -96,7 +96,7 @@ useEffect(() => {
 
 const [list, setList] = useState([]);
 const fetchList = async () => {
-  const res = await fetch("http://localhost:5000/api/appointments/list");
+  const res = await fetch("https://digyaanshshrishti.onrender.com/api/appointments/list");
   const result = await res.json();
   if (result.success) {
     setList(result.list);
