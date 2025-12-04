@@ -4,7 +4,7 @@
   top: 0;
   width: 100%;
   backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.7);
+  background: rgb(255, 255, 255);
   z-index: 1000;
   border-bottom: 1px solid #e5e5e5;
 }
@@ -19,13 +19,26 @@
   justify-content: space-between;
 }
 
-/* Logo */
+/* Logo (image + text) */
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 26px;
   font-weight: 700;
-  background: linear-gradient(90deg, #6e00ff, #ff007b);
+  background: #444;
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Logo image */
+.logo-img {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
 }
 
 /* Desktop nav links */
@@ -68,6 +81,7 @@
   font-size: 26px;
   background: none;
   border: none;
+  cursor: pointer;
 }
 
 /* Mobile dropdown */
@@ -83,15 +97,18 @@
   .nav-links {
     display: none;
   }
+
   .menu-btn {
     display: block;
   }
+
   .mobile-menu {
     display: flex;
     background: white;
     border-bottom: 1px solid #ddd;
     padding-bottom: 20px;
   }
+
   .mobile-menu a {
     font-size: 18px;
     padding: 5px 0;

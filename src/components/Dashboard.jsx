@@ -7,7 +7,7 @@ export default function Dashboard() {
 
   const quickActions = [
     {
-      title: "Digyaansh – Appointment Letter",
+      title: " Appointment Letter",
       link: "/form/digyaansh-appointment",
       icon: "📋",
       color: "from-blue-500 to-blue-600",
@@ -15,7 +15,7 @@ export default function Dashboard() {
       count: 12,
     },
     {
-      title: "Digyaansh – Leaving Letter",
+      title: " Leaving Letter",
       link: "/form/digyaansh-leaving",
       icon: "🚪",
       color: "from-red-500 to-red-600",
@@ -23,7 +23,7 @@ export default function Dashboard() {
       count: 5,
     },
     {
-      title: "Digyaansh – Experience Certificate",
+      title: " Experience Certificate",
       link: "/form/digyaansh-experience",
       icon: "🏆",
       color: "from-amber-500 to-amber-600",
@@ -756,15 +756,36 @@ export default function Dashboard() {
 
           .content {
             padding: 12px;
-          }
+          } 
+            .logout-btn {
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #ff4d4d, #ff8080);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  opacity: 0.9;
+}
+
+.logout-btn:active {
+  transform: scale(0.95);
+}
         }
       `}</style>
 
       {/* SIDEBAR */}
       <div className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
         <div className="sidebar-header">
-          <div className="sidebar-logo">D</div>
-          <span className="sidebar-title">Digyaansh</span>
+          <a href="/" className="sidebar-title">
+            DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
+          </a>
+
           <button
             className="sidebar-toggle"
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -810,7 +831,16 @@ export default function Dashboard() {
 
             <button className="icon-btn">🔔</button>
             <button className="icon-btn">⚙️</button>
-            <div className="profile-avatar">AD</div>
+            <button
+              className="logout-btn"
+              onClick={() => {
+                localStorage.removeItem("user");
+                localStorage.removeItem("token");
+                window.location.href = "/login";
+              }}
+            >
+              Logout
+            </button>
           </div>
         </div>
 
