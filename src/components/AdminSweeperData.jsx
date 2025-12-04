@@ -8,29 +8,28 @@ export default function AdminSweeperData() {
   const [filtered, setFiltered] = useState([]);
   const [blocks, setBlocks] = useState([]);
   const [selectedBlock, setSelectedBlock] = useState("ALL");
-
   const [editingId, setEditingId] = useState(null);
   const [editRow, setEditRow] = useState({});
-const deleteSweeper = async (id) => {
-  if (!window.confirm("Delete this sweeper?")) return;
+  const deleteSweeper = async (id) => {
+    if (!window.confirm("Delete this sweeper?")) return;
 
-  const res = await fetch(
-    `https://digyaanshshrishti.onrender.com/api/sweeper/delete/${id}`,
-    { method: "DELETE" }
-  );
+    const res = await fetch(
+      `https://digyaanshshrishti.onrender.com/api/sweeper/delete/${id}`,
+      { method: "DELETE" }
+    );
 
-  const out = await res.json();
+    const out = await res.json();
 
-  if (out.success) {
-    alert("Deleted!");
+    if (out.success) {
+      alert("Deleted!");
 
-    const remaining = data.filter((d) => d._id !== id);
-    setData(remaining);
-    setFiltered(remaining);
-  } else {
-    alert("Failed!");
-  }
-};
+      const remaining = data.filter((d) => d._id !== id);
+      setData(remaining);
+      setFiltered(remaining);
+    } else {
+      alert("Failed!");
+    }
+  };
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [addForm, setAddForm] = useState({
@@ -81,11 +80,14 @@ const deleteSweeper = async (id) => {
 
   // Save updated data
   const saveEdit = async () => {
-    const res = await fetch(`https://digyaanshshrishti.onrender.com/api/sweeper/update/${editingId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(editRow),
-    });
+    const res = await fetch(
+      `https://digyaanshshrishti.onrender.com/api/sweeper/update/${editingId}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editRow),
+      }
+    );
 
     const out = await res.json();
 
@@ -125,11 +127,14 @@ const deleteSweeper = async (id) => {
       salary: Number(addForm.salary) || 0,
     };
 
-    const res = await fetch("https://digyaanshshrishti.onrender.com/api//sweeper/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    const res = await fetch(
+      "https://digyaanshshrishti.onrender.com/api//sweeper/add",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }
+    );
 
     const out = await res.json();
 
@@ -156,7 +161,6 @@ const deleteSweeper = async (id) => {
 
   return (
     <div className="dashboard-wrapper">
-
       {/* HEADER */}
       <div className="dash-header">
         <h2 className="dash-logo">Admin Panel</h2>
@@ -242,6 +246,7 @@ const deleteSweeper = async (id) => {
                 <th>IFSC</th>
                 <th>Salary</th>
                 <th>Edit</th>
+                <th>Delete</th>
               </tr>
             </thead>
 
@@ -251,13 +256,62 @@ const deleteSweeper = async (id) => {
                   <tr key={item._id}>
                     <td>{index + 1}</td>
 
-                    <td><input value={editRow.block} onChange={(e) => handleEditChange("block", e.target.value)} /></td>
-                    <td><input value={editRow.schoolName} onChange={(e) => handleEditChange("schoolName", e.target.value)} /></td>
-                    <td><input value={editRow.sweeperName} onChange={(e) => handleEditChange("sweeperName", e.target.value)} /></td>
-                    <td><input value={editRow.toilets} onChange={(e) => handleEditChange("toilets", e.target.value)} /></td>
-                    <td><input value={editRow.accountNumber} onChange={(e) => handleEditChange("accountNumber", e.target.value)} /></td>
-                    <td><input value={editRow.ifsc} onChange={(e) => handleEditChange("ifsc", e.target.value)} /></td>
-                    <td><input value={editRow.salary} onChange={(e) => handleEditChange("salary", e.target.value)} /></td>
+                    <td>
+                      <input
+                        value={editRow.block}
+                        onChange={(e) =>
+                          handleEditChange("block", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editRow.schoolName}
+                        onChange={(e) =>
+                          handleEditChange("schoolName", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editRow.sweeperName}
+                        onChange={(e) =>
+                          handleEditChange("sweeperName", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editRow.toilets}
+                        onChange={(e) =>
+                          handleEditChange("toilets", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editRow.accountNumber}
+                        onChange={(e) =>
+                          handleEditChange("accountNumber", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editRow.ifsc}
+                        onChange={(e) =>
+                          handleEditChange("ifsc", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editRow.salary}
+                        onChange={(e) =>
+                          handleEditChange("salary", e.target.value)
+                        }
+                      />
+                    </td>
 
                     <td>
                       <button
@@ -298,19 +352,18 @@ const deleteSweeper = async (id) => {
                       </button>
                     </td>
                     <td>
-  <button
-    onClick={() => deleteSweeper(item._id)}
-    style={{
-      padding: "5px 10px",
-      background: "red",
-      color: "white",
-      borderRadius: "6px",
-    }}
-  >
-    Delete
-  </button>
-</td>
-
+                      <button
+                        onClick={() => deleteSweeper(item._id)}
+                        style={{
+                          padding: "5px 10px",
+                          background: "red",
+                          color: "white",
+                          borderRadius: "6px",
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 )
               )}
@@ -320,142 +373,139 @@ const deleteSweeper = async (id) => {
       )}
 
       {/* ADD POPUP */}
-    {showAddForm && (
-  <div className="overlay">
-    <div className="popup">
+      {showAddForm && (
+        <div className="overlay">
+          <div className="popup">
+            <h2>Add New Sweeper</h2>
 
-      <h2>Add New Sweeper</h2>
+            {/* BLOCK DROPDOWN — ADMIN CAN SELECT ANY BLOCK */}
+            <div style={{ marginBottom: "12px" }}>
+              <label style={{ fontWeight: "600" }}>BLOCK</label>
+              <select
+                value={addForm.block}
+                onChange={(e) =>
+                  setAddForm({ ...addForm, block: e.target.value })
+                }
+                style={{
+                  width: "100%",
+                  padding: "8px",
+                  marginTop: "4px",
+                  borderRadius: "6px",
+                  border: "1px solid #ccc",
+                }}
+              >
+                <option value="">Select Block</option>
 
-      {/* BLOCK DROPDOWN — ADMIN CAN SELECT ANY BLOCK */}
-      <div style={{ marginBottom: "12px" }}>
-        <label style={{ fontWeight: "600" }}>BLOCK</label>
-        <select
-          value={addForm.block}
-          onChange={(e) => setAddForm({ ...addForm, block: e.target.value })}
-          style={{
-            width: "100%",
-            padding: "8px",
-            marginTop: "4px",
-            borderRadius: "6px",
-            border: "1px solid #ccc"
-          }}
-        >
-          <option value="">Select Block</option>
+                {blocks.map((b, idx) => (
+                  <option key={idx} value={b}>
+                    {b}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {blocks.map((b, idx) => (
-            <option key={idx} value={b}>
-              {b}
-            </option>
-          ))}
+            {/* SCHOOL NAME */}
+            <div style={{ marginBottom: "12px" }}>
+              <label style={{ fontWeight: "600" }}>School Name</label>
+              <input
+                value={addForm.schoolName}
+                onChange={(e) =>
+                  setAddForm({ ...addForm, schoolName: e.target.value })
+                }
+                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
+              />
+            </div>
 
-        </select>
-      </div>
+            {/* SWEEPER NAME */}
+            <div style={{ marginBottom: "12px" }}>
+              <label style={{ fontWeight: "600" }}>Sweeper Name</label>
+              <input
+                value={addForm.sweeperName}
+                onChange={(e) =>
+                  setAddForm({ ...addForm, sweeperName: e.target.value })
+                }
+                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
+              />
+            </div>
 
-      {/* SCHOOL NAME */}
-      <div style={{ marginBottom: "12px" }}>
-        <label style={{ fontWeight: "600" }}>School Name</label>
-        <input
-          value={addForm.schoolName}
-          onChange={(e) =>
-            setAddForm({ ...addForm, schoolName: e.target.value })
-          }
-          style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-        />
-      </div>
+            {/* TOILETS */}
+            <div style={{ marginBottom: "12px" }}>
+              <label style={{ fontWeight: "600" }}>Toilets</label>
+              <input
+                type="number"
+                value={addForm.toilets}
+                onChange={(e) =>
+                  setAddForm({ ...addForm, toilets: Number(e.target.value) })
+                }
+                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
+              />
+            </div>
 
-      {/* SWEEPER NAME */}
-      <div style={{ marginBottom: "12px" }}>
-        <label style={{ fontWeight: "600" }}>Sweeper Name</label>
-        <input
-          value={addForm.sweeperName}
-          onChange={(e) =>
-            setAddForm({ ...addForm, sweeperName: e.target.value })
-          }
-          style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-        />
-      </div>
+            {/* ACCOUNT NUMBER */}
+            <div style={{ marginBottom: "12px" }}>
+              <label style={{ fontWeight: "600" }}>Account Number</label>
+              <input
+                value={addForm.accountNumber}
+                onChange={(e) =>
+                  setAddForm({ ...addForm, accountNumber: e.target.value })
+                }
+                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
+              />
+            </div>
 
-      {/* TOILETS */}
-      <div style={{ marginBottom: "12px" }}>
-        <label style={{ fontWeight: "600" }}>Toilets</label>
-        <input
-          type="number"
-          value={addForm.toilets}
-          onChange={(e) =>
-            setAddForm({ ...addForm, toilets: Number(e.target.value) })
-          }
-          style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-        />
-      </div>
+            {/* IFSC */}
+            <div style={{ marginBottom: "12px" }}>
+              <label style={{ fontWeight: "600" }}>IFSC</label>
+              <input
+                value={addForm.ifsc}
+                onChange={(e) =>
+                  setAddForm({ ...addForm, ifsc: e.target.value })
+                }
+                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
+              />
+            </div>
 
-      {/* ACCOUNT NUMBER */}
-      <div style={{ marginBottom: "12px" }}>
-        <label style={{ fontWeight: "600" }}>Account Number</label>
-        <input
-          value={addForm.accountNumber}
-          onChange={(e) =>
-            setAddForm({ ...addForm, accountNumber: e.target.value })
-          }
-          style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-        />
-      </div>
+            {/* SALARY */}
+            <div style={{ marginBottom: "12px" }}>
+              <label style={{ fontWeight: "600" }}>Salary</label>
+              <input
+                type="number"
+                value={addForm.salary}
+                onChange={(e) =>
+                  setAddForm({ ...addForm, salary: Number(e.target.value) })
+                }
+                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
+              />
+            </div>
 
-      {/* IFSC */}
-      <div style={{ marginBottom: "12px" }}>
-        <label style={{ fontWeight: "600" }}>IFSC</label>
-        <input
-          value={addForm.ifsc}
-          onChange={(e) =>
-            setAddForm({ ...addForm, ifsc: e.target.value })
-          }
-          style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-        />
-      </div>
+            {/* BUTTONS */}
+            <button
+              onClick={saveNewSweeper}
+              style={{
+                padding: "10px 15px",
+                background: "green",
+                color: "white",
+                borderRadius: "8px",
+                marginRight: "10px",
+              }}
+            >
+              Save
+            </button>
 
-      {/* SALARY */}
-      <div style={{ marginBottom: "12px" }}>
-        <label style={{ fontWeight: "600" }}>Salary</label>
-        <input
-          type="number"
-          value={addForm.salary}
-          onChange={(e) =>
-            setAddForm({ ...addForm, salary: Number(e.target.value) })
-          }
-          style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-        />
-      </div>
-
-      {/* BUTTONS */}
-      <button
-        onClick={saveNewSweeper}
-        style={{
-          padding: "10px 15px",
-          background: "green",
-          color: "white",
-          borderRadius: "8px",
-          marginRight: "10px",
-        }}
-      >
-        Save
-      </button>
-
-      <button
-        onClick={() => setShowAddForm(false)}
-        style={{
-          padding: "10px 15px",
-          background: "red",
-          color: "white",
-          borderRadius: "8px",
-        }}
-      >
-        Cancel
-      </button>
-
-    </div>
-  </div>
-)}
-
-
+            <button
+              onClick={() => setShowAddForm(false)}
+              style={{
+                padding: "10px 15px",
+                background: "red",
+                color: "white",
+                borderRadius: "8px",
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

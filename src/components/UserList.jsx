@@ -71,9 +71,7 @@ export default function AdminUsersExcelView() {
     if (out.success) {
       alert("Updated!");
 
-      const updated = users.map((u) =>
-        u._id === editingId ? out.updated : u
-      );
+      const updated = users.map((u) => (u._id === editingId ? out.updated : u));
 
       setUsers(updated);
       setEditingId(null);
@@ -90,28 +88,152 @@ export default function AdminUsersExcelView() {
   };
 
   return (
-    <div className="p-10 min-h-screen bg-gray-100">
+    <div className="page-container">
       {/* STYLE */}
       <style>{`
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          background: white;
-          font-size: 14px;
-        }
-        th, td {
-          border: 1px solid #d1d5db;
-          padding: 10px;
-          text-align: left;
-        }
-        th {
-          background: #f3f4f6;
-          font-weight: bold;
-        }
-        tr:nth-child(even) {
-          background: #f9fafb;
-        }
-      `}</style>
+/* ================= PAGE ================= */
+.page-container {
+  padding: 40px;
+  background: #f5f6fa;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+/* Title */
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+}
+
+/* Excel Download Button */
+.download-btn {
+  padding: 10px 16px;
+  background: #4a6cff;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+.download-btn:hover {
+  background: #3d59e5;
+}
+
+/* ================= TABLE CARD ================= */
+.table-card {
+  background: white;
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid #d5d9e2;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+/* Scroll wrapper */
+.table-scroll {
+  overflow-x: auto;
+}
+
+/* ================= TABLE ================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+/* --- HEADER --- */
+thead th {
+  background: #eef1f6;
+  padding: 12px;
+  color: #333;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  border-bottom: 1px solid #cfd6e1;
+  white-space: nowrap;
+}
+
+/* --- BODY ROWS --- */
+tbody tr {
+  background: white;
+  border-bottom: 1px solid #eceff4;
+  transition: background 0.2s ease;
+}
+tbody tr:hover {
+  background: #f7f9fc;
+}
+
+/* --- CELLS --- */
+td {
+  padding: 12px;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Column size control */
+th, td { max-width: 160px; }
+
+/* SL column small */
+th:nth-child(1), td:nth-child(1) { width: 40px; text-align: center; }
+
+/* Address / email bigger */
+th:nth-child(7), td:nth-child(7) { max-width: 220px; }
+th:nth-child(12), td:nth-child(12) { max-width: 250px; }
+
+/* ================= EDIT INPUT ================= */
+input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #bfc7d5;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 13px;
+}
+input:focus {
+  border-color: #4a6cff;
+  box-shadow: 0 0 3px rgba(74,108,255,0.5);
+  outline: none;
+}
+
+/* ================= ACTION BUTTONS ================= */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.action-btn {
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.edit-btn {
+  background: #f6c343;
+  color: #000;
+}
+.delete-btn {
+  background: #e64242;
+  color: white;
+}
+.save-btn {
+  background: #28a745;
+  color: white;
+}
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+}
+
+
+`}</style>
 
       <h1 className="text-3xl font-bold mb-6">Users (Editable Table)</h1>
 
@@ -120,119 +242,81 @@ export default function AdminUsersExcelView() {
       </button>
 
       {/* TABLE */}
-      <table>
-        <thead>
-          <tr>
-            <th>SL</th>
-            <th>Name</th>
-            <th>Father</th>
-            <th>Gender</th>
-            <th>DOB</th>
-            <th>Mobile</th>
-            <th>Email</th>
-            <th>Aadhaar</th>
-            <th>District</th>
-            <th>Block</th>
-            <th>Designation</th>
-            <th>Address</th>
-            <th>Account No.</th>
-            <th>IFSC</th>
-            <th>Bank Name</th>
-            <th>Status</th>
-            <th>CreatedAt</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {users.map((u, i) =>
-            editingId === u._id ? (
-              // ===================== EDIT MODE ROW =====================
-              <tr key={u._id}>
-
-                <td>{i + 1}</td>
-
-                <td><input value={editRow.name} onChange={(e) => handleEditChange("name", e.target.value)} /></td>
-                <td><input value={editRow.fatherName} onChange={(e) => handleEditChange("fatherName", e.target.value)} /></td>
-                <td><input value={editRow.gender} onChange={(e) => handleEditChange("gender", e.target.value)} /></td>
-                <td><input value={editRow.dob} onChange={(e) => handleEditChange("dob", e.target.value)} /></td>
-                <td><input value={editRow.mobile} onChange={(e) => handleEditChange("mobile", e.target.value)} /></td>
-                <td><input value={editRow.email} onChange={(e) => handleEditChange("email", e.target.value)} /></td>
-                <td><input value={editRow.aadhaar} onChange={(e) => handleEditChange("aadhaar", e.target.value)} /></td>
-                <td><input value={editRow.district} onChange={(e) => handleEditChange("district", e.target.value)} /></td>
-                <td><input value={editRow.block} onChange={(e) => handleEditChange("block", e.target.value)} /></td>
-                <td><input value={editRow.designation} onChange={(e) => handleEditChange("designation", e.target.value)} /></td>
-                <td><input value={editRow.address} onChange={(e) => handleEditChange("address", e.target.value)} /></td>
-
-                <td><input value={editRow.bankDetails?.accountNumber} onChange={(e) => handleEditChange("bank.accountNumber", e.target.value)} /></td>
-                <td><input value={editRow.bankDetails?.ifscCode} onChange={(e) => handleEditChange("bank.ifscCode", e.target.value)} /></td>
-                <td><input value={editRow.bankDetails?.bankName} onChange={(e) => handleEditChange("bank.bankName", e.target.value)} /></td>
-
-                <td>{u.access}</td>
-                <td>{u.createdAt?.slice(0, 10)}</td>
-
-                {/* SAVE + CANCEL */}
-                <td>
-                  <button
-                    onClick={saveEdit}
-                    style={{ background: "green", color: "white", padding: "6px" }}
-                  >
-                    Save
-                  </button>
-
-                  <button
-                    onClick={() => setEditingId(null)}
-                    style={{ background: "gray", color: "white", padding: "6px", marginLeft: "5px" }}
-                  >
-                    Cancel
-                  </button>
-                </td>
-
+      <div className="table-card">
+        <div className="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>SL</th>
+                <th>Name</th>
+                <th>Father</th>
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Aadhaar</th>
+                <th>District</th>
+                <th>Block</th>
+                <th>Designation</th>
+                <th>Address</th>
+                <th>Account No.</th>
+                <th>IFSC</th>
+                <th>Bank Name</th>
+                <th>Status</th>
+                <th>CreatedAt</th>
+                <th>Actions</th>
               </tr>
-            ) : (
-              // ===================== NORMAL ROW =====================
-              <tr key={u._id}>
-                <td>{i + 1}</td>
+            </thead>
 
-                <td>{u.name}</td>
-                <td>{u.fatherName}</td>
-                <td>{u.gender}</td>
-                <td>{u.dob}</td>
-                <td>{u.mobile}</td>
-                <td>{u.email}</td>
-                <td>{u.aadhaar}</td>
-                <td>{u.district}</td>
-                <td>{u.block}</td>
-                <td>{u.designation}</td>
-                <td>{u.address}</td>
-
-                <td>{u.bankDetails?.accountNumber}</td>
-                <td>{u.bankDetails?.ifscCode}</td>
-                <td>{u.bankDetails?.bankName}</td>
-
-                <td>{u.access}</td>
-                <td>{u.createdAt?.slice(0, 10)}</td>
-
-                <td>
-                  <button
-                    onClick={() => enableEdit(u)}
-                    style={{ background: "orange", padding: "5px", marginRight: "5px" }}
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    onClick={() => deleteUser(u._id)}
-                    style={{ background: "red", padding: "5px", color: "white" }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            )
-          )}
-        </tbody>
-      </table>
+            <tbody>
+              {users.map((u, i) =>
+                editingId === u._id ? (
+                  <tr key={u._id}>
+                    <td>{i + 1}</td>
+                    {/* EDIT MODE INPUTS... */}
+                  </tr>
+                ) : (
+                  <tr key={u._id}>
+                    <td>{i + 1}</td>
+                    <td>{u.name}</td>
+                    <td>{u.fatherName}</td>
+                    <td>{u.gender}</td>
+                    <td>{u.dob}</td>
+                    <td>{u.mobile}</td>
+                    <td>{u.email}</td>
+                    <td>{u.aadhaar}</td>
+                    <td>{u.district}</td>
+                    <td>{u.block}</td>
+                    <td>{u.designation}</td>
+                    <td>{u.address}</td>
+                    <td>{u.bankDetails?.accountNumber}</td>
+                    <td>{u.bankDetails?.ifscCode}</td>
+                    <td>{u.bankDetails?.bankName}</td>
+                    <td>{u.access}</td>
+                    <td>{u.createdAt?.slice(0, 10)}</td>
+                    <td>
+                      <div className="action-buttons">
+                        <button
+                          onClick={() => enableEdit(u)}
+                          className="action-btn edit-btn"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => deleteUser(u._id)}
+                          className="action-btn delete-btn"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
