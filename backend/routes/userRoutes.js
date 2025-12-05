@@ -87,6 +87,21 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.put("/update-all-status", async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    // admin users ko skip kar do
+    await User.updateMany(
+      { role: { $ne: "admin" } },
+      { $set: { access: status } }
+    );
+
+    res.json({ success: true, message: "Updated all users" });
+  } catch (err) {
+    res.json({ success: false, error: err.message });
+  }
+});
 
 
 export default router;
