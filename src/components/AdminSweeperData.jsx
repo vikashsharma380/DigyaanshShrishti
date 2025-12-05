@@ -5,6 +5,7 @@ import * as XLSX from "xlsx";
 
 export default function AdminSweeperData() {
   const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [filtered, setFiltered] = useState([]);
   const [blocks, setBlocks] = useState([]);
   const [selectedBlock, setSelectedBlock] = useState("ALL");
@@ -158,6 +159,25 @@ export default function AdminSweeperData() {
       alert(out.message);
     }
   };
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+
+    const text = value.toLowerCase();
+
+    const filteredData = data.filter((item) => {
+      return (
+        item.block.toLowerCase().includes(text) ||
+        item.schoolName.toLowerCase().includes(text) ||
+        item.sweeperName.toLowerCase().includes(text) ||
+        String(item.toilets).includes(text) ||
+        String(item.accountNumber).includes(text) ||
+        item.ifsc.toLowerCase().includes(text) ||
+        String(item.salary).includes(text)
+      );
+    });
+
+    setFiltered(filteredData);
+  };
 
   return (
     <div className="sweeper-page">
@@ -203,6 +223,13 @@ export default function AdminSweeperData() {
             </option>
           ))}
         </select>
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search sweeper, school, IFSC, account..."
+          value={searchQuery}
+          onChange={(e) => handleSearch(e.target.value)}
+        />
       </div>
 
       {/* TABLE */}
@@ -215,9 +242,9 @@ export default function AdminSweeperData() {
               <tr>
                 <th>SI.No</th>
                 <th>Block</th>
-                <th>School</th>
-                <th>Sweeper</th>
-                <th>Toilets</th>
+                <th>School Name</th>
+                <th>Sweeper Name</th>
+                <th>No. Of Toilets</th>
                 <th>Account No.</th>
                 <th>IFSC</th>
                 <th>Salary</th>

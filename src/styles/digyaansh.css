@@ -370,3 +370,29 @@
   break-inside: avoid-page !important;
   -webkit-region-break-inside: avoid !important;
 }
+.appointment-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.left-panel {
+  position: sticky;
+  top: 20px;
+  height: fit-content;
+}
+
+.right-panel {
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .appointment-layout {
+    grid-template-columns: 1fr;
+  }
+  .left-panel {
+    position: relative;
+    top: 0;
+  }
+}
