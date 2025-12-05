@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../../styles/user.css";
 
 export default function CreateUserForm() {
+  const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     name: "",
     fatherName: "",
@@ -224,6 +225,35 @@ export default function CreateUserForm() {
               onChange={handleChange}
               required
             />
+          </div>
+          <div>
+            <label>Password:</label>
+            <div style={{ position: "relative" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={data.password}
+                onChange={handleChange}
+                required
+                style={{ paddingRight: "40px" }}
+              />
+
+              {/* Show/Hide Button */}
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  color: "#333",
+                }}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </span>
+            </div>
           </div>
         </div>
 
