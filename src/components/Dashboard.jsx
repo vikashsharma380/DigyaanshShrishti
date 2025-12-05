@@ -7,6 +7,8 @@ export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
 const [notifications, setNotifications] = useState([]);
 const [showNotifications, setShowNotifications] = useState(false);
+const [selectedDistrict, setSelectedDistrict] = useState("");
+
 useEffect(() => {
   fetch("https://digyaanshshrishti.onrender.com/api/contact/list")
     .then(res => res.json())
@@ -357,37 +359,71 @@ const deleteMessage = async (id) => {
 
     <hr style={{ margin: "20px 0" }} />
 
-    <h3>Add Block</h3>
-    <select
-      id="dist-select"
-      style={{ padding: "10px", width: "100%", marginBottom: "10px" }}
-    >
-      {districts.map((d) => (
-        <option key={d._id} value={d.name}>
-          {d.name}
-        </option>
+   <h3>Add Block</h3>
+
+{/* Select District Dropdown */}
+<select
+  id="dist-select"
+  style={{ padding: "10px", width: "100%", marginBottom: "10px" }}
+>
+  <option value="">Select District</option>
+  {districts.map((d) => (
+    <option key={d._id} value={d.name}>
+      {d.name}
+    </option>
+  ))}
+</select>
+
+{/* Add Block Input */}
+<input
+  type="text"
+  placeholder="Enter block name"
+  id="block-input"
+  style={{ padding: "10px", width: "100%", marginBottom: "10px" }}
+/>
+
+<button
+  onClick={addBlock}
+  style={{
+    padding: "10px 18px",
+    background: "purple",
+    color: "white",
+    borderRadius: "6px",
+  }}
+>
+  Add Block
+</button>
+
+<hr style={{ margin: "20px 0" }} />
+
+{/* SHOW BLOCK LIST OF SELECTED DISTRICT */}
+<h3>Existing Blocks</h3>
+
+<select
+  onChange={(e) => setSelectedDistrict(e.target.value)}
+  style={{ padding: "10px", width: "100%", marginBottom: "10px" }}
+>
+  <option value="">Select District to View Blocks</option>
+  {districts.map((d) => (
+    <option key={d._id} value={d.name}>
+      {d.name}
+    </option>
+  ))}
+</select>
+
+{/* Show blocks dynamically */}
+{selectedDistrict && (
+  <ul style={{ padding: "10px", background: "#f7f7f7", borderRadius: "10px" }}>
+    {districts
+      .find((d) => d.name === selectedDistrict)
+      ?.blocks?.map((b, idx) => (
+        <li key={idx} style={{ marginBottom: "5px" }}>
+          • {b}
+        </li>
       ))}
-    </select>
+  </ul>
+)}
 
-    <input
-      type="text"
-      placeholder="Enter block name"
-      id="block-input"
-      style={{ padding: "10px", width: "100%" }}
-    />
-
-    <button
-      onClick={addBlock}
-      style={{
-        padding: "10px 18px",
-        background: "purple",
-        color: "white",
-        marginTop: "10px",
-        borderRadius: "6px",
-      }}
-    >
-      Add Block
-    </button>
   </div>
 )}
 
