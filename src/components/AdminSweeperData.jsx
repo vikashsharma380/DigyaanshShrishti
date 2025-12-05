@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../styles/dashboard.css";
+import "../styles/SweeperData.css";
 import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 
@@ -160,7 +160,7 @@ export default function AdminSweeperData() {
   };
 
   return (
-    <div className="dashboard-wrapper">
+    <div className="sweeper-page">
       {/* UPDATED HEADER */}
       <div className="dash-header">
         <h2 className="dash-logo">Admin Panel</h2>
