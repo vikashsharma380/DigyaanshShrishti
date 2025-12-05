@@ -42,14 +42,31 @@ const ContactSection = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch("https://digyaanshshrishti.onrender.com/api/contact/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    const out = await res.json();
+
+    if (out.success) {
+      setSubmitted(true);
       setFormData({ name: "", email: "", subject: "", message: "" });
-      setSubmitted(false);
-    }, 2500);
-  };
+
+      setTimeout(() => setSubmitted(false), 2500);
+    } else {
+      alert("Failed to send message");
+    }
+  } catch (err) {
+    alert("Server error!");
+  }
+};
+
 
   return (
     <>
