@@ -67,7 +67,6 @@
   overflow: hidden;
 }
 
-
 /* Header */
 .pdf-header {
   display: flex;
@@ -89,8 +88,6 @@
 .header-text {
   flex: 1;
   text-align: center;
- 
- 
 }
 .company-name {
   color: #003d86;
@@ -123,16 +120,14 @@
   margin: 14px 0;
   font-size: 13px;
   color: black;
-  
 }
-.ref-left{
+.ref-left {
   font-weight: 600;
 }
 /* Heading center */
 .center-heading {
   text-align: center;
   text-decoration: underline;
-
 }
 
 /* Employee details */
@@ -152,36 +147,33 @@
 .letter-body ol {
   margin-left: 18px;
 }
-.emply{
+.emply {
   margin-top: 35px;
 }
 /* Signatures row */
 .signatures {
   display: flex;
   justify-content: right;
-  
-margin-top: 50px;
+
+  margin-top: 50px;
   font-weight: 600;
 }
 .Authorized {
   text-align: center;
   line-height: 90px;
 }
-.footer1{
+.footer1 {
   margin-top: 40px;
 }
 
 /* Footer */
 .pdf-footer {
- 
   background: #003d86;
   color: #fff;
   padding: 10px;
   font-size: 12px;
   border-radius: 6px;
   text-align: center;
-
-  
 }
 
 .pdf-footer .small {
@@ -189,8 +181,8 @@ margin-top: 50px;
   margin-top: 4px;
   color: rgba(255, 255, 255, 0.9);
 }
-.sign{
- margin-top: 40px;
+.sign {
+  margin-top: 40px;
   text-align: center;
 }
 /* Page 2 styling */
@@ -333,16 +325,14 @@ margin-top: 50px;
   page-break-inside: avoid;
 }
 
-
 .edit-box {
   width: 100%;
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 6px;
 }
-.header-divider{
+.header-divider {
   border-bottom: 5px solid #000000;
-
 }
 
 /* FIX HTML2PDF BLANK PAGE BUG */
