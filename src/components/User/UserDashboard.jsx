@@ -183,15 +183,25 @@ export default function UserDashboard() {
 
   // ---------------- DOWNLOAD EXCEL ----------------
   const downloadExcel = () => {
-  // Remove id, district, and __v from each record
-  const cleaned = filtered.map(({ id, district, __v, ...rest }) => rest);
+  // Clean unwanted keys
+  const cleaned = filtered.map(item => {
+    const obj = { ...item };
+
+    delete obj._id;
+    delete obj.district;
+    delete obj.__v;
+
+    return obj;
+  });
+
+  console.log("Cleaned Data: ", cleaned);  // ← Check this (ID should be removed)
 
   const ws = XLSX.utils.json_to_sheet(cleaned);
   const wb = XLSX.utils.book_new();
-
   XLSX.utils.book_append_sheet(wb, ws, "Sweeper Data");
   XLSX.writeFile(wb, "SweeperData.xlsx");
 };
+
 
 
   return (
