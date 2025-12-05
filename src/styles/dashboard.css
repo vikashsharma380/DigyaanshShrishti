@@ -7,6 +7,11 @@
   background: linear-gradient(to bottom right, #0d1117, #1a2332, #111722);
   color: white;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  padding-top: 0 !important;
+}
+body {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* =========================================================
@@ -307,4 +312,145 @@
   .content {
     padding: 20px;
   }
+}
+/* =========================================================
+   SWEEPER DATA UI (UPDATED)
+========================================================= */
+
+/* Table Wrapper */
+.table-wrapper {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  overflow-x: auto;
+}
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #e5e7eb;
+  font-size: 14px;
+}
+
+.data-table th {
+  background: rgba(80, 140, 255, 0.15);
+  padding: 14px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 13px;
+  color: #dbeafe;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.data-table td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.data-table tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transition: 0.2s ease;
+}
+
+/* Buttons */
+.btn-blue {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+.btn-blue:hover {
+  transform: translateY(-2px);
+}
+
+.btn-green {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #059669, #10b981);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+.btn-green:hover {
+  transform: translateY(-2px);
+}
+
+.btn-red {
+  padding: 8px 14px;
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Filter Bar */
+.filter-bar {
+  margin: 20px 0;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.filter-select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 15px;
+}
+
+/* Popup Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(6px);
+  z-index: 2000;
+}
+
+.popup {
+  width: 420px;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  color: white;
+  backdrop-filter: blur(15px);
+}
+
+.popup h2 {
+  margin-bottom: 18px;
+  font-size: 22px;
+  text-align: center;
+}
+
+.popup input,
+.popup select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
 }

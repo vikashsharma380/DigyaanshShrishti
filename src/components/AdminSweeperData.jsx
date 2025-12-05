@@ -161,7 +161,7 @@ export default function AdminSweeperData() {
 
   return (
     <div className="dashboard-wrapper">
-      {/* HEADER */}
+      {/* UPDATED HEADER */}
       <div className="dash-header">
         <h2 className="dash-logo">Admin Panel</h2>
 
@@ -173,54 +173,30 @@ export default function AdminSweeperData() {
         </div>
       </div>
 
+      {/* UPDATED TITLE */}
       <h1 className="dash-title">All Sweeper Data</h1>
 
-      {/* Excel Download + Add */}
-      <div style={{ marginBottom: "20px", display: "flex", gap: "15px" }}>
-        <button
-          onClick={downloadExcel}
-          style={{
-            padding: "10px 20px",
-            background: "green",
-            color: "white",
-            borderRadius: "8px",
-          }}
-        >
+      {/* ACTION BUTTONS */}
+      <div className="top-actions">
+        <button onClick={downloadExcel} className="btn-green">
           ⬇️ Download Excel
         </button>
 
-        <button
-          onClick={() => setShowAddForm(true)}
-          style={{
-            padding: "10px 20px",
-            background: "blue",
-            color: "white",
-            borderRadius: "8px",
-          }}
-        >
+        <button onClick={() => setShowAddForm(true)} className="btn-blue">
           ➕ Add Sweeper
         </button>
       </div>
 
-      {/* Block Filter */}
-      <div style={{ marginBottom: "20px" }}>
-        <label style={{ fontSize: "18px", fontWeight: "600" }}>
-          Filter by Block:
-        </label>
+      {/* FILTER BAR */}
+      <div className="filter-bar">
+        <label className="filter-label">Filter Block:</label>
 
         <select
           value={selectedBlock}
           onChange={(e) => handleFilter(e.target.value)}
-          style={{
-            marginLeft: "15px",
-            padding: "8px 12px",
-            fontSize: "16px",
-            borderRadius: "8px",
-            border: "1px solid #999",
-          }}
+          className="filter-select"
         >
           <option value="ALL">All Blocks</option>
-
           {blocks.map((b, idx) => (
             <option key={idx} value={b}>
               {b}
@@ -258,54 +234,67 @@ export default function AdminSweeperData() {
 
                     <td>
                       <input
+                        className="input-edit"
                         value={editRow.block}
                         onChange={(e) =>
                           handleEditChange("block", e.target.value)
                         }
                       />
                     </td>
+
                     <td>
                       <input
+                        className="input-edit"
                         value={editRow.schoolName}
                         onChange={(e) =>
                           handleEditChange("schoolName", e.target.value)
                         }
                       />
                     </td>
+
                     <td>
                       <input
+                        className="input-edit"
                         value={editRow.sweeperName}
                         onChange={(e) =>
                           handleEditChange("sweeperName", e.target.value)
                         }
                       />
                     </td>
+
                     <td>
                       <input
+                        className="input-edit"
                         value={editRow.toilets}
                         onChange={(e) =>
                           handleEditChange("toilets", e.target.value)
                         }
                       />
                     </td>
+
                     <td>
                       <input
+                        className="input-edit"
                         value={editRow.accountNumber}
                         onChange={(e) =>
                           handleEditChange("accountNumber", e.target.value)
                         }
                       />
                     </td>
+
                     <td>
                       <input
+                        className="input-edit"
                         value={editRow.ifsc}
                         onChange={(e) =>
                           handleEditChange("ifsc", e.target.value)
                         }
                       />
                     </td>
+
                     <td>
                       <input
+                        className="input-edit"
                         value={editRow.salary}
                         onChange={(e) =>
                           handleEditChange("salary", e.target.value)
@@ -314,15 +303,7 @@ export default function AdminSweeperData() {
                     </td>
 
                     <td>
-                      <button
-                        onClick={saveEdit}
-                        style={{
-                          padding: "5px 10px",
-                          background: "blue",
-                          color: "white",
-                          borderRadius: "6px",
-                        }}
-                      >
+                      <button onClick={saveEdit} className="btn-blue">
                         Save
                       </button>
                     </td>
@@ -341,25 +322,16 @@ export default function AdminSweeperData() {
                     <td>
                       <button
                         onClick={() => enableEdit(item)}
-                        style={{
-                          padding: "5px 10px",
-                          background: "orange",
-                          color: "black",
-                          borderRadius: "6px",
-                        }}
+                        className="btn-blue"
                       >
                         Edit
                       </button>
                     </td>
+
                     <td>
                       <button
                         onClick={() => deleteSweeper(item._id)}
-                        style={{
-                          padding: "5px 10px",
-                          background: "red",
-                          color: "white",
-                          borderRadius: "6px",
-                        }}
+                        className="btn-red"
                       >
                         Delete
                       </button>
@@ -378,131 +350,86 @@ export default function AdminSweeperData() {
           <div className="popup">
             <h2>Add New Sweeper</h2>
 
-            {/* BLOCK DROPDOWN — ADMIN CAN SELECT ANY BLOCK */}
-            <div style={{ marginBottom: "12px" }}>
-              <label style={{ fontWeight: "600" }}>BLOCK</label>
-              <select
-                value={addForm.block}
-                onChange={(e) =>
-                  setAddForm({ ...addForm, block: e.target.value })
-                }
-                style={{
-                  width: "100%",
-                  padding: "8px",
-                  marginTop: "4px",
-                  borderRadius: "6px",
-                  border: "1px solid #ccc",
-                }}
-              >
-                <option value="">Select Block</option>
+            {/* BLOCK */}
+            <label>BLOCK</label>
+            <select
+              value={addForm.block}
+              onChange={(e) =>
+                setAddForm({ ...addForm, block: e.target.value })
+              }
+            >
+              <option value="">Select Block</option>
+              {blocks.map((b, idx) => (
+                <option key={idx} value={b}>
+                  {b}
+                </option>
+              ))}
+            </select>
 
-                {blocks.map((b, idx) => (
-                  <option key={idx} value={b}>
-                    {b}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {/* SCHOOL */}
+            <label>School Name</label>
+            <input
+              value={addForm.schoolName}
+              onChange={(e) =>
+                setAddForm({ ...addForm, schoolName: e.target.value })
+              }
+            />
 
-            {/* SCHOOL NAME */}
-            <div style={{ marginBottom: "12px" }}>
-              <label style={{ fontWeight: "600" }}>School Name</label>
-              <input
-                value={addForm.schoolName}
-                onChange={(e) =>
-                  setAddForm({ ...addForm, schoolName: e.target.value })
-                }
-                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-              />
-            </div>
-
-            {/* SWEEPER NAME */}
-            <div style={{ marginBottom: "12px" }}>
-              <label style={{ fontWeight: "600" }}>Sweeper Name</label>
-              <input
-                value={addForm.sweeperName}
-                onChange={(e) =>
-                  setAddForm({ ...addForm, sweeperName: e.target.value })
-                }
-                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-              />
-            </div>
+            {/* SWEEPER */}
+            <label>Sweeper Name</label>
+            <input
+              value={addForm.sweeperName}
+              onChange={(e) =>
+                setAddForm({ ...addForm, sweeperName: e.target.value })
+              }
+            />
 
             {/* TOILETS */}
-            <div style={{ marginBottom: "12px" }}>
-              <label style={{ fontWeight: "600" }}>Toilets</label>
-              <input
-                type="number"
-                value={addForm.toilets}
-                onChange={(e) =>
-                  setAddForm({ ...addForm, toilets: Number(e.target.value) })
-                }
-                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-              />
-            </div>
+            <label>Toilets</label>
+            <input
+              type="number"
+              value={addForm.toilets}
+              onChange={(e) =>
+                setAddForm({ ...addForm, toilets: Number(e.target.value) })
+              }
+            />
 
-            {/* ACCOUNT NUMBER */}
-            <div style={{ marginBottom: "12px" }}>
-              <label style={{ fontWeight: "600" }}>Account Number</label>
-              <input
-                value={addForm.accountNumber}
-                onChange={(e) =>
-                  setAddForm({ ...addForm, accountNumber: e.target.value })
-                }
-                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-              />
-            </div>
+            {/* ACCOUNT */}
+            <label>Account Number</label>
+            <input
+              value={addForm.accountNumber}
+              onChange={(e) =>
+                setAddForm({ ...addForm, accountNumber: e.target.value })
+              }
+            />
 
             {/* IFSC */}
-            <div style={{ marginBottom: "12px" }}>
-              <label style={{ fontWeight: "600" }}>IFSC</label>
-              <input
-                value={addForm.ifsc}
-                onChange={(e) =>
-                  setAddForm({ ...addForm, ifsc: e.target.value })
-                }
-                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-              />
-            </div>
+            <label>IFSC</label>
+            <input
+              value={addForm.ifsc}
+              onChange={(e) => setAddForm({ ...addForm, ifsc: e.target.value })}
+            />
 
             {/* SALARY */}
-            <div style={{ marginBottom: "12px" }}>
-              <label style={{ fontWeight: "600" }}>Salary</label>
-              <input
-                type="number"
-                value={addForm.salary}
-                onChange={(e) =>
-                  setAddForm({ ...addForm, salary: Number(e.target.value) })
-                }
-                style={{ width: "100%", padding: "8px", borderRadius: "6px" }}
-              />
-            </div>
+            <label>Salary</label>
+            <input
+              type="number"
+              value={addForm.salary}
+              onChange={(e) =>
+                setAddForm({ ...addForm, salary: Number(e.target.value) })
+              }
+            />
 
             {/* BUTTONS */}
-            <button
-              onClick={saveNewSweeper}
-              style={{
-                padding: "10px 15px",
-                background: "green",
-                color: "white",
-                borderRadius: "8px",
-                marginRight: "10px",
-              }}
-            >
-              Save
-            </button>
+            <div className="popup-actions">
+              <button onClick={saveNewSweeper} className="btn-green">
+                Save
+              </button>
 
-            <button
-              onClick={() => setShowAddForm(false)}
-              style={{
-                padding: "10px 15px",
-                background: "red",
-                color: "white",
-                borderRadius: "8px",
-              }}
-            >
-              Cancel
-            </button>
+              <button onClick={() => setShowAddForm(false)} className="btn-red">
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}

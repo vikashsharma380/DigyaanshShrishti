@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../../styles/user.css";
 
 export default function CreateUserForm() {
+  const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     name: "",
     fatherName: "",
@@ -22,6 +23,27 @@ export default function CreateUserForm() {
     },
     access: "active",
   });
+  const districtBlocks = {
+    Gopalganj: ["Sidhwaliya", "Panchdewari"],
+    Bhagalpur: ["Sahkund", "Jagdishpur"],
+    "East Champaran": [
+      "Adapur",
+      "Areraj",
+      "Banjariya",
+      "Bankatwa",
+      "Chakia",
+      "Dhaka",
+      "Phenhara",
+      "Harsidhi",
+      "Kalyanpur",
+      "Kesariya",
+      "Kotwa",
+      "Madhuban",
+      "Mehsi",
+      "Piprakothi",
+      "Sangrampur",
+    ],
+  };
 
   // NORMAL FIELD CHANGE
   const handleChange = (e) => {
@@ -89,24 +111,43 @@ export default function CreateUserForm() {
             />
           </div>
 
+          {/* UPDATED DISTRICT FIELD */}
           <div>
             <label>District:</label>
-            <input
+            <select
               name="district"
               value={data.district}
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e);
+                setData({ ...data, district: e.target.value, block: "" });
+              }}
               required
-            />
+            >
+              <option value="">Select District</option>
+              <option value="East Champaran">East Champaran</option>
+              <option value="Gopalganj">Gopalganj</option>
+              <option value="Bhagalpur">Bhagalpur</option>
+            </select>
           </div>
 
+          {/* UPDATED BLOCK FIELD */}
           <div>
             <label>Block:</label>
-            <input
+            <select
               name="block"
               value={data.block}
               onChange={handleChange}
               required
-            />
+            >
+              <option value="">Select Block</option>
+
+              {data.district &&
+                districtBlocks[data.district]?.map((b) => (
+                  <option key={b} value={b}>
+                    {b}
+                  </option>
+                ))}
+            </select>
           </div>
 
           <div>
@@ -184,6 +225,35 @@ export default function CreateUserForm() {
               onChange={handleChange}
               required
             />
+          </div>
+          <div>
+            <label>Password:</label>
+            <div style={{ position: "relative" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={data.password}
+                onChange={handleChange}
+                required
+                style={{ paddingRight: "40px" }}
+              />
+
+              {/* Show/Hide Button */}
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  color: "#333",
+                }}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </span>
+            </div>
           </div>
         </div>
 
