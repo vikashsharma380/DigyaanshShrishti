@@ -13,6 +13,27 @@ export default function AdminUsersExcelView() {
         if (out.success) setUsers(out.users);
       });
   }, []);
+  const toggleAccess = async (user) => {
+    const newAccess = user.access === "active" ? "inactive" : "active";
+
+    const res = await fetch(
+      `https://digyaanshshrishti.onrender.com/api/users/update/${user._id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ access: newAccess }),
+      }
+    );
+
+    const out = await res.json();
+
+    if (out.success) {
+      alert("Access Updated!");
+      setUsers((prev) =>
+        prev.map((u) => (u._id === user._id ? { ...u, access: newAccess } : u))
+      );
+    }
+  };
 
   // ============= DELETE USER =================
   const deleteUser = async (id) => {
@@ -292,7 +313,25 @@ input:focus {
                     <td>{u.bankDetails?.accountNumber}</td>
                     <td>{u.bankDetails?.ifscCode}</td>
                     <td>{u.bankDetails?.bankName}</td>
-                    <td>{u.access}</td>
+                    <td>
+                   
+
+                      <button
+                        onClick={() => toggleAccess(u)}
+                        style={{
+                          padding: "4px 10px",
+                          borderRadius: "6px",
+                          border: "none",
+                          cursor: "pointer",
+                          background: u.access === "active" ? "green" : "red",
+                          color: "white",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {u.access === "active" ? "active" : "inactive"}
+                      </button>
+                    </td>
+
                     <td>{u.createdAt?.slice(0, 10)}</td>
                     <td>
                       <div className="action-buttons">

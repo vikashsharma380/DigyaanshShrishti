@@ -338,11 +338,29 @@ export default function UserDashboard() {
 
   // ---- SAFE USER ----
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const isInactive = user?.access === "inactive";
 
   if (!user?.id) {
     navigate("/login");
     return null;
   }
+useEffect(() => {
+  async function refreshUser() {
+    const res = await fetch(
+      `https://digyaanshshrishti.onrender.com/api/users/${user.id}`
+    );
+
+    const out = await res.json();
+
+    if (out.success) {
+      localStorage.setItem("user", JSON.stringify(out.user));
+      window.location.reload();
+    }
+  }
+
+  refreshUser();
+}, []);
+
 
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -532,9 +550,11 @@ export default function UserDashboard() {
           <button className="btn" onClick={downloadExcel}>
             📥 Download Excel
           </button>
-          <button className="btn" onClick={() => setShowAddForm(true)}>
-            ➕ Add Sweeper
-          </button>
+          {!isInactive && (
+            <button className="btn" onClick={() => setShowAddForm(true)}>
+              ➕ Add Sweeper
+            </button>
+          )}
         </div>
 
         {/* TABLE */}
@@ -550,6 +570,7 @@ export default function UserDashboard() {
               <th>IFSC</th>
               <th>Salary</th>
               <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
 
@@ -639,22 +660,42 @@ export default function UserDashboard() {
                     <td>{row.accountNumber}</td>
                     <td>{row.ifsc}</td>
                     <td>{row.salary}</td>
-                    <td>
-                      <button onClick={() => startEdit(row)}>✏️ Edit</button>
-                    </td>
-                    <td>
-                      <button
-                        onClick={() => deleteSweeper(row._id)}
-                        style={{
-                          background: "red",
-                          color: "white",
-                          padding: "5px 10px",
-                          borderRadius: "6px",
-                        }}
-                      >
-                        🗑 Delete
-                      </button>
-                    </td>
+                    {isInactive ? (
+                      <>
+                        <td style={{ color: "red", fontWeight: "bold" }}>
+                          Restricted
+                        </td>
+                        <td></td>
+                      </>
+                    ) : row.status === "active" ? (
+                      <>
+                        <td>
+                          <button onClick={() => startEdit(row)}>
+                            ✏️ Edit
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            onClick={() => deleteSweeper(row._id)}
+                            style={{
+                              background: "red",
+                              color: "white",
+                              padding: "5px 10px",
+                              borderRadius: "6px",
+                            }}
+                          >
+                            🗑 Delete
+                          </button>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td style={{ color: "red", fontWeight: "bold" }}>
+                          Inactive
+                        </td>
+                        <td></td>
+                      </>
+                    )}
                   </>
                 )}
               </tr>

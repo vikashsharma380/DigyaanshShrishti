@@ -30,8 +30,6 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(user));
 
       setLoading(false);
-      alert("Login Successful!");
-
       // ⭐ Redirect based on designation
       if (user.designation === "Admin") {
         navigate("/dashboard");
