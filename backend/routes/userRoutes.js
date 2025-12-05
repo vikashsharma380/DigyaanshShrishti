@@ -73,7 +73,7 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
-router.get("/users/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.json({ success: false });
@@ -83,6 +83,7 @@ router.get("/users/:id", async (req, res) => {
     res.json({ success: false });
   }
 });
+
 
 
 export default router;
