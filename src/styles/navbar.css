@@ -61,17 +61,20 @@
 
 /* Primary button */
 .btn-primary {
-  background: linear-gradient(90deg, #6e00ff, #ff007b);
-  color: white;
+  background: #000 !important;
+  color: #fff !important;
   padding: 10px 20px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: 0.3s;
+  display: inline-block;
+  margin-top: -4px !important;
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
+  background: #111 !important;
+  color: #fff !important;
   transform: scale(1.05);
 }
 
