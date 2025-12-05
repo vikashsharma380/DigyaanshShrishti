@@ -32,6 +32,8 @@ app.use("/api/auth", authRoutes);
 import sweeperRoutes from "./routes/sweeper.js";
 app.use("/api/sweeper", sweeperRoutes);
 
+import contactRoutes from "./routes/contact.js";
+app.use("/api/contact", contactRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log("Server running on port", process.env.PORT);

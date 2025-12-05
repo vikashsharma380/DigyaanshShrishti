@@ -59,31 +59,29 @@ export default function AdminUsersExcelView() {
     setEditingId(user._id);
     setEditRow({ ...user });
   };
-const updateAllStatus = async (status) => {
-  if (!window.confirm(`Are you sure to set all users as ${status}?`)) return;
+  const updateAllStatus = async (status) => {
+    if (!window.confirm(`Are you sure to set all users as ${status}?`)) return;
 
-  const res = await fetch(
-    "https://digyaanshshrishti.onrender.com/api/users/update-all-status",
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    }
-  );
-
-  const out = await res.json();
-
-  if (out.success) {
-    alert("All users updated!");
-
-    // Update frontend state except admin
-    setUsers((prev) =>
-      prev.map((u) =>
-        u.role === "admin" ? u : { ...u, access: status }
-      )
+    const res = await fetch(
+      "https://digyaanshshrishti.onrender.com/api/users/update-all-status",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      }
     );
-  }
-};
+
+    const out = await res.json();
+
+    if (out.success) {
+      alert("All users updated!");
+
+      // Update frontend state except admin
+      setUsers((prev) =>
+        prev.map((u) => (u.role === "admin" ? u : { ...u, access: status }))
+      );
+    }
+  };
 
   // ============= HANDLE EDIT CHANGE ============
   const handleEditChange = (field, value) => {
@@ -140,24 +138,23 @@ const updateAllStatus = async (status) => {
       <button className="download-btn" onClick={downloadExcel}>
         Download Excel ⬇️
       </button>
-      <div style={{ display: "flex", gap: "10px", margin: "15px 0" }}>
-  <button
-    className="download-btn"
-    style={{ background: "green" }}
-    onClick={() => updateAllStatus("active")}
-  >
-    Activate All (Except Admin)
-  </button>
+      <button
+        className="download-btn"
+        style={{ background: "green" }}
+        onClick={() => updateAllStatus("active")}
+      >
+        Activate All (Except Admin)
+      </button>
 
-  <button
-    className="download-btn"
-    style={{ background: "red" }}
-    onClick={() => updateAllStatus("inactive")}
-  >
-    Deactivate All (Except Admin)
-  </button>
-</div>
+      <button
+        className="download-btn"
+        style={{ background: "red" }}
+        onClick={() => updateAllStatus("inactive")}
+      >
+        Deactivate All (Except Admin)
+      </button>
 
+      <div className="btn-container"></div>
 
       {/* TABLE */}
       <div className="table-card">
@@ -192,7 +189,6 @@ const updateAllStatus = async (status) => {
                 editingId === u._id ? (
                   <tr key={u._id}>
                     <td>{i + 1}</td>
-
 
                     <td>
                       <input
@@ -247,7 +243,7 @@ const updateAllStatus = async (status) => {
                         }
                       />
                     </td>
-  <td>
+                    <td>
                       <input
                         value={editRow.password}
                         onChange={(e) =>
@@ -263,7 +259,6 @@ const updateAllStatus = async (status) => {
                         }
                       />
                     </td>
-                  
 
                     <td>
                       <input
@@ -557,8 +552,6 @@ input:focus {
 
 
 `}</style>
-
- 
     </div>
   );
 }
