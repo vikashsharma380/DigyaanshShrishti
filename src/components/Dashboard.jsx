@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import "../styles/dashboard.css";
 
 export default function Dashboard() {
@@ -8,7 +8,7 @@ export default function Dashboard() {
 const [notifications, setNotifications] = useState([]);
 const [showNotifications, setShowNotifications] = useState(false);
 useEffect(() => {
-  fetch("https://YOUR_BACKEND_URL/api/contact/list")
+  fetch("https://digyaanshshrishti.onrender.com/api/contact/list")
     .then(res => res.json())
     .then(out => {
       if (out.success) {
