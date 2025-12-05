@@ -47,10 +47,9 @@
   bottom: 55px;
   border-radius: 16px;
   background: #f6f2ff;
-  padding: 35px;
+  padding: 0; /* UPDATED */
+  overflow: hidden; /* UPDATED */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .about-years {
@@ -159,4 +158,12 @@
   .about-left {
     height: 370px;
   }
+}
+
+/* IMAGE FULL FIT */
+.about-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
 }
