@@ -7,6 +7,8 @@ export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
 const [notifications, setNotifications] = useState([]);
 const [showNotifications, setShowNotifications] = useState(false);
+const [selectedDistrict, setSelectedDistrict] = useState("");
+
 useEffect(() => {
   fetch("https://digyaanshshrishti.onrender.com/api/contact/list")
     .then(res => res.json())
@@ -16,6 +18,60 @@ useEffect(() => {
       }
     });
 }, []);
+const [districts, setDistricts] = useState([]);
+
+useEffect(() => {
+  fetch("https://digyaanshshrishti.onrender.com/api/district/list")
+    .then(res => res.json())
+    .then(out => {
+      if (out.success) setDistricts(out.list);
+    });
+}, []);
+
+const addDistrict = async () => {
+  const name = document.getElementById("district-input").value;
+  if (!name) return alert("Enter district");
+
+  const res = await fetch(
+    "https://digyaanshshrishti.onrender.com/api/district/add-district",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name }),
+    }
+  );
+  const out = await res.json();
+
+  if (out.success) {
+    alert("District Added");
+    setDistricts([...districts, out.district]);
+  }
+};
+
+const addBlock = async () => {
+  const districtName = document.getElementById("dist-select").value;
+  const block = document.getElementById("block-input").value;
+
+  if (!block) return alert("Enter block name");
+
+  const res = await fetch(
+    "https://digyaanshshrishti.onrender.com/api/district/add-block",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ districtName, block }),
+    }
+  );
+  const out = await res.json();
+
+  if (out.success) {
+    alert("Block Added");
+
+    setDistricts(
+      districts.map((d) => (d.name === districtName ? out.updated : d))
+    );
+  }
+};
 
   // ================================
   // ALL CHILD ITEMS
@@ -278,6 +334,99 @@ const deleteMessage = async (id) => {
 
         {/* CONTENT SECTION */}
         <div className="content">
+          {activeNav === "settings" && (
+  <div style={{ maxWidth: "500px" }}>
+    <h2 className="section-title">Settings</h2>
+
+    <h3>Add District</h3>
+    <input
+      type="text"
+      placeholder="Enter district name"
+      id="district-input"
+      style={{ padding: "10px", width: "100%", marginBottom: "10px" }}
+    />
+    <button
+      onClick={addDistrict}
+      style={{
+        padding: "10px 18px",
+        background: "black",
+        color: "white",
+        borderRadius: "6px",
+      }}
+    >
+      Add District
+    </button>
+
+    <hr style={{ margin: "20px 0" }} />
+
+   <h3>Add Block</h3>
+
+{/* Select District Dropdown */}
+<select
+  id="dist-select"
+  style={{ padding: "10px", width: "100%", marginBottom: "10px" }}
+>
+  <option value="">Select District</option>
+  {districts.map((d) => (
+    <option key={d._id} value={d.name}>
+      {d.name}
+    </option>
+  ))}
+</select>
+
+{/* Add Block Input */}
+<input
+  type="text"
+  placeholder="Enter block name"
+  id="block-input"
+  style={{ padding: "10px", width: "100%", marginBottom: "10px" }}
+/>
+
+<button
+  onClick={addBlock}
+  style={{
+    padding: "10px 18px",
+    background: "purple",
+    color: "white",
+    borderRadius: "6px",
+  }}
+>
+  Add Block
+</button>
+
+<hr style={{ margin: "20px 0" }} />
+
+{/* SHOW BLOCK LIST OF SELECTED DISTRICT */}
+<h3>Existing Blocks</h3>
+
+<select
+  onChange={(e) => setSelectedDistrict(e.target.value)}
+  style={{ padding: "10px", width: "100%", marginBottom: "10px" }}
+>
+  <option value="">Select District to View Blocks</option>
+  {districts.map((d) => (
+    <option key={d._id} value={d.name}>
+      {d.name}
+    </option>
+  ))}
+</select>
+
+{/* Show blocks dynamically */}
+{selectedDistrict && (
+  <ul style={{ padding: "10px", background: "#f7f7f7", borderRadius: "10px" }}>
+    {districts
+      .find((d) => d.name === selectedDistrict)
+      ?.blocks?.map((b, idx) => (
+        <li key={idx} style={{ marginBottom: "5px" }}>
+          • {b}
+        </li>
+      ))}
+  </ul>
+)}
+
+  </div>
+)}
+
           <h2 className="section-title">
             {activeNav === "dashboard"
               ? "Quick Actions"
