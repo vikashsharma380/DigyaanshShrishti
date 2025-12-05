@@ -12,7 +12,7 @@
    HEADER (Admin Panel bar)
 ================================ */
 .dash-header {
-  background: #ffffff;
+  background: #000000;
   border-bottom: 1px solid #e5e7eb;
   padding: 22px 40px;
   display: flex;
@@ -23,7 +23,7 @@
 .dash-logo {
   font-size: 24px;
   font-weight: 700;
-  color: #000;
+  color: #fffdfd;
 }
 
 .dash-right {
@@ -34,23 +34,18 @@
 
 .dash-admin-name {
   font-size: 16px;
-  color: #000;
+  color: #f8f8f8;
 }
 
 .dash-logout-btn {
-  background: #000;
-  color: #fff;
+  background: #f7f6f6;
+  color: #000000;
   padding: 10px 18px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   font-weight: 600;
   transition: 0.2s ease;
-}
-
-.dash-logout-btn:hover {
-  background: #111;
-  transform: translateY(-2px);
 }
 
 /* ================================
@@ -86,7 +81,7 @@
 
 /* Blue button */
 .btn-blue {
-  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  background: linear-gradient(90deg, #000000, #000000);
   color: #fff;
 }
 .btn-blue:hover {
@@ -95,7 +90,7 @@
 
 /* Green button */
 .btn-green {
-  background: linear-gradient(90deg, #059669, #10b981);
+  background: linear-gradient(90deg, #000000, #000000);
   color: #fff;
 }
 .btn-green:hover {
@@ -104,8 +99,8 @@
 
 /* Red button */
 .btn-red {
-  background: linear-gradient(135deg, #dc2626, #ef4444);
-  color: #fff;
+  background: linear-gradient(135deg, #090606b9, #0000008e);
+  color: #fffefe;
 }
 .btn-red:hover {
   transform: scale(1.05);
@@ -231,4 +226,14 @@
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+}
+.search-input {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: none;
+  background: white;
+  color: black;
+  font-size: 15px;
+  outline: none;
+  width: 250px;
 }

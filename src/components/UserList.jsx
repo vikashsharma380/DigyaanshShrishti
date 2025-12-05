@@ -550,9 +550,15 @@ input:focus {
   background: #6c757d;
   color: white;
 }
+.edit-user-btn{
+  background:"black";
+  color:"white";
+}
 
 
 `}</style>
+
+ 
     </div>
   );
 }
