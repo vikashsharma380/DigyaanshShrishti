@@ -1,6 +1,7 @@
 import express from "express";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import { act } from "react";
 
 const router = express.Router();
 
@@ -32,6 +33,7 @@ router.post("/login", async (req, res) => {
         name: user.name,
         designation: user.designation,
         block: user.block,
+        access: user.access,
       },
     });
   } catch (err) {
