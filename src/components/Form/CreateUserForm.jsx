@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/user.css";
 
 export default function CreateUserForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [district, setDistrict] = useState([]);
   const [data, setData] = useState({
     name: "",
     fatherName: "",
@@ -23,27 +24,15 @@ export default function CreateUserForm() {
     },
     access: "active",
   });
-  const districtBlocks = {
-    Gopalganj: ["Sidhwaliya", "Panchdewari"],
-    Bhagalpur: ["Sahkund", "Jagdishpur"],
-    "East Champaran": [
-      "Adapur",
-      "Areraj",
-      "Banjariya",
-      "Bankatwa",
-      "Chakia",
-      "Dhaka",
-      "Phenhara",
-      "Harsidhi",
-      "Kalyanpur",
-      "Kesariya",
-      "Kotwa",
-      "Madhuban",
-      "Mehsi",
-      "Piprakothi",
-      "Sangrampur",
-    ],
-  };
+  useEffect(() => {
+    fetch("https://digyaanshshrishti.onrender.com/api/district/list")
+      .then(res => res.json())
+      .then(out => {
+        if (out.success) {
+          setDistrict(out.list);
+        }
+      });
+  }, []);
 
   // NORMAL FIELD CHANGE
   const handleChange = (e) => {
@@ -122,9 +111,11 @@ export default function CreateUserForm() {
               required
             >
               <option value="">Select District</option>
-              <option value="East Champaran">East Champaran</option>
-              <option value="Gopalganj">Gopalganj</option>
-              <option value="Bhagalpur">Bhagalpur</option>
+              {district.map((d) => (
+                <option key={d.name} value={d.name}>
+                  {d.name}
+                </option>
+              ))} 
             </select>
           </div>
 
