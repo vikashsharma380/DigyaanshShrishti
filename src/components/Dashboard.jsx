@@ -5,6 +5,17 @@ export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeNav, setActiveNav] = useState("dashboard");
   const [searchQuery, setSearchQuery] = useState("");
+const [notifications, setNotifications] = useState([]);
+const [showNotifications, setShowNotifications] = useState(false);
+useEffect(() => {
+  fetch("https://YOUR_BACKEND_URL/api/contact/list")
+    .then(res => res.json())
+    .then(out => {
+      if (out.success) {
+        setNotifications(out.list);
+      }
+    });
+}, []);
 
   // ================================
   // ALL CHILD ITEMS
@@ -65,6 +76,20 @@ export default function Dashboard() {
       type: "sweeper",
     },
   ];
+const deleteMessage = async (id) => {
+  if (!window.confirm("Delete this message?")) return;
+
+  const res = await fetch(
+    `https://digyaanshshrishti.onrender.com/api/contact/delete/${id}`,
+    { method: "DELETE" }
+  );
+
+  const out = await res.json();
+
+  if (out.success) {
+    setNotifications(notifications.filter((msg) => msg._id !== id));
+  }
+};
 
   // ================================
   // DASHBOARD PARENT BOXES
@@ -164,7 +189,30 @@ export default function Dashboard() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
 
-            <button className="icon-btn">🔔</button>
+         <button
+  className="icon-btn"
+  onClick={() => setShowNotifications(!showNotifications)}
+  style={{ position: "relative" }}
+>
+  🔔
+  {notifications.length > 0 && (
+    <span
+      style={{
+        position: "absolute",
+        top: "-5px",
+        right: "-5px",
+        background: "red",
+        color: "white",
+        fontSize: "12px",
+        padding: "2px 6px",
+        borderRadius: "50%",
+      }}
+    >
+      {notifications.length}
+    </span>
+  )}
+</button>
+
             <button className="icon-btn">🔧</button>
 
             <button
@@ -179,6 +227,54 @@ export default function Dashboard() {
             </button>
           </div>
         </div>
+        {showNotifications && (
+  <div
+    style={{
+      position: "absolute",
+      top: "70px",
+      right: "30px",
+      width: "350px",
+      background: "white",
+      borderRadius: "10px",
+      boxShadow: "0 5px 25px rgba(0,0,0,0.2)",
+      padding: "15px",
+      zIndex: 50,
+    }}
+  >
+    <h3 style={{ marginBottom: "10px" }}>Messages</h3>
+
+    {notifications.length === 0 && <p>No new messages</p>}
+
+    {notifications.map((msg) => (
+      <div
+        key={msg._id}
+        style={{
+          padding: "10px",
+          borderBottom: "1px solid #ddd",
+        }}
+      >
+        <strong>{msg.name}</strong> <br />
+        <small>{msg.email}</small> <br />
+        <p>{msg.message}</p>
+
+        <button
+          style={{
+            background: "red",
+            color: "white",
+            padding: "5px 10px",
+            borderRadius: "5px",
+            border: "none",
+            cursor: "pointer",
+          }}
+          onClick={() => deleteMessage(msg._id)}
+        >
+          Delete
+        </button>
+      </div>
+    ))}
+  </div>
+)}
+
 
         {/* CONTENT SECTION */}
         <div className="content">
