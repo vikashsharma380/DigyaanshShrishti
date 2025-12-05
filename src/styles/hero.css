@@ -118,7 +118,7 @@
 .box1 {
   width: 120px;
   height: 120px;
-  background: linear-gradient(45deg, #000000, #000000);
+  background: linear-gradient(45deg, #00000072, #00000078);
   top: 50px;
   right: 50px;
 }
@@ -164,14 +164,6 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-}
-
-.mini-box {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #000000, #2c2c2d);
-  margin-bottom: 10px;
 }
 
 .dots span {
