@@ -252,6 +252,10 @@ input:focus {
   background: #6c757d;
   color: white;
 }
+.edit-user-btn{
+  background:"black";
+  color:"white";
+}
 
 
 `}</style>
@@ -261,6 +265,7 @@ input:focus {
       <button className="download-btn" onClick={downloadExcel}>
         Download Excel ⬇️
       </button>
+      <button className="edit-user-btn">Edit Users</button>
 
       {/* TABLE */}
       <div className="table-card">
@@ -314,8 +319,6 @@ input:focus {
                     <td>{u.bankDetails?.ifscCode}</td>
                     <td>{u.bankDetails?.bankName}</td>
                     <td>
-                   
-
                       <button
                         onClick={() => toggleAccess(u)}
                         style={{
