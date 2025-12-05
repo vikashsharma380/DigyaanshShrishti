@@ -58,7 +58,7 @@ export default function Login() {
             <img src={logo} alt="Company Logo" className="login-logo" />
           </div>
 
-          <h2 className="login-title">Welcome Back In DSM</h2>
+          <h2 className="login-title">Welcome Back To DSM</h2>
           <p className="login-subtitle">Login to access your dashboard</p>
 
           <form className="login-form" onSubmit={handleLogin}>

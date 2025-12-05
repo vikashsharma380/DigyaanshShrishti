@@ -215,9 +215,9 @@ export default function AdminSweeperData() {
               <tr>
                 <th>SI.No</th>
                 <th>Block</th>
-                <th>School</th>
-                <th>Sweeper</th>
-                <th>Toilets</th>
+                <th>School Name</th>
+                <th>Sweeper Name</th>
+                <th>No. Of Toilets</th>
                 <th>Account No.</th>
                 <th>IFSC</th>
                 <th>Salary</th>
