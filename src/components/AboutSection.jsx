@@ -1,4 +1,5 @@
 import "../styles/about.css";
+import AboutImage from "../assets/about.jpeg";
 
 const AboutSection = () => {
   const highlights = [
@@ -19,12 +20,7 @@ const AboutSection = () => {
           <div className="about-middle"></div>
 
           <div className="about-inner">
-            <h1 className="about-years">3+</h1>
-            <h3 className="about-heading">Years of Excellence</h3>
-            <p>
-              Delivering reliable multi-industry services with quality,
-              commitment, and trust.
-            </p>
+            <img src={AboutImage} alt="About" className="about-image" />
           </div>
 
           <div className="about-stamp">
