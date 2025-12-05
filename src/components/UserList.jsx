@@ -59,6 +59,31 @@ export default function AdminUsersExcelView() {
     setEditingId(user._id);
     setEditRow({ ...user });
   };
+const updateAllStatus = async (status) => {
+  if (!window.confirm(`Are you sure to set all users as ${status}?`)) return;
+
+  const res = await fetch(
+    "https://digyaanshshrishti.onrender.com/api/users/update-all-status",
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    }
+  );
+
+  const out = await res.json();
+
+  if (out.success) {
+    alert("All users updated!");
+
+    // Update frontend state except admin
+    setUsers((prev) =>
+      prev.map((u) =>
+        u.role === "admin" ? u : { ...u, access: status }
+      )
+    );
+  }
+};
 
   // ============= HANDLE EDIT CHANGE ============
   const handleEditChange = (field, value) => {
@@ -110,6 +135,279 @@ export default function AdminUsersExcelView() {
 
   return (
     <div className="page-container">
+      <h1 className="text-3xl font-bold mb-6">Users (Editable Table)</h1>
+
+      <button className="download-btn" onClick={downloadExcel}>
+        Download Excel ⬇️
+      </button>
+      <div style={{ display: "flex", gap: "10px", margin: "15px 0" }}>
+  <button
+    className="download-btn"
+    style={{ background: "green" }}
+    onClick={() => updateAllStatus("active")}
+  >
+    Activate All (Except Admin)
+  </button>
+
+  <button
+    className="download-btn"
+    style={{ background: "red" }}
+    onClick={() => updateAllStatus("inactive")}
+  >
+    Deactivate All (Except Admin)
+  </button>
+</div>
+
+
+      {/* TABLE */}
+      <div className="table-card">
+        <div className="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>SL</th>
+                <th>Name</th>
+                <th>Father</th>
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Aadhaar</th>
+                <th>District</th>
+                <th>Block</th>
+                <th>Designation</th>
+                <th>Address</th>
+                <th>Account No.</th>
+                <th>IFSC</th>
+                <th>Bank Name</th>
+                <th>Status</th>
+                <th>CreatedAt</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {users.map((u, i) =>
+                editingId === u._id ? (
+                  <tr key={u._id}>
+                    <td>{i + 1}</td>
+
+
+                    <td>
+                      <input
+                        value={editRow.name}
+                        onChange={(e) =>
+                          handleEditChange("name", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        value={editRow.fatherName}
+                        onChange={(e) =>
+                          handleEditChange("fatherName", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        value={editRow.gender}
+                        onChange={(e) =>
+                          handleEditChange("gender", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        value={editRow.dob}
+                        onChange={(e) =>
+                          handleEditChange("dob", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        value={editRow.mobile}
+                        onChange={(e) =>
+                          handleEditChange("mobile", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        value={editRow.email}
+                        onChange={(e) =>
+                          handleEditChange("email", e.target.value)
+                        }
+                      />
+                    </td>
+  <td>
+                      <input
+                        value={editRow.password}
+                        onChange={(e) =>
+                          handleEditChange("password", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={editRow.aadhaar}
+                        onChange={(e) =>
+                          handleEditChange("aadhaar", e.target.value)
+                        }
+                      />
+                    </td>
+                  
+
+                    <td>
+                      <input
+                        value={editRow.district}
+                        onChange={(e) =>
+                          handleEditChange("district", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        value={editRow.block}
+                        onChange={(e) =>
+                          handleEditChange("block", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        value={editRow.designation}
+                        onChange={(e) =>
+                          handleEditChange("designation", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        value={editRow.address}
+                        onChange={(e) =>
+                          handleEditChange("address", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        value={editRow.bankDetails?.accountNumber || ""}
+                        onChange={(e) =>
+                          handleEditChange("bank.accountNumber", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        value={editRow.bankDetails?.ifscCode || ""}
+                        onChange={(e) =>
+                          handleEditChange("bank.ifscCode", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        value={editRow.bankDetails?.bankName || ""}
+                        onChange={(e) =>
+                          handleEditChange("bank.bankName", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>{u.access}</td>
+
+                    <td>{u.createdAt?.slice(0, 10)}</td>
+
+                    <td>
+                      <div className="action-buttons">
+                        <button
+                          onClick={saveEdit}
+                          className="action-btn save-btn"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => setEditingId(null)}
+                          className="action-btn cancel-btn"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  <tr key={u._id}>
+                    <td>{i + 1}</td>
+                    <td>{u.name}</td>
+                    <td>{u.fatherName}</td>
+                    <td>{u.gender}</td>
+                    <td>{u.dob}</td>
+                    <td>{u.mobile}</td>
+                    <td>{u.email}</td>
+                    <td>{u.password}</td>
+                    <td>{u.aadhaar}</td>
+                    <td>{u.district}</td>
+                    <td>{u.block}</td>
+                    <td>{u.designation}</td>
+                    <td>{u.address}</td>
+                    <td>{u.bankDetails?.accountNumber}</td>
+                    <td>{u.bankDetails?.ifscCode}</td>
+                    <td>{u.bankDetails?.bankName}</td>
+                    <td>
+                      <button
+                        onClick={() => toggleAccess(u)}
+                        style={{
+                          padding: "4px 10px",
+                          borderRadius: "6px",
+                          border: "none",
+                          cursor: "pointer",
+                          background: u.access === "active" ? "green" : "red",
+                          color: "white",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {u.access === "active" ? "active" : "inactive"}
+                      </button>
+                    </td>
+
+                    <td>{u.createdAt?.slice(0, 10)}</td>
+                    <td>
+                      <div className="action-buttons">
+                        <button
+                          onClick={() => enableEdit(u)}
+                          className="action-btn edit-btn"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => deleteUser(u._id)}
+                          className="action-btn delete-btn"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
       {/* STYLE */}
       <style>{`
 /* ================= PAGE ================= */
@@ -255,107 +553,6 @@ input:focus {
 
 
 `}</style>
-
-      <h1 className="text-3xl font-bold mb-6">Users (Editable Table)</h1>
-
-      <button className="download-btn" onClick={downloadExcel}>
-        Download Excel ⬇️
-      </button>
-
-      {/* TABLE */}
-      <div className="table-card">
-        <div className="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>SL</th>
-                <th>Name</th>
-                <th>Father</th>
-                <th>Gender</th>
-                <th>DOB</th>
-                <th>Mobile</th>
-                <th>Email</th>
-                <th>Aadhaar</th>
-                <th>District</th>
-                <th>Block</th>
-                <th>Designation</th>
-                <th>Address</th>
-                <th>Account No.</th>
-                <th>IFSC</th>
-                <th>Bank Name</th>
-                <th>Status</th>
-                <th>CreatedAt</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {users.map((u, i) =>
-                editingId === u._id ? (
-                  <tr key={u._id}>
-                    <td>{i + 1}</td>
-                    {/* EDIT MODE INPUTS... */}
-                  </tr>
-                ) : (
-                  <tr key={u._id}>
-                    <td>{i + 1}</td>
-                    <td>{u.name}</td>
-                    <td>{u.fatherName}</td>
-                    <td>{u.gender}</td>
-                    <td>{u.dob}</td>
-                    <td>{u.mobile}</td>
-                    <td>{u.email}</td>
-                    <td>{u.aadhaar}</td>
-                    <td>{u.district}</td>
-                    <td>{u.block}</td>
-                    <td>{u.designation}</td>
-                    <td>{u.address}</td>
-                    <td>{u.bankDetails?.accountNumber}</td>
-                    <td>{u.bankDetails?.ifscCode}</td>
-                    <td>{u.bankDetails?.bankName}</td>
-                    <td>
-                   
-
-                      <button
-                        onClick={() => toggleAccess(u)}
-                        style={{
-                          padding: "4px 10px",
-                          borderRadius: "6px",
-                          border: "none",
-                          cursor: "pointer",
-                          background: u.access === "active" ? "green" : "red",
-                          color: "white",
-                          fontWeight: "600",
-                        }}
-                      >
-                        {u.access === "active" ? "active" : "inactive"}
-                      </button>
-                    </td>
-
-                    <td>{u.createdAt?.slice(0, 10)}</td>
-                    <td>
-                      <div className="action-buttons">
-                        <button
-                          onClick={() => enableEdit(u)}
-                          className="action-btn edit-btn"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => deleteUser(u._id)}
-                          className="action-btn delete-btn"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   );
 }
