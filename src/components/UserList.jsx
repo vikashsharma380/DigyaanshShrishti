@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminUsersExcelView() {
   const [users, setUsers] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editRow, setEditRow] = useState({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("https://digyaanshshrishti.onrender.com/api/users/list")
@@ -138,23 +141,23 @@ export default function AdminUsersExcelView() {
       <button className="download-btn" onClick={downloadExcel}>
         Download Excel ⬇️
       </button>
-      <button
-        className="download-btn"
-        style={{ background: "green" }}
-        onClick={() => updateAllStatus("active")}
-      >
-        Activate All (Except Admin)
-      </button>
+      <div style={{ display: "flex", gap: "10px", margin: "15px 0" }}>
+        <button
+          className="download-btn"
+          style={{ background: "green" }}
+          onClick={() => updateAllStatus("active")}
+        >
+          Activate All (Except Admin)
+        </button>
 
-      <button
-        className="download-btn"
-        style={{ background: "red" }}
-        onClick={() => updateAllStatus("inactive")}
-      >
-        Deactivate All (Except Admin)
-      </button>
-
-      <div className="btn-container"></div>
+        <button
+          className="download-btn"
+          style={{ background: "red" }}
+          onClick={() => updateAllStatus("inactive")}
+        >
+          Deactivate All (Except Admin)
+        </button>
+      </div>
 
       {/* TABLE */}
       <div className="table-card">
@@ -424,7 +427,7 @@ export default function AdminUsersExcelView() {
 /* Excel Download Button */
 .download-btn {
   padding: 10px 16px;
-  background: #4a6cff;
+  background: #000000ff;
   border: none;
   border-radius: 6px;
   color: white;
@@ -530,15 +533,15 @@ input:focus {
 }
 
 .edit-btn {
-  background: #f6c343;
-  color: #000;
+  background: #000000ff;
+  color: #ecececff;
 }
 .delete-btn {
   background: #e64242;
   color: white;
 }
 .save-btn {
-  background: #28a745;
+  background: #000000ff;
   color: white;
 }
 .cancel-btn {
@@ -548,6 +551,27 @@ input:focus {
 .edit-user-btn{
   background:"black";
   color:"white";
+}
+.create-user-btn {
+  margin-left: 12px;
+  padding: 10px 18px;
+  background: linear-gradient(90deg, #030405ff, #000000ff);
+  border-radius: 8px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  box-shadow: 0 4px 14px rgba(0, 114, 255, 0.3);
+}
+
+.create-user-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 114, 255, 0.45);
+}
+
+.create-user-btn:active {
+  transform: scale(0.95);
 }
 
 
