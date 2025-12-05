@@ -232,3 +232,13 @@
   justify-content: space-between;
   margin-top: 10px;
 }
+.search-input {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: none;
+  background: white;
+  color: black;
+  font-size: 15px;
+  outline: none;
+  width: 250px;
+}
