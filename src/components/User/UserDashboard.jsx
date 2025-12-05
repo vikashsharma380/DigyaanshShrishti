@@ -517,11 +517,16 @@ useEffect(() => {
 
   // ---------------- DOWNLOAD EXCEL ----------------
   const downloadExcel = () => {
-    const ws = XLSX.utils.json_to_sheet(filtered);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sweeper Data");
-    XLSX.writeFile(wb, "SweeperData.xlsx");
-  };
+  // Remove id, district, and __v from each record
+  const cleaned = filtered.map(({ id, district, __v, ...rest }) => rest);
+
+  const ws = XLSX.utils.json_to_sheet(cleaned);
+  const wb = XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(wb, ws, "Sweeper Data");
+  XLSX.writeFile(wb, "SweeperData.xlsx");
+};
+
 
   return (
     <div className="dashboard-bg">
