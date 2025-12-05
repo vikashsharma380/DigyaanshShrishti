@@ -153,3 +153,15 @@
   font-size: 14px;
   font-weight: 600;
 }
+.login-logo-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.login-logo {
+  width: 90px; /* adjust size if needed */
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
