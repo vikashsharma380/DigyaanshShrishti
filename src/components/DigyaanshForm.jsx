@@ -272,9 +272,9 @@ export default function DigyaanshAppointmentForm() {
             Dear {data.name || "__________"},
             <br />
             <br />
-            हमें आपको<b> {data.project || "__________"}</b> के <b> {data.designation} </b>पद की
+            हमें आपको<b> {data.project || "__________"}</b> <b> {data.designation} </b>पद की
             नियुक्ति प्रदान करते हुए प्रसन्नता हो रही है। DIGYAANSH SHRISHTI
-            MAINTENANCE PVT. LTD.,प्रभावी तिथि {data.deo || "__________"} यह
+            MAINTENANCE PVT. LTD.,प्रभावी तिथि { formatDate(data.deo || "__________")} यह
             नियुक्ति कुछ नियमो और शर्तों पर निर्भर है जो नीचे दी गयी हैं :-
             <br />
             <br />

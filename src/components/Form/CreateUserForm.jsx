@@ -77,9 +77,7 @@ export default function CreateUserForm() {
     const result = await res.json();
 
     if (result.success) {
-      alert(
-        `User Created!\nUser ID: ${result.userId}\nPassword: ${result.password}`
-      );
+      
     } else {
       alert("Error: " + result.message);
     }
