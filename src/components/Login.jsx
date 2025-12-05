@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/login.css";
+import logo from "../assets/logo.jpeg";
 
 export default function Login() {
   const [mobile, setMobile] = useState("");
@@ -17,11 +18,13 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await axios.post("https://digyaanshshrishti.onrender.com/api/auth/login", {
-
-        mobile: mobile,
-        password: password,
-      });
+      const res = await axios.post(
+        "https://digyaanshshrishti.onrender.com/api/auth/login",
+        {
+          mobile: mobile,
+          password: password,
+        }
+      );
 
       const { token, user } = res.data;
 
@@ -50,7 +53,12 @@ export default function Login() {
 
       <div className="login-wrapper">
         <div className="login-card">
-          <h2 className="login-title">Welcome Back 👋</h2>
+          {/* ⭐ YOUR LOGO ABOVE WELCOME BACK ⭐ */}
+          <div className="login-logo-box">
+            <img src={logo} alt="Company Logo" className="login-logo" />
+          </div>
+
+          <h2 className="login-title">Welcome Back In DSM</h2>
           <p className="login-subtitle">Login to access your dashboard</p>
 
           <form className="login-form" onSubmit={handleLogin}>
@@ -76,7 +84,11 @@ export default function Login() {
 
             {error && <p className="error">{error}</p>}
 
-            <button className="btn-primary login-btn" type="submit" disabled={loading}>
+            <button
+              className="btn-primary login-btn"
+              type="submit"
+              disabled={loading}
+            >
               {loading ? "Logging in..." : "Login →"}
             </button>
           </form>
