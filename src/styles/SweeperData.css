@@ -48,11 +48,6 @@
   transition: 0.2s ease;
 }
 
-.dash-logout-btn:hover {
-  background: #111;
-  transform: translateY(-2px);
-}
-
 /* ================================
    PAGE TITLE
 ================================ */
