@@ -38,8 +38,7 @@ const AboutSection = () => {
           <span className="about-tag">About Us</span>
 
           <h2 className="about-title">
-            Your Trusted{" "}
-            <span className="highlight-accent">Service Partner</span>
+            Your Trusted <span>Service Partner</span>
           </h2>
 
           <p className="about-text">
