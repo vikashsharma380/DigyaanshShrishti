@@ -73,4 +73,16 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
+router.get("/users/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.json({ success: false });
+
+    res.json({ success: true, user });
+  } catch (err) {
+    res.json({ success: false });
+  }
+});
+
+
 export default router;
