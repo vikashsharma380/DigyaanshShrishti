@@ -22,6 +22,27 @@ export default function CreateUserForm() {
     },
     access: "active",
   });
+  const districtBlocks = {
+    Gopalganj: ["Sidhwaliya", "Panchdewari"],
+    Bhagalpur: ["Sahkund", "Jagdishpur"],
+    "East Champaran": [
+      "Adapur",
+      "Areraj",
+      "Banjariya",
+      "Bankatwa",
+      "Chakia",
+      "Dhaka",
+      "Phenhara",
+      "Harsidhi",
+      "Kalyanpur",
+      "Kesariya",
+      "Kotwa",
+      "Madhuban",
+      "Mehsi",
+      "Piprakothi",
+      "Sangrampur",
+    ],
+  };
 
   // NORMAL FIELD CHANGE
   const handleChange = (e) => {
@@ -89,24 +110,43 @@ export default function CreateUserForm() {
             />
           </div>
 
+          {/* UPDATED DISTRICT FIELD */}
           <div>
             <label>District:</label>
-            <input
+            <select
               name="district"
               value={data.district}
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e);
+                setData({ ...data, district: e.target.value, block: "" });
+              }}
               required
-            />
+            >
+              <option value="">Select District</option>
+              <option value="East Champaran">East Champaran</option>
+              <option value="Gopalganj">Gopalganj</option>
+              <option value="Bhagalpur">Bhagalpur</option>
+            </select>
           </div>
 
+          {/* UPDATED BLOCK FIELD */}
           <div>
             <label>Block:</label>
-            <input
+            <select
               name="block"
               value={data.block}
               onChange={handleChange}
               required
-            />
+            >
+              <option value="">Select Block</option>
+
+              {data.district &&
+                districtBlocks[data.district]?.map((b) => (
+                  <option key={b} value={b}>
+                    {b}
+                  </option>
+                ))}
+            </select>
           </div>
 
           <div>
