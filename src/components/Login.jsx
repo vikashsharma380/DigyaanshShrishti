@@ -20,7 +20,7 @@ export default function Login() {
       const res = await axios.post("https://digyaanshshrishti.onrender.com/api/auth/login", {
 
         mobile: mobile,
-        password: pass,
+        password: password,
       });
 
       const { token, user } = res.data;
