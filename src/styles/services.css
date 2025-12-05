@@ -19,10 +19,10 @@
 .services-tag {
   font-size: 14px;
   text-transform: uppercase;
-  background: rgba(120, 0, 255, 0.1);
+  background: rgba(0, 0, 0, 0.53);
   padding: 8px 16px;
   border-radius: 20px;
-  color: #7a00ff;
+  color: #f0eff1;
   font-weight: 600;
 }
 
