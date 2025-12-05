@@ -338,28 +338,44 @@ export default function UserDashboard() {
 
   // ---- SAFE USER ----
   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const isInactive = user?.access === "inactive";
+const [currentUser, setCurrentUser] = useState(user);
 
-  if (!user?.id) {
-    navigate("/login");
-    return null;
-  }
+
 useEffect(() => {
-  async function refreshUser() {
-    const res = await fetch(
-      `https://digyaanshshrishti.onrender.com/api/users/${user.id}`
-    );
+  if(!user?.id) return;
+  fetch(`https://digyaanshshrishti.onrender.com/api/users/${user.id}`)
+    .then(res => res.json())
+    .then(updatedUser => {
+      console.log("Fetched updated user:", updatedUser);
 
-    const out = await res.json();
+     if (updatedUser.success) {
+  const u = {
+    ...updatedUser.user,
+    id: updatedUser.user._id,   // FIX - MongoDB ID always stored as id
+  };
 
-    if (out.success) {
-      localStorage.setItem("user", JSON.stringify(out.user));
-      window.location.reload();
-    }
-  }
+localStorage.setItem(
+  "user",
+  JSON.stringify({
+    ...res.data.user,
+    id: res.data.user.id || res.data.user._id,
+  })
+);
 
-  refreshUser();
+  setCurrentUser(u);
+}
+
+    });
 }, []);
+
+  const canModify = currentUser?.access === "active";
+
+useEffect(() => {
+  if (!currentUser?.id) {
+    navigate("/login");
+  }
+}, [currentUser]);
+
 
 
   const [data, setData] = useState([]);
@@ -394,7 +410,8 @@ useEffect(() => {
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [addForm, setAddForm] = useState({
-    block: user.block || "",
+   block: (currentUser?.block || user.block || ""),
+
     schoolName: "",
     sweeperName: "",
     toilets: "",
@@ -513,7 +530,7 @@ useEffect(() => {
         <h1 className="title">User Dashboard</h1>
 
         <div className="profile">
-          <span>👤 {user?.name}</span>
+          <span>👤 {currentUser?.name}</span>
           <button className="logout-btn" onClick={handleLogout}>
             Logout
           </button>
@@ -550,11 +567,12 @@ useEffect(() => {
           <button className="btn" onClick={downloadExcel}>
             📥 Download Excel
           </button>
-          {!isInactive && (
-            <button className="btn" onClick={() => setShowAddForm(true)}>
-              ➕ Add Sweeper
-            </button>
-          )}
+         {canModify && (
+  <button className="btn" onClick={() => setShowAddForm(true)}>
+    ➕ Add Sweeper
+  </button>
+)}
+
         </div>
 
         {/* TABLE */}
@@ -570,7 +588,6 @@ useEffect(() => {
               <th>IFSC</th>
               <th>Salary</th>
               <th>Edit</th>
-              <th>Delete</th>
             </tr>
           </thead>
 
@@ -660,42 +677,27 @@ useEffect(() => {
                     <td>{row.accountNumber}</td>
                     <td>{row.ifsc}</td>
                     <td>{row.salary}</td>
-                    {isInactive ? (
-                      <>
-                        <td style={{ color: "red", fontWeight: "bold" }}>
-                          Restricted
-                        </td>
-                        <td></td>
-                      </>
-                    ) : row.status === "active" ? (
-                      <>
-                        <td>
-                          <button onClick={() => startEdit(row)}>
-                            ✏️ Edit
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            onClick={() => deleteSweeper(row._id)}
-                            style={{
-                              background: "red",
-                              color: "white",
-                              padding: "5px 10px",
-                              borderRadius: "6px",
-                            }}
-                          >
-                            🗑 Delete
-                          </button>
-                        </td>
-                      </>
-                    ) : (
-                      <>
-                        <td style={{ color: "red", fontWeight: "bold" }}>
-                          Inactive
-                        </td>
-                        <td></td>
-                      </>
-                    )}
+{currentUser?.access === "active" && (
+  <td>
+  <button onClick={() => startEdit(row)}>✏ Edit</button>
+  </td>
+)}
+{currentUser?.access === "active" && (
+  <td>
+    <button
+      onClick={() => deleteSweeper(row._id)}
+      style={{
+        background: "red",
+        color: "white",
+        padding: "5px 10px",
+        borderRadius: "6px",
+      }}
+    >
+      🗑 Delete
+    </button>
+  </td>
+)}
+
                   </>
                 )}
               </tr>

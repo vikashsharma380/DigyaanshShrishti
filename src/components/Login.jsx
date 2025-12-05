@@ -4,7 +4,7 @@ import axios from "axios";
 import "../styles/login.css";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ export default function Login() {
     try {
       const res = await axios.post("https://digyaanshshrishti.onrender.com/api/auth/login", {
 
-        email,
+        mobile: mobile,
         password: pass,
       });
 
@@ -61,7 +61,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <label>Email Address</label>
+              <label>Mobile Number</label>
             </div>
 
             <div className="input-group">

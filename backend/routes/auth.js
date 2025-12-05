@@ -9,17 +9,18 @@ const JWT_SECRET = "MY_SECRET_KEY";
 
 router.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { mobile, password } = req.body;
 
-    if (!email || !password)
-      return res.status(400).json({ message: "Email and password required" });
+    if (!mobile || !password)
+      return res.status(400).json({ message: "Mobile and password required" });
 
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const user = await User.findOne({ mobile });
 
-    if (!user) return res.status(401).json({ message: "Invalid email or password" });
+    if (!user)
+      return res.status(401).json({ message: "Invalid mobile or password" });
 
     if (password !== user.password)
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({ message: "Invalid mobile or password" });
 
     const token = jwt.sign({ id: user._id }, JWT_SECRET, {
       expiresIn: "7d",
@@ -29,8 +30,8 @@ router.post("/login", async (req, res) => {
       token,
       user: {
         id: user._id,
-        email: user.email,
         name: user.name,
+        mobile: user.mobile,
         designation: user.designation,
         block: user.block,
         access: user.access,
@@ -41,5 +42,6 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 export default router;
