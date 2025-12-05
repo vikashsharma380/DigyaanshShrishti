@@ -5,7 +5,7 @@ import "../styles/login.css";
 
 export default function Login() {
   const [mobile, setMobile] = useState("");
-  const [pass, setPass] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -56,10 +56,10 @@ export default function Login() {
           <form className="login-form" onSubmit={handleLogin}>
             <div className="input-group">
               <input
-                type="email"
+                type="text"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={mobile}
+                onChange={(e) => setMobile(e.target.value)}
               />
               <label>Mobile Number</label>
             </div>
@@ -68,8 +68,8 @@ export default function Login() {
               <input
                 type="password"
                 required
-                value={pass}
-                onChange={(e) => setPass(e.target.value)}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <label>Password</label>
             </div>
