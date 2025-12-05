@@ -183,11 +183,26 @@ export default function UserDashboard() {
 
   // ---------------- DOWNLOAD EXCEL ----------------
   const downloadExcel = () => {
-    const ws = XLSX.utils.json_to_sheet(filtered);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sweeper Data");
-    XLSX.writeFile(wb, "SweeperData.xlsx");
-  };
+  // Clean unwanted keys
+  const cleaned = filtered.map(item => {
+    const obj = { ...item };
+
+    delete obj._id;
+    delete obj.district;
+    delete obj.__v;
+
+    return obj;
+  });
+
+  console.log("Cleaned Data: ", cleaned);  // ← Check this (ID should be removed)
+
+  const ws = XLSX.utils.json_to_sheet(cleaned);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Sweeper Data");
+  XLSX.writeFile(wb, "SweeperData.xlsx");
+};
+
+
 
   return (
     <div className="dashboard-bg">

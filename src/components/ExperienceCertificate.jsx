@@ -14,6 +14,14 @@ export default function DeepakExperience() {
     salary: "1,700",
   });
 
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    let day = String(d.getDate()).padStart(2, "0");
+    let month = String(d.getMonth() + 1).padStart(2, "0");
+    let year = d.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
@@ -147,7 +155,7 @@ export default function DeepakExperience() {
                 contentEditable
                 onInput={(e) => handleEditable("date", e.target.innerText)}
               >
-                Date: {data.date}
+                Date: {formatDate(data.date)}
               </div>
 
               <img
@@ -158,7 +166,7 @@ export default function DeepakExperience() {
             </div>
           </div>
 
-          <h2 className="center-heading">EMPLOYEE EXPERIENCE CERTIFICATE</h2>
+          <h2 className="center-heading"> EXPERIENCE CERTIFICATE</h2>
 
           {/* EMPLOYEE DETAILS */}
           {/* <div className="employee-details">
@@ -190,11 +198,11 @@ export default function DeepakExperience() {
             future endeavors.
           </div>
 
-          <div className="signatures">
-            <div contentEditable className="Authorized">
+          <div className="signaturess">
+            <div contentEditable className=" experiencecertificate">
               For, Digyaansh Shrishti Maintenance Pvt. Ltd.
               <br />
-              <div contentEditable className="sign">
+              <div contentEditable className="signe ">
                 {" "}
                 Managing Director
               </div>
