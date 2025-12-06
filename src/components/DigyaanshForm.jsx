@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/digyaansh.css";
+import * as XLSX from "xlsx";
+
 
 export default function DigyaanshAppointmentForm() {
   const [data, setData] = useState({
@@ -43,7 +45,21 @@ export default function DigyaanshAppointmentForm() {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
+const downloadExcel = () => {
+  if (list.length === 0) {
+    alert("No data to download!");
+    return;
+  }
 
+  // Remove _id and __v if present
+  const cleaned = list.map(({ _id, __v, ...rest }) => rest);
+
+  const ws = XLSX.utils.json_to_sheet(cleaned);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Appointments");
+
+  XLSX.writeFile(wb, "appointments.xlsx");
+};
   // handle editable content below
   const handleEditable = (key, value) => {
     setData((p) => ({ ...p, [key]: value }));
@@ -68,6 +84,24 @@ export default function DigyaanshAppointmentForm() {
         date: data.date,
       }),
     });
+
+    const deleteAppointment = async (id) => {
+  if (!window.confirm("Are you sure you want to delete this record?")) return;
+
+  const res = await fetch(
+    `https://digyaanshshrishti.onrender.com/api/appointments/delete/${id}`,
+    { method: "DELETE" }
+  );
+
+  const result = await res.json();
+
+  if (result.success) {
+    alert("Deleted Successfully");
+    fetchList(); // list refresh
+  } else {
+    alert("Delete Failed: " + result.message);
+  }
+};
 
     // Step 2: Generate PDF
     const element = document.getElementById("pdf-wrapper");
@@ -176,29 +210,7 @@ export default function DigyaanshAppointmentForm() {
           Generate PDF
         </button>
       </div>
-      <div className="list-box">
-        <h3>Saved Appointments</h3>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Ref No.</th>
-              <th>Name</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {list.map((item, index) => (
-              <tr key={index}>
-                <td>{item.ref}</td>
-                <td>{item.name}</td>
-                <td>{item.date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+     
 
       {/* ========= PDF PREVIEW AREA ========= */}
       <div id="pdf-wrapper" className="pdf-wrapper">
@@ -390,6 +402,47 @@ export default function DigyaanshAppointmentForm() {
           </footer>
         </div>
       </div>
+ <div className="list-box">
+   <button className="btn-primary" onClick={downloadExcel}>
+  Download Excel
+</button>
+        <h3>Saved Appointments</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Ref No.</th>
+              <th>Name</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+
+         <tbody>
+  {list.map((item, index) => (
+    <tr key={index}>
+      <td>{item.ref}</td>
+      <td>{item.name}</td>
+      <td>{item.date}</td>
+
+      <td>
+        <button
+          className="delete-btn"
+          onClick={() => deleteAppointment(item._id)}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+    
+  ))}
+  
+</tbody>
+
+        </table>
+       
+
+      </div>
+
     </div>
   );
 }
