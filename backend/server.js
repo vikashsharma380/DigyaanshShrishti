@@ -31,6 +31,9 @@ import authRoutes from "./routes/auth.js";
 app.use("/api/auth", authRoutes);
 import sweeperRoutes from "./routes/sweeper.js";
 app.use("/api/sweeper", sweeperRoutes);
+import experienceRoute from "./routes/experience.js";
+
+app.use("/api/experience", experienceRoute);
 
 import contactRoutes from "./routes/contact.js";
 app.use("/api/contact", contactRoutes);
