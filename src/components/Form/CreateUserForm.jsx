@@ -4,6 +4,10 @@ import "../../styles/user.css";
 export default function CreateUserForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [district, setDistrict] = useState([]);
+  const districtBlocks = {};
+  district.forEach((d) => {
+    districtBlocks[d.name] = d.blocks;
+  });
   const [data, setData] = useState({
     name: "",
     fatherName: "",
