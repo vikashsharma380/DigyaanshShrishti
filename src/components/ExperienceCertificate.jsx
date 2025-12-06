@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import * as XLSX from "xlsx";
+
 import "../styles/digyaansh.css";
 
 export default function DeepakExperience() {
@@ -13,6 +15,54 @@ export default function DeepakExperience() {
     endDate: "30 September 2025",
     salary: "1,700",
   });
+const [list, setList] = useState([]);
+const fetchList = async () => {
+  const res = await fetch(
+    "https://digyaanshshrishti.onrender.com/api/experience/list"
+  );
+
+  const result = await res.json();
+
+  if (result.success) {
+    setList(result.list);
+  }
+};
+useEffect(() => {
+  fetchList();
+}, []);
+const deleteExperience = async (id) => {
+  if (!window.confirm("Are you sure?")) return;
+
+  const res = await fetch(
+    `https://digyaanshshrishti.onrender.com/api/experience/delete/${id}`,
+    { method: "DELETE" }
+  );
+
+  const result = await res.json();
+
+  if (result.success) {
+    alert("Deleted!");
+    fetchList();
+  }
+};
+
+const downloadExcel = () => {
+  if (list.length === 0) {
+    alert("No data available!");
+    return;
+  }
+
+  // Remove MongoDB fields (_id, __v)
+  const cleaned = list.map(({ _id, __v, createdAt, updatedAt, ...rest }) => rest);
+
+  const ws = XLSX.utils.json_to_sheet(cleaned);
+  const wb = XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(wb, ws, "Experience List");
+
+  XLSX.writeFile(wb, "experience_list.xlsx");
+};
+
 
   const formatDate = (dateStr) => {
     if (!dateStr) return "";
@@ -31,7 +81,28 @@ export default function DeepakExperience() {
     setData((p) => ({ ...p, [key]: value }));
   };
 
-  const generatePDF = () => {
+  const saveExperience = async () => {
+  const res = await fetch(
+    "https://digyaanshshrishti.onrender.com/api/experience/add",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }
+  );
+
+  const result = await res.json();
+
+  if (result.success) {
+    alert("Experience Saved Successfully!");
+  } else {
+    alert("Error: " + result.message);
+  }
+};
+
+
+  const generatePDF = async () => {
+    await saveExperience();
     const element = document.getElementById("pdf-wrapper");
     const opt = {
       margin: 0,
@@ -220,6 +291,40 @@ export default function DeepakExperience() {
           </footer>
         </div>
       </div>
+   <div className="list-box">
+  <h3>Saved Experience Certificates</h3>
+
+  <button className="btn-primary" onClick={downloadExcel}>
+    Download Excel
+  </button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Ref No.</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {list.map((item, i) => (
+        <tr key={i}>
+          <td>{item.ref}</td>
+          <td>{item.name}</td>
+          <td>{item.date}</td>
+          <td>
+            <button className="delete-btn" onClick={() => deleteExperience(item._id)}>
+              Delete
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+
     </div>
   );
 }
