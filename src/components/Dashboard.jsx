@@ -8,6 +8,9 @@ export default function Dashboard() {
 const [notifications, setNotifications] = useState([]);
 const [showNotifications, setShowNotifications] = useState(false);
 const [selectedDistrict, setSelectedDistrict] = useState("");
+const [selectedBlock, setSelectedBlock] = useState("");
+const [openStates, setOpenStates] = useState({});
+
 
 useEffect(() => {
   fetch("https://digyaanshshrishti.onrender.com/api/contact/list")

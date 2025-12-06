@@ -185,7 +185,7 @@ export default function UserDashboard() {
   const downloadExcel = () => {
   // Clean unwanted keys
   const cleaned = filtered.map(item => {
-    const obj = { ...item };
+    const obj = { ...item.toUpperCase() };
 
     delete obj._id;
     delete obj.district;
