@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid mobile or password" });
 
     const token = jwt.sign({ id: user._id }, JWT_SECRET, {
-      expiresIn: "7d",
+      expiresIn: "2h",
     });
 
     res.json({
