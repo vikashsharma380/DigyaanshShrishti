@@ -94,8 +94,7 @@ const downloadExcel = () => {
   const result = await res.json();
 
   if (result.success) {
-    alert("Experience Saved Successfully!");
-  } else {
+    } else {
     alert("Error: " + result.message);
   }
 };
