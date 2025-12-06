@@ -24,4 +24,15 @@ router.get("/list", async (req, res) => {
   }
 });
 
+// DELETE Appointment
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    await Appointment.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: "Deleted successfully" });
+  } catch (err) {
+    res.json({ success: false, message: "Delete failed" });
+  }
+});
+
+
 export default router;
