@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import "../../styles/UserDashboard.css";
@@ -6,15 +6,14 @@ import "../../styles/UserDashboard.css";
 export default function UserDashboard() {
   const navigate = useNavigate();
 
-  // ---- SAFE USER ----
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const [currentUser, setCurrentUser] = useState(user);
+  // ---- SAFE USER (initial from localStorage) ----
+  const stored = JSON.parse(localStorage.getItem("user") || "{}");
+  const [currentUser, setCurrentUser] = useState(stored);
   const [showProfile, setShowProfile] = useState(false);
 
-  // ⭐ Sweeper / Night Guard Switch
-  const roleType = currentUser?.roleType || "sweeper";
-
-  const canModify = currentUser?.access === "active";
+  // ⭐ role + permission derived state
+  const [roleType, setRoleType] = useState(stored?.roleType || "sweeper");
+  const [canModify, setCanModify] = useState(stored?.access === "active");
 
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -26,9 +25,8 @@ export default function UserDashboard() {
   const [editForm, setEditForm] = useState({});
 
   const [showAddForm, setShowAddForm] = useState(false);
-
   const [addForm, setAddForm] = useState({
-    block: currentUser?.block || "",
+    block: stored?.block || "",
     schoolName: "",
     sweeperName: "",
     guardName: "",
@@ -38,22 +36,98 @@ export default function UserDashboard() {
     salary: "",
   });
 
-  // ---------------- FETCH DATA BASED ON ROLE ----------------
+  // ---------- helper: fetch fresh user from API ----------
+  const fetchCurrentUser = useCallback(async () => {
+    if (!currentUser?._id && !stored?.id && !stored?._id) return;
+    const id = currentUser._id || stored.id || stored._id;
+    try {
+      const res = await fetch(
+        `https://digyaanshshrishti.onrender.com/api/users/${id}`
+      );
+      const out = await res.json();
+      if (out.success && out.user) {
+        setCurrentUser(out.user);
+        setRoleType(out.user.roleType || "sweeper");
+        setCanModify(out.user.access === "active");
+        localStorage.setItem("user", JSON.stringify(out.user));
+        // keep addForm.block in sync if needed
+        setAddForm((prev) => ({ ...prev, block: out.user.block || prev.block }));
+      }
+    } catch (err) {
+      console.error("Failed fetching current user:", err);
+    }
+  }, [currentUser._id, stored.id, stored._id]);
+
+  // ---------- re-fetch current user on mount and when localStorage or focus changes ----------
   useEffect(() => {
+    // initial fetch to ensure latest
+    fetchCurrentUser();
+
+    const onStorage = (e) => {
+      if (e.key === "user") {
+        // another tab updated the user
+        try {
+          const u = JSON.parse(e.newValue || "{}");
+          if (u && u._id) {
+            setCurrentUser(u);
+            setRoleType(u.roleType || "sweeper");
+            setCanModify(u.access === "active");
+            setAddForm((prev) => ({ ...prev, block: u.block || prev.block }));
+          } else {
+            // fallback fetch
+            fetchCurrentUser();
+          }
+        } catch {
+          fetchCurrentUser();
+        }
+      }
+    };
+
+    const onFocus = () => {
+      // user returned to tab: re-fetch to pick up admin changes
+      fetchCurrentUser();
+    };
+
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") fetchCurrentUser();
+    };
+
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [fetchCurrentUser]);
+
+  // ---------------- FETCH DATA BASED ON ROLE & currentUser id ----------------
+  useEffect(() => {
+    const id = currentUser._id || stored.id || stored._id;
+    if (!id) return;
+
     const apiPath =
       roleType === "nightguard"
         ? "nightguard/supervisor-data"
         : "sweeper/supervisor-data";
 
-    fetch(`https://digyaanshshrishti.onrender.com/api/${apiPath}/${user.id}`)
+    fetch(`https://digyaanshshrishti.onrender.com/api/${apiPath}/${id}`)
       .then((res) => res.json())
       .then((out) => {
-        const cleanData = out.filter((d) => d && d.block);
+        // handle both array response or wrapped object
+        const list = Array.isArray(out) ? out : out.list || out.data || out;
+        const cleanData = (list || []).filter((d) => d && d.block);
         setData(cleanData);
         setFiltered(cleanData);
       })
-      .catch(() => setData([]));
-  }, [roleType]);
+      .catch((err) => {
+        console.error("Failed fetching role data:", err);
+        setData([]);
+        setFiltered([]);
+      });
+  }, [roleType, currentUser._id, stored.id, stored._id]);
 
   // ---------------- FILTER ----------------
   useEffect(() => {
@@ -68,13 +142,15 @@ export default function UserDashboard() {
 
       result = result.filter(
         (row) =>
-          row.schoolName?.toLowerCase().includes(search.toLowerCase()) ||
-          row[key]?.toLowerCase().includes(search.toLowerCase())
+          (row.schoolName || "")
+            .toLowerCase()
+            .includes(search.toLowerCase()) ||
+          ((row[key] || "").toLowerCase().includes(search.toLowerCase()))
       );
     }
 
     setFiltered(result);
-  }, [search, blockFilter, data]);
+  }, [search, blockFilter, data, roleType]);
 
   // ---------------- LOGOUT ----------------
   const handleLogout = () => {
@@ -179,14 +255,13 @@ export default function UserDashboard() {
     XLSX.writeFile(wb, `${roleType}-data.xlsx`);
   };
 
+  // ---------- render UI (unchanged UI logic) ----------
   return (
     <div className="dashboard-bg">
       {/* TOPBAR */}
       <div className="topbar modern-topbar">
         <h1 className="title">
-          {roleType === "nightguard"
-            ? "Night Guard Dashboard"
-            : "Sweeper Dashboard"}
+          {roleType === "nightguard" ? "Night Guard Dashboard" : "Sweeper Dashboard"}
         </h1>
 
         <div className="profile" onClick={() => setShowProfile(true)}>
@@ -209,175 +284,62 @@ export default function UserDashboard() {
         <div className="filter-box">
           <input
             className="filter-input"
-            placeholder={`Search school or ${
-              roleType === "nightguard" ? "guard" : "sweeper"
-            }...`}
+            placeholder={`Search school or ${roleType === "nightguard" ? "guard" : "sweeper"}...`}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
 
-          <select
-            className="filter-input"
-            value={blockFilter}
-            onChange={(e) => setBlockFilter(e.target.value)}
-          >
+          <select className="filter-input" value={blockFilter} onChange={(e) => setBlockFilter(e.target.value)}>
             <option value="">Filter Block</option>
-
             {[...new Set(data.map((d) => d.block))].map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
+              <option key={b} value={b}>{b}</option>
             ))}
           </select>
 
-          <button className="btn" onClick={downloadExcel}>
-            📥 Download Excel
-          </button>
+          <button className="btn" onClick={downloadExcel}>📥 Download Excel</button>
 
-          {canModify && (
-            <button className="btn" onClick={() => setShowAddForm(true)}>
-              ➕ Add New
-            </button>
-          )}
+          {canModify && <button className="btn" onClick={() => setShowAddForm(true)}>➕ Add New</button>}
         </div>
 
         {/* TABLE */}
         <table className="styled-table">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Block</th>
-              <th>School</th>
-              <th>{roleType === "nightguard" ? "Guard Name" : "Sweeper"}</th>
-              <th>Toilets</th>
-              <th>Account No</th>
-              <th>IFSC</th>
-              <th>Salary</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <th>#</th><th>Block</th><th>School</th><th>{roleType === "nightguard" ? "Guard Name" : "Sweeper"}</th>
+              <th>Toilets</th><th>Account No</th><th>IFSC</th><th>Salary</th><th>Edit</th><th>Delete</th>
             </tr>
           </thead>
-
           <tbody>
             {filtered.map((row, index) => (
               <tr key={row._id || index}>
                 <td>{index + 1}</td>
-
                 {editingId === row._id ? (
                   <>
+                    <td><input value={editForm.block} onChange={(e) => setEditForm({...editForm, block: e.target.value})} /></td>
+                    <td><input value={editForm.schoolName} onChange={(e) => setEditForm({...editForm, schoolName: e.target.value})} /></td>
                     <td>
                       <input
-                        value={editForm.block}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, block: e.target.value })
-                        }
+                        value={roleType === "nightguard" ? editForm.guardName : editForm.sweeperName}
+                        onChange={(e) => setEditForm({...editForm, [roleType === "nightguard" ? "guardName" : "sweeperName"]: e.target.value})}
                       />
                     </td>
-
-                    <td>
-                      <input
-                        value={editForm.schoolName}
-                        onChange={(e) =>
-                          setEditForm({
-                            ...editForm,
-                            schoolName: e.target.value,
-                          })
-                        }
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        value={
-                          roleType === "nightguard"
-                            ? editForm.guardName
-                            : editForm.sweeperName
-                        }
-                        onChange={(e) =>
-                          setEditForm({
-                            ...editForm,
-                            [roleType === "nightguard"
-                              ? "guardName"
-                              : "sweeperName"]: e.target.value,
-                          })
-                        }
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        value={editForm.toilets}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, toilets: e.target.value })
-                        }
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        value={editForm.accountNumber}
-                        onChange={(e) =>
-                          setEditForm({
-                            ...editForm,
-                            accountNumber: e.target.value,
-                          })
-                        }
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        value={editForm.ifsc}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, ifsc: e.target.value })
-                        }
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        value={editForm.salary}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, salary: e.target.value })
-                        }
-                      />
-                    </td>
-
-                    <td>
-                      <button onClick={saveEdit}>💾 Save</button>
-                    </td>
+                    <td><input value={editForm.toilets} onChange={(e) => setEditForm({...editForm, toilets: e.target.value})} /></td>
+                    <td><input value={editForm.accountNumber} onChange={(e) => setEditForm({...editForm, accountNumber: e.target.value})} /></td>
+                    <td><input value={editForm.ifsc} onChange={(e) => setEditForm({...editForm, ifsc: e.target.value})} /></td>
+                    <td><input value={editForm.salary} onChange={(e) => setEditForm({...editForm, salary: e.target.value})} /></td>
+                    <td><button onClick={saveEdit}>💾 Save</button></td>
                   </>
                 ) : (
                   <>
                     <td>{row.block}</td>
                     <td>{row.schoolName}</td>
-                    <td>
-                      {roleType === "nightguard"
-                        ? row.guardName
-                        : row.sweeperName}
-                    </td>
-
+                    <td>{roleType === "nightguard" ? row.guardName : row.sweeperName}</td>
                     <td>{row.toilets}</td>
                     <td>{row.accountNumber}</td>
                     <td>{row.ifsc}</td>
                     <td>{row.salary}</td>
-
-                    {canModify && (
-                      <td>
-                        <button onClick={() => startEdit(row)}>✏ Edit</button>
-                      </td>
-                    )}
-
-                    {canModify && (
-                      <td>
-                        <button
-                          onClick={() => deleteRow(row._id)}
-                          style={{ background: "red", color: "white" }}
-                        >
-                          🗑 Delete
-                        </button>
-                      </td>
-                    )}
+                    {canModify && <td><button onClick={() => startEdit(row)}>✏ Edit</button></td>}
+                    {canModify && <td><button onClick={() => deleteRow(row._id)} style={{background:"red",color:"white"}}>🗑 Delete</button></td>}
                   </>
                 )}
               </tr>
@@ -390,88 +352,46 @@ export default function UserDashboard() {
           <div className="overlay">
             <div className="popup popup-modern">
               <h3>Add New {roleType === "nightguard" ? "Guard" : "Sweeper"}</h3>
-
-              <div style={{ marginBottom: "10px" }}>
+              <div style={{marginBottom:10}}>
                 <label>Block</label>
-                <input
-                  value={addForm.block}
-                  readOnly
-                  style={{ background: "#eee" }}
-                />
+                <input value={addForm.block} readOnly style={{background:"#eee"}}/>
               </div>
-
-              <div style={{ marginBottom: "10px" }}>
+              <div style={{marginBottom:10}}>
                 <label>School Name</label>
-                <input
-                  value={addForm.schoolName}
-                  onChange={(e) =>
-                    setAddForm({ ...addForm, schoolName: e.target.value })
-                  }
-                />
+                <input value={addForm.schoolName} onChange={(e)=>setAddForm({...addForm, schoolName: e.target.value})}/>
               </div>
-
-              <div style={{ marginBottom: "10px" }}>
-                <label>
-                  {roleType === "nightguard" ? "Guard Name" : "Sweeper Name"}
-                </label>
-                <input
-                  value={
-                    roleType === "nightguard"
-                      ? addForm.guardName
-                      : addForm.sweeperName
-                  }
-                  onChange={(e) =>
-                    setAddForm({
-                      ...addForm,
-                      [roleType === "nightguard" ? "guardName" : "sweeperName"]:
-                        e.target.value,
-                    })
-                  }
-                />
+              <div style={{marginBottom:10}}>
+                <label>{roleType === "nightguard" ? "Guard Name" : "Sweeper Name"}</label>
+                <input value={roleType === "nightguard" ? addForm.guardName : addForm.sweeperName}
+                  onChange={(e)=>setAddForm({...addForm, [roleType === "nightguard" ? "guardName" : "sweeperName"]: e.target.value})}/>
               </div>
+             {roleType !== "nightguard" && (
+  <div style={{ marginBottom: "10px" }}>
+    <label>Toilets</label>
+    <input
+      value={addForm.toilets}
+      onChange={(e) =>
+        setAddForm({ ...addForm, toilets: e.target.value })
+      }
+    />
+  </div>
+)}
 
-              <div style={{ marginBottom: "10px" }}>
-                <label>Toilets</label>
-                <input
-                  value={addForm.toilets}
-                  onChange={(e) =>
-                    setAddForm({ ...addForm, toilets: e.target.value })
-                  }
-                />
-              </div>
-
-              <div style={{ marginBottom: "10px" }}>
+              <div style={{marginBottom:10}}>
                 <label>Account Number</label>
-                <input
-                  value={addForm.accountNumber}
-                  onChange={(e) =>
-                    setAddForm({ ...addForm, accountNumber: e.target.value })
-                  }
-                />
+                <input value={addForm.accountNumber} onChange={(e)=>setAddForm({...addForm, accountNumber: e.target.value})}/>
               </div>
-
-              <div style={{ marginBottom: "10px" }}>
+              <div style={{marginBottom:10}}>
                 <label>IFSC</label>
-                <input
-                  value={addForm.ifsc}
-                  onChange={(e) =>
-                    setAddForm({ ...addForm, ifsc: e.target.value })
-                  }
-                />
+                <input value={addForm.ifsc} onChange={(e)=>setAddForm({...addForm, ifsc: e.target.value})}/>
               </div>
-
-              <div style={{ marginBottom: "10px" }}>
+              <div style={{marginBottom:10}}>
                 <label>Salary</label>
-                <input
-                  value={addForm.salary}
-                  onChange={(e) =>
-                    setAddForm({ ...addForm, salary: e.target.value })
-                  }
-                />
+                <input value={addForm.salary} onChange={(e)=>setAddForm({...addForm, salary: e.target.value})}/>
               </div>
 
-              <button onClick={saveNew}>Save</button>
-              <button onClick={() => setShowAddForm(false)}>Cancel</button>
+              <button style={{background:"green",color:"white", marginRight:300}} onClick={saveNew}>Save</button>
+              <button style={{background:"red",color:"white"}} onClick={()=>setShowAddForm(false)}>Cancel</button>
             </div>
           </div>
         )}
@@ -489,65 +409,23 @@ export default function UserDashboard() {
 
             <table className="profile-table-pro">
               <tbody>
-                <tr>
-                  <th>Name</th>
-                  <td>{currentUser?.name}</td>
-                </tr>
-
-                <tr>
-                  <th>Email</th>
-                  <td>{currentUser?.email}</td>
-                </tr>
-
-                <tr>
-                  <th>Mobile</th>
-                  <td>{currentUser?.mobile}</td>
-                </tr>
-                <tr>
-                  <th>District</th>
-                  <td>{currentUser?.district}</td>
-                </tr>
-                <tr>
-                  <th>Block</th>
-                  <td>{currentUser?.block}</td>
-                </tr>
-               {currentUser?.bankDetails ? (
-  <>
-    <tr>
-      <th>Bank Name</th>
-      <td>{currentUser.bankDetails.bankName || "Not Provided"}</td>
-    </tr>
-
-    <tr>
-      <th>Account Number</th>
-      <td>{currentUser.bankDetails.accountNumber || "Not Provided"}</td>
-    </tr>
-
-    <tr>
-      <th>IFSC Code</th>
-      <td>{currentUser.bankDetails.ifscCode || "Not Provided"}</td>
-    </tr>
-  </>
-) : (
-  <tr>
-    <th>Bank Details</th>
-    <td>Not Provided</td>
-  </tr>
-)}
-
-                <tr>
-                  <th>Role Type</th>
-                  <td>{roleType}</td>
-                </tr>
+                <tr><th>Name</th><td>{currentUser?.name}</td></tr>
+                <tr><th>Email</th><td>{currentUser?.email}</td></tr>
+                <tr><th>Mobile</th><td>{currentUser?.mobile}</td></tr>
+                <tr><th>District</th><td>{currentUser?.district}</td></tr>
+                <tr><th>Block</th><td>{currentUser?.block}</td></tr>
+                {currentUser?.bankDetails ? (
+                  <>
+                    <tr><th>Bank Name</th><td>{currentUser.bankDetails.bankName || "Not Provided"}</td></tr>
+                    <tr><th>Account Number</th><td>{currentUser.bankDetails.accountNumber || "Not Provided"}</td></tr>
+                    <tr><th>IFSC Code</th><td>{currentUser.bankDetails.ifscCode || "Not Provided"}</td></tr>
+                  </>
+                ) : (<tr><th>Bank Details</th><td>Not Provided</td></tr>)}
+                <tr><th>Role Type</th><td>{roleType}</td></tr>
               </tbody>
             </table>
 
-            <button
-              className="close-btn-pro"
-              onClick={() => setShowProfile(false)}
-            >
-              Close
-            </button>
+            <button className="close-btn-pro" onClick={() => setShowProfile(false)}>Close</button>
           </div>
         </div>
       )}

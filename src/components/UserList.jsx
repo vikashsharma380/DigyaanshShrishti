@@ -43,11 +43,11 @@ const toggleRole = async (user) => {
   if (!window.confirm(`Change ${user.name} role to ${newRole}?`)) return;
 
   const res = await fetch(
-    `https://digyaanshshrishti.onrender.com/api/users/update-role/${user._id}`,
+    `https://digyaanshshrishti.onrender.com/api/users/update/${user._id}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ roleType: newRole }),
+      body: JSON.stringify({ roleType: newRole }), // ⭐ Only roleType update
     }
   );
 
@@ -55,11 +55,15 @@ const toggleRole = async (user) => {
 
   if (out.success) {
     alert("Role updated!");
+
     setUsers((prev) =>
-      prev.map((u) => (u._id === user._id ? out.user : u))
+      prev.map((u) =>
+        u._id === user._id ? { ...u, roleType: newRole } : u
+      )
     );
   }
 };
+
 
   // ============= DELETE USER =================
   const deleteUser = async (id) => {
