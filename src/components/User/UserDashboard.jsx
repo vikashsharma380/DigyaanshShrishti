@@ -240,20 +240,27 @@ export default function UserDashboard() {
   };
 
   // ---------------- DOWNLOAD EXCEL ----------------
-  const downloadExcel = () => {
-    const cleaned = filtered.map((item) => {
-      const obj = { ...item };
-      delete obj._id;
-      delete obj.__v;
-      delete obj.district;
-      return obj;
-    });
+ const downloadExcel = () => {
+  // Remove unwanted fields
+  const cleaned = filtered.map(item => {
+    const {
+      _id,
+      __v,
+      createdAt,
+      updatedAt,
+      district,  // REMOVE THIS IF NOT NEEDED
+      ...rest
+    } = item;
 
-    const ws = XLSX.utils.json_to_sheet(cleaned);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Data");
-    XLSX.writeFile(wb, `${roleType}-data.xlsx`);
-  };
+    return rest;
+  });
+
+  const worksheet = XLSX.utils.json_to_sheet(cleaned);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "SweeperData");
+  XLSX.writeFile(workbook, "Sweeper_Data.xlsx");
+};
+
 
   // ---------- render UI (unchanged UI logic) ----------
   return (

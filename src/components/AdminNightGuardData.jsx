@@ -183,12 +183,27 @@ export default function AdminNightGuardData() {
   };
 
   // DOWNLOAD EXCEL
-  const downloadExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(filtered);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "NightGuardData");
-    XLSX.writeFile(workbook, "NightGuard_Data.xlsx");
-  };
+ const downloadExcel = () => {
+  // Remove unwanted fields
+  const cleaned = filtered.map(item => {
+    const {
+      _id,
+      __v,
+      createdAt,
+      updatedAt,
+      district,  // REMOVE THIS IF NOT NEEDED
+      ...rest
+    } = item;
+
+    return rest;
+  });
+
+  const worksheet = XLSX.utils.json_to_sheet(cleaned);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "SweeperData");
+  XLSX.writeFile(workbook, "Sweeper_Data.xlsx");
+};
+
 
   // LOGOUT
   const handleLogout = () => {
