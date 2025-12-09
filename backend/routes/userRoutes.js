@@ -122,4 +122,26 @@ router.put("/update-role/:id", async (req, res) => {
 });
 
 
+// UPDATE ALL USERS ROLE TYPE
+router.put("/update-all-roles", async (req, res) => {
+  try {
+    const { roleType } = req.body;
+
+    if (!roleType) {
+      return res.json({ success: false, message: "Role type required" });
+    }
+
+    // Update all except admins
+    const result = await User.updateMany(
+      { designation: { $ne: "Admin" } },
+      { roleType }
+    );
+
+    res.json({ success: true, updated: result.modifiedCount });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+});
+
+
 export default router;
