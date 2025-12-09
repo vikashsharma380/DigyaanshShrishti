@@ -10,6 +10,9 @@ export default function UserDashboard() {
   const stored = JSON.parse(localStorage.getItem("user") || "{}");
   const [currentUser, setCurrentUser] = useState(stored);
   const [showProfile, setShowProfile] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+const [showNotifications, setShowNotifications] = useState(false);
+
 
   // ⭐ role + permission derived state
   const [roleType, setRoleType] = useState(stored?.roleType || "sweeper");
@@ -83,6 +86,8 @@ export default function UserDashboard() {
       }
     };
 
+  
+
     const onFocus = () => {
       // user returned to tab: re-fetch to pick up admin changes
       fetchCurrentUser();
@@ -103,6 +108,19 @@ export default function UserDashboard() {
     };
   }, [fetchCurrentUser]);
 
+    useEffect(() => {
+  const id = currentUser._id || stored.id || stored._id;
+  if (!id) return;
+
+  fetch(`https://digyaanshshrishti.onrender.com/api/notifications/${id}`)
+    .then(res => res.json())
+    .then(out => {
+      if (out.success) {
+        setNotifications(out.notifications || []);
+      }
+    })
+    .catch(err => console.error("Notification Error:", err));
+}, [currentUser]);
   // ---------------- FETCH DATA BASED ON ROLE & currentUser id ----------------
   useEffect(() => {
     const id = currentUser._id || stored.id || stored._id;
@@ -283,6 +301,14 @@ export default function UserDashboard() {
             Logout
           </button>
         </div>
+        <div className="notification-box" onClick={() => setShowNotifications(prev => !prev)}>
+  <span className="bell-icon">🔔</span>
+
+  {notifications.length > 0 && (
+    <span className="notif-count">{notifications.length}</span>
+  )}
+</div>
+
       </div>
 
       {/* CONTENT */}
@@ -438,6 +464,24 @@ export default function UserDashboard() {
           </div>
         </div>
       )}
+
+      {showNotifications && (
+  <div className="notification-dropdown">
+    <h4>Notifications</h4>
+
+    {notifications.length === 0 ? (
+      <p className="empty">No notifications</p>
+    ) : (
+      notifications.map((n, i) => (
+        <div key={i} className="notif-item">
+          <p>{n.message}</p>
+          <span className="time">{new Date(n.createdAt).toLocaleString()}</span>
+        </div>
+      ))
+    )}
+  </div>
+)}
+
     </div>
   );
 }
