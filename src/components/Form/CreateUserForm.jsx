@@ -27,6 +27,7 @@ export default function CreateUserForm() {
       bankName: "",
     },
     access: "active",
+    roleType: "sweeper",
   });
   useEffect(() => {
     fetch("https://digyaanshshrishti.onrender.com/api/district/list")
@@ -143,15 +144,38 @@ export default function CreateUserForm() {
             </select>
           </div>
 
-          <div>
-            <label>Designation:</label>
-            <input
-              name="designation"
-              value={data.designation}
-              onChange={handleChange}
-              required
-            />
-          </div>
+         <div>
+  <label>Designation:</label>
+  <select
+    name="designation"
+    value={data.designation}
+    onChange={(e) => {
+      const value = e.target.value;
+
+      // Auto Set Role Type
+      let role = "supervisor"; // default
+
+      if (value === "Sweeper") role = "sweeper";
+      if (value === "Night Guard") role = "nightguard";
+
+      setData({
+        ...data,
+        designation: value,
+        roleType: role,
+      });
+    }}
+    required
+  >
+    <option value="">Select Designation</option>
+    <option value="Admin">Admin</option>
+    <option value="Supervisor">Supervisor</option>
+   
+    <option value="Coordinator">Coordinator</option>
+    <option value="Staff">Staff</option>
+    <option value="Other">Other</option>
+  </select>
+</div>
+
 
           <div>
             <label>Aadhaar:</label>
