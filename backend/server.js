@@ -39,6 +39,8 @@ import contactRoutes from "./routes/contact.js";
 app.use("/api/contact", contactRoutes);
 import districtRoutes from "./routes/district.js";
 app.use("/api/district", districtRoutes);
+import nightguardRoutes from "./routes/nightguard.js";
+app.use("/api/nightguard", nightguardRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log("Server running on port", process.env.PORT);

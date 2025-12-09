@@ -37,6 +37,29 @@ export default function AdminUsersExcelView() {
       );
     }
   };
+const toggleRole = async (user) => {
+  const newRole = user.roleType === "nightguard" ? "sweeper" : "nightguard";
+
+  if (!window.confirm(`Change ${user.name} role to ${newRole}?`)) return;
+
+  const res = await fetch(
+    `https://digyaanshshrishti.onrender.com/api/users/update-role/${user._id}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ roleType: newRole }),
+    }
+  );
+
+  const out = await res.json();
+
+  if (out.success) {
+    alert("Role updated!");
+    setUsers((prev) =>
+      prev.map((u) => (u._id === user._id ? out.user : u))
+    );
+  }
+};
 
   // ============= DELETE USER =================
   const deleteUser = async (id) => {
@@ -141,6 +164,8 @@ export default function AdminUsersExcelView() {
       <button className="download-btn" onClick={downloadExcel}>
         Download Excel ⬇️
       </button>
+      
+
       <div style={{ display: "flex", gap: "10px", margin: "15px 0" }}>
         <button
           className="download-btn"
@@ -184,6 +209,8 @@ export default function AdminUsersExcelView() {
                 <th>Status</th>
                 <th>CreatedAt</th>
                 <th>Actions</th>
+                <th>Role Action</th>
+
               </tr>
             </thead>
 
@@ -327,6 +354,7 @@ export default function AdminUsersExcelView() {
                     </td>
 
                     <td>{u.access}</td>
+                  
 
                     <td>{u.createdAt?.slice(0, 10)}</td>
 
@@ -381,6 +409,7 @@ export default function AdminUsersExcelView() {
                         {u.access === "active" ? "active" : "inactive"}
                       </button>
                     </td>
+                    
 
                     <td>{u.createdAt?.slice(0, 10)}</td>
                     <td>
@@ -399,6 +428,24 @@ export default function AdminUsersExcelView() {
                         </button>
                       </div>
                     </td>
+
+                    <td>
+  <button
+    onClick={() => toggleRole(u)}
+    style={{
+      padding: "6px 12px",
+      background: u.roleType === "nightguard" ? "orange" : "blue",
+      color: "white",
+      border: "none",
+      borderRadius: "6px",
+      cursor: "pointer",
+      fontWeight: "600"
+    }}
+  >
+    {u.roleType === "nightguard" ? "Make Sweeper" : "Make Night Guard"}
+  </button>
+</td>
+
                   </tr>
                 )
               )}

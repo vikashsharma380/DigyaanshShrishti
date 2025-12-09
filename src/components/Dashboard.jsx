@@ -31,6 +31,35 @@ useEffect(() => {
     });
 }, []);
 
+
+
+
+const toggleRole = async (user) => {
+  const newRole = user.roleType === "nightguard" ? "sweeper" : "nightguard";
+
+  if (!window.confirm(`Change ${user.name}'s role to ${newRole}?`)) return;
+
+  const res = await fetch(
+    `https://digyaanshshrishti.onrender.com/api/users/update-role/${user._id}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ roleType: newRole }),
+    }
+  );
+
+  const out = await res.json();
+
+  if (out.success) {
+    alert("Role updated!");
+    setUsers((prev) =>
+      prev.map((u) => (u._id === user._id ? out.user : u))
+    );
+  } else {
+    alert("Failed to update role!");
+  }
+};
+
 const addDistrict = async () => {
   const name = document.getElementById("district-input").value;
   if (!name) return alert("Enter district");
