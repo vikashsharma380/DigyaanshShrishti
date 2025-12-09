@@ -1,60 +1,14 @@
-// import { useState } from "react";
-// import * as XLSX from "xlsx";
 
-// export default function ExcelUpload() {
-//   const [jsonData, setJsonData] = useState([]);
-
-//   const handleFileUpload = (e) => {
-//     const file = e.target.files[0];
-
-//     const reader = new FileReader();
-//     reader.onload = (event) => {
-//       const binary = event.target.result;
-//       const workbook = XLSX.read(binary, { type: "binary" });
-
-//       const sheetName = workbook.SheetNames[0];
-//       const sheet = workbook.Sheets[sheetName];
-
-//       const json = XLSX.utils.sheet_to_json(sheet);
-//       setJsonData(json);
-//     };
-
-//     reader.readAsBinaryString(file);
-//   };
-
-//   const sendToBackend = async () => {
-//     const res = await fetch("https://digyaanshshrishti.onrender.com/api/sweeper/upload-excel", {
-
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ data: jsonData })
-//     });
-
-//     const result = await res.json();
-//     alert(result.message);
-//   };
-
-//   return (
-//     <div style={{ padding: "40px" }}>
-//       <h2>Upload Sweeper Excel File</h2>
-//       <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
-
-//       {jsonData.length > 0 && (
-//         <>
-//           <p>{jsonData.length} records loaded</p>
-//           <button onClick={sendToBackend}>Save to Database</button>
-//         </>
-//       )}
-//     </div>
-//   );
-// }
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import * as XLSX from "xlsx";
 import { useNavigate } from "react-router-dom";
 
 export default function ExcelUpload() {
   const [jsonData, setJsonData] = useState([]);
   const navigate = useNavigate();
+
+const [blockSummary, setBlockSummary] = useState([]);
+
 
   const handleFileUpload = (file) => {
     if (!file) return;
@@ -78,6 +32,38 @@ export default function ExcelUpload() {
     e.preventDefault();
     handleFileUpload(e.dataTransfer.files[0]);
   };
+const [dbData, setDbData] = useState([]);
+useEffect(() => {
+  fetch("https://digyaanshshrishti.onrender.com/api/sweeper/all-data")
+    .then(res => res.json())
+    .then(out => {
+      const clean = (Array.isArray(out) ? out : []).filter(item => item && item.block);
+      setDbData(clean);
+    })
+    .catch(err => console.log(err));
+}, []);
+
+useEffect(() => {
+  const summary = {};
+
+  dbData.forEach((row) => {
+    const block = row.block?.trim().toLowerCase();
+    if (block) {
+      summary[block] = (summary[block] || 0) + 1;
+    }
+  });
+
+  setBlockSummary(Object.entries(summary));
+}, [dbData]);
+const [blockCounts, setBlockCounts] = useState([]);
+
+useEffect(() => {
+  fetch("http://localhost:5000/api/sweeper/blocks/count")
+    .then((res) => res.json())
+    .then((data) => setBlockCounts(data))
+    .catch((err) => console.log(err));
+}, []);
+
 
   const sendToBackend = async () => {
     const res = await fetch(
@@ -221,6 +207,69 @@ export default function ExcelUpload() {
           </div>
         )}
       </div>
+    
+<div
+  style={{
+    marginTop: "30px",
+    background: "#fff",
+    padding: "20px",
+    borderRadius: "12px",
+    boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+    width: "500px",
+  }}
+>
+  <h3 style={{ marginBottom: "15px", color: "#222", textAlign: "center" }}>
+    Block-wise Data Summary
+  </h3>
+
+  {blockSummary.length === 0 ? (
+    <p
+      style={{
+        textAlign: "center",
+        padding: "10px",
+        color: "#666",
+        fontStyle: "italic",
+      }}
+    >
+      No block data available yet.
+    </p>
+  ) : (
+    <table
+      style={{
+        width: "100%",
+        borderCollapse: "collapse",
+        textAlign: "left",
+        fontSize: "15px",
+      }}
+    >
+      <thead>
+        <tr style={{ background: "#f3f3f3" }}>
+          <th style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+            Block Name
+          </th>
+          <th style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+            Records Count
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {blockSummary.map(([block, count]) => (
+          <tr key={block}>
+            <td style={{ padding: "10px", borderBottom: "1px solid #eee", textTransform: "capitalize" }}>
+              {block}
+            </td>
+            <td style={{ padding: "10px", borderBottom: "1px solid #eee" }}>
+              {count}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )}
+</div>
+
+    
     </div>
   );
 }
