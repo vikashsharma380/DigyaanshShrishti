@@ -197,10 +197,10 @@ const updateAllRoles = async (role) => {
       </button>
       
 
-      <div style={{ display: "flex", gap: "10px", margin: "15px 0" }}>
+      <div style={{ display: "flex", gap: "10px",justifyContent: "space-evenly", margin: "15px 0" }}>
         <button
   className="download-btn"
-  style={{ background: "black" }}
+  style={{ background: "green" }}
   onClick={() => updateAllRoles("sweeper")}
 >
   Set All as Sweeper

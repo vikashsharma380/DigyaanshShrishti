@@ -164,17 +164,18 @@ const addBlock = async () => {
       type: "sweeper",
     },
     {
-  title: "View Night Guard Data",
-  link: "/admin/nightguard-data",
-  icon: "🛡️",
-  type: "nightguard",
-},
-{
   title: "Upload Night Guard Excel",
   link: "/upload-nightguard",
   icon: "📤",
   type: "nightguard",
 },
+    {
+  title: "View Night Guard Data",
+  link: "/admin/nightguard-data",
+  icon: "🛡️",
+  type: "nightguard",
+},
+
 {
   title: "Send Notification",
   link: "/admin/send-notification",
