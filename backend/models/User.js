@@ -30,6 +30,8 @@ const userSchema = new mongoose.Schema(
       enum: ["active", "inactive"],
       default: "active",
     },
+    roleType: { type: String, default: "sweeper" }
+
   },
   { timestamps: true }
 );

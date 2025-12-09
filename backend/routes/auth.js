@@ -35,6 +35,7 @@ router.post("/login", async (req, res) => {
         designation: user.designation,
         block: user.block,
         access: user.access,
+        roleType: user.roleType, 
         email: user.email,
         aadhaar: user.aadhaar,
         address: user.address,

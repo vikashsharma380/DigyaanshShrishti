@@ -102,6 +102,24 @@ router.put("/update-all-status", async (req, res) => {
     res.json({ success: false, error: err.message });
   }
 });
+router.put("/update-role/:id", async (req, res) => {
+  try {
+    const { roleType } = req.body;
+
+    const updated = await User.findByIdAndUpdate(
+      req.params.id,
+      { roleType },
+      { new: true }
+    );
+
+    if (!updated)
+      return res.json({ success: false, message: "User not found" });
+
+    res.json({ success: true, message: "Role updated", user: updated });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
 
 
 export default router;
