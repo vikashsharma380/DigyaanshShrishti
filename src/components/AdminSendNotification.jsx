@@ -4,32 +4,26 @@ export default function AdminSendNotification() {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("all");
   const [message, setMessage] = useState("");
-
   const [sentMessages, setSentMessages] = useState([]);
 
-  // GET ALL USERS
+  // FETCH USERS
   useEffect(() => {
     fetch("https://digyaanshshrishti.onrender.com/api/users/list")
       .then((res) => res.json())
-      .then((out) => {
-        console.log("USERS API OUTPUT:", out);
-        if (out.success) setUsers(out.users);
-      });
+      .then((out) => out.success && setUsers(out.users));
   }, []);
 
-  // GET ALL SENT NOTIFICATIONS
+  // FETCH SENT NOTIFICATIONS
   useEffect(() => {
     fetch("https://digyaanshshrishti.onrender.com/api/notifications/admin/all")
       .then((res) => res.json())
-      .then((out) => {
-        if (out.success) setSentMessages(out.list);
-      });
+      .then((out) => out.success && setSentMessages(out.list));
   }, []);
 
   const sendMessage = async () => {
     if (!message.trim()) return alert("Please type a message!");
 
-    let payload = {
+    const payload = {
       message,
       userId: selectedUser === "all" ? null : selectedUser,
     };
@@ -46,31 +40,20 @@ export default function AdminSendNotification() {
     const out = await res.json();
 
     if (out.success) {
-      alert(
-        selectedUser === "all"
-          ? "Message sent to ALL users!"
-          : "Message sent successfully!"
-      );
-
+      alert("Notification Sent! 🚀");
       setMessage("");
       setSelectedUser("all");
 
-      // REFRESH NOTIFICATION LIST
       fetch(
         "https://digyaanshshrishti.onrender.com/api/notifications/admin/all"
       )
         .then((res) => res.json())
-        .then((out) => {
-          if (out.success) setSentMessages(out.list);
-        });
-    } else {
-      alert("Failed to send message!");
+        .then((out) => out.success && setSentMessages(out.list));
     }
   };
 
-  // DELETE MESSAGE
   const deleteMsg = async (id) => {
-    if (!window.confirm("Delete this notification?")) return;
+    if (!window.confirm("Delete this message?")) return;
 
     const res = await fetch(
       `https://digyaanshshrishti.onrender.com/api/notifications/delete/${id}`,
@@ -87,40 +70,55 @@ export default function AdminSendNotification() {
   return (
     <div
       style={{
-        maxWidth: "750px",
+        maxWidth: "900px",
         margin: "40px auto",
-        background: "white",
-        padding: "25px",
-        borderRadius: "12px",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+        padding: "40px",
+        borderRadius: "18px",
+        background: "rgba(255,255,255,0.1)",
+        backdropFilter: "blur(12px)",
+        border: "1px solid rgba(255,255,255,0.2)",
+        boxShadow: "0 20px 50px rgba(0,0,0,0.25)",
       }}
     >
+      {/* HEADER */}
       <h2
         style={{
           textAlign: "center",
-          marginBottom: "20px",
-          fontSize: "26px",
-          fontWeight: "600",
+          marginBottom: "30px",
+          fontSize: "34px",
+          fontWeight: "700",
+          background: "linear-gradient(90deg,#00d2ff,#3a7bd5)",
+          WebkitBackgroundClip: "text",
+          color: "transparent",
+          letterSpacing: "1px",
         }}
       >
         📢 Send Notification
       </h2>
 
-      {/* USER SELECTION */}
-      <label style={{ fontWeight: "600" }}>Send To</label>
+      {/* SELECT USER */}
+      <label
+        style={{ fontWeight: "600", fontSize: "18px", color: "#fff" }}
+      >
+        Select User
+      </label>
+
       <select
         style={{
           width: "100%",
-          padding: "12px",
-          margin: "8px 0 16px 0",
-          borderRadius: "8px",
-          border: "1px solid #ccc",
+          padding: "14px",
+          borderRadius: "10px",
+          border: "none",
+          margin: "10px 0 20px 0",
+          background: "rgba(255,255,255,0.2)",
+          color: "black",
+          fontSize: "16px",
+          outline: "none",
         }}
         value={selectedUser}
         onChange={(e) => setSelectedUser(e.target.value)}
       >
         <option value="all">📢 All Users</option>
-
         {users.map((u) => (
           <option key={u._id} value={u._id}>
             {u.name} ({u.roleType})
@@ -128,19 +126,24 @@ export default function AdminSendNotification() {
         ))}
       </select>
 
-      {/* MESSAGE INPUT */}
-      <label style={{ fontWeight: "600" }}>Message</label>
+      {/* MESSAGE BOX */}
+      <label style={{ fontWeight: "600", fontSize: "18px", color: "#000000ff" }}>
+        Message
+      </label>
       <textarea
         style={{
           width: "100%",
-          padding: "12px",
-          minHeight: "120px",
-          borderRadius: "8px",
-          border: "1px solid #ccc",
-          marginBottom: "20px",
+          padding: "15px",
+          minHeight: "130px",
+          borderRadius: "12px",
+          border: "none",
+          background: "rgba(255,255,255,0.2)",
+          color: "black",
           fontSize: "16px",
+          outline: "none",
+          marginTop: "10px",
         }}
-        placeholder="Type message here..."
+        placeholder="Type your message..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
@@ -149,53 +152,75 @@ export default function AdminSendNotification() {
       <button
         style={{
           width: "100%",
-          padding: "14px",
-          background: "#007bff",
+          padding: "15px",
+          background: "linear-gradient(90deg,#3a7bd5,#00d2ff)",
           color: "white",
-          borderRadius: "8px",
+          borderRadius: "12px",
+          fontSize: "20px",
+          fontWeight: "700",
           border: "none",
-          fontSize: "18px",
-          fontWeight: "600",
           cursor: "pointer",
-          marginBottom: "30px",
+          marginTop: "20px",
+          transition: "0.25s",
         }}
+        onMouseEnter={(e) =>
+          (e.target.style.transform = "scale(1.03)")
+        }
+        onMouseLeave={(e) =>
+          (e.target.style.transform = "scale(1)")
+        }
         onClick={sendMessage}
       >
-        Send Message 🚀
+        🚀 Send Notification
       </button>
 
-      {/* ========================== */}
-      {/* SENT MESSAGES LIST */}
-      {/* ========================== */}
-
-      <h3 style={{ marginBottom: "10px", fontWeight: "600" }}>
+      {/* LIST OF SENT MESSAGES */}
+      <h3
+        style={{
+          fontSize: "24px",
+          color: "black",
+          marginTop: "35px",
+          color: "#fff",
+          borderBottom: "2px solid rgba(255,255,255,0.3)",
+          paddingBottom: "8px",
+        }}
+      >
         📜 Sent Notifications
       </h3>
 
-      {sentMessages.length === 0 && <p>No messages sent yet.</p>}
+      {sentMessages.length === 0 && (
+        <p style={{ color: "#eee", marginTop: "10px" }}>
+          No notifications sent yet.
+        </p>
+      )}
 
       {sentMessages.map((m) => (
         <div
           key={m._id}
           style={{
-            background: "#f5f5f5",
-            padding: "12px",
-            marginBottom: "10px",
-            borderRadius: "8px",
+            background: "rgba(255,255,255,0.15)",
+            padding: "14px",
+            borderRadius: "12px",
+            marginTop: "12px",
+            border: "1px solid rgba(255,255,255,0.2)",
           }}
         >
-          <strong>Message:</strong> {m.message} <br />
-          <small style={{ color: "gray" }}>
+          <strong style={{ fontSize: "17px", color: "#000000ff" }}>
+            {m.message}
+          </strong>
+          <br />
+          <small style={{ color: "#000000ff" }}>
             {new Date(m.createdAt).toLocaleString()}
           </small>
-          <br />
+
           <button
             style={{
+              float: "right",
               background: "red",
               color: "white",
+              border: "none",
               padding: "6px 12px",
               borderRadius: "6px",
-              border: "none",
               cursor: "pointer",
               marginTop: "8px",
             }}
