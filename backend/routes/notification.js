@@ -1,9 +1,8 @@
 import express from "express";
 import Notification from "../models/Notification.js";
+import User from "../models/User.js";   // <-- MISSING IMPORT (IMPORTANT)
 
 const router = express.Router();
-
-
 
 // ---------- GET USER NOTIFICATIONS ----------
 router.get("/:userId", async (req, res) => {
@@ -18,6 +17,7 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
+// ---------- SEND NOTIFICATION ----------
 router.post("/send", async (req, res) => {
   try {
     const { userId, message } = req.body;
@@ -43,9 +43,11 @@ router.post("/send", async (req, res) => {
 
     res.json({ success: true, notification: note });
   } catch (err) {
+    console.log("ERROR:", err);
     res.json({ success: false, message: "Error sending notification" });
   }
 });
+
 // ---------- DELETE NOTIFICATION ----------
 router.delete("/delete/:id", async (req, res) => {
   try {
@@ -61,7 +63,7 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// GET ALL SENT NOTIFICATIONS (ADMIN)
+// ---------- GET ALL SENT (ADMIN) ----------
 router.get("/admin/all", async (req, res) => {
   try {
     const list = await Notification.find().sort({ createdAt: -1 });
@@ -70,6 +72,5 @@ router.get("/admin/all", async (req, res) => {
     res.json({ success: false, message: "Error fetching notifications" });
   }
 });
-
 
 export default router;

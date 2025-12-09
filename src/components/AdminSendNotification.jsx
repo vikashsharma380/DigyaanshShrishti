@@ -9,9 +9,10 @@ export default function AdminSendNotification() {
 
   // GET ALL USERS
   useEffect(() => {
-    fetch("https://digyaanshshrishti.onrender.com/api/users/all")
+    fetch("https://digyaanshshrishti.onrender.com/api/users/list")
       .then((res) => res.json())
       .then((out) => {
+        console.log("USERS API OUTPUT:", out);
         if (out.success) setUsers(out.users);
       });
   }, []);
@@ -45,16 +46,19 @@ export default function AdminSendNotification() {
     const out = await res.json();
 
     if (out.success) {
-      alert(selectedUser === "all"
-        ? "Message sent to ALL users!"
-        : "Message sent successfully!"
+      alert(
+        selectedUser === "all"
+          ? "Message sent to ALL users!"
+          : "Message sent successfully!"
       );
 
       setMessage("");
       setSelectedUser("all");
 
       // REFRESH NOTIFICATION LIST
-      fetch("https://digyaanshshrishti.onrender.com/api/notifications/admin/all")
+      fetch(
+        "https://digyaanshshrishti.onrender.com/api/notifications/admin/all"
+      )
         .then((res) => res.json())
         .then((out) => {
           if (out.success) setSentMessages(out.list);
@@ -185,7 +189,6 @@ export default function AdminSendNotification() {
             {new Date(m.createdAt).toLocaleString()}
           </small>
           <br />
-
           <button
             style={{
               background: "red",
