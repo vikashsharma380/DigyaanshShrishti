@@ -423,43 +423,90 @@ const [showProfile, setShowProfile] = useState(false);
       </div>
     
     
-    {showProfile && (
-  <div className="overlay">
-    <div className="popup profile-popup">
+{showProfile && (
+  <div className="profile-overlay">
+    <div className="profile-card">
 
-      <h2>User Profile</h2>
-
-      <div className="profile-details">
-
-        <p><strong>Name:</strong> {currentUser?.name}</p>
-        <p><strong>Email:</strong> {currentUser?.email}</p>
-        <p><strong>Mobile:</strong> {currentUser?.phone}</p>
-        <p><strong>Block:</strong> {currentUser?.block}</p>
-        <p><strong>Access:</strong> {currentUser?.access}</p>
-        
-        <p><strong>Designation:</strong> {currentUser?.designation}</p>
-        <p><strong>Address:</strong> {currentUser?.address}</p>
-        <p><strong>District:</strong> {currentUser?.district}</p>
-        <p><strong>Father's Name:</strong> {currentUser?.fatherName}</p>
-        <p><strong>Aadhaar:</strong> {currentUser?.aadhaar}</p>
-        <p><strong>DOB:</strong> {currentUser?.dob}</p>
-        <p><strong>Gender:</strong> {currentUser?.gender}</p>
-        <p><strong>Bank Details:</strong> {currentUser?.bankDetails}</p>
-
-
+      <div className="profile-header">
+        <div className="avatar">{currentUser?.name?.charAt(0)}</div>
+        <h2>User Profile</h2>
+        <p className="sub-text">Account Information & Details</p>
       </div>
 
-      <button
-        className="btn"
-        style={{ background: "red", color: "white", marginTop: "10px" }}
-        onClick={() => setShowProfile(false)}
-      >
+      <table className="profile-table-pro">
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <td>{currentUser?.name}</td>
+          </tr>
+
+          <tr>
+            <th>Email</th>
+            <td>{currentUser?.email || "Not Provided"}</td>
+          </tr>
+
+          <tr>
+            <th>Mobile</th>
+            <td>{currentUser?.phone}</td>
+          </tr>
+
+          <tr>
+            <th>Block</th>
+            <td>{currentUser?.block}</td>
+          </tr>
+
+          <tr>
+            <th>District</th>
+            <td>{currentUser?.district}</td>
+          </tr>
+
+          <tr>
+            <th>Father's Name</th>
+            <td>{currentUser?.fatherName}</td>
+          </tr>
+
+          <tr>
+            <th>Aadhaar</th>
+            <td>{currentUser?.aadhaar}</td>
+          </tr>
+
+          <tr>
+            <th>DOB</th>
+            <td>{currentUser?.dob}</td>
+          </tr>
+
+          <tr>
+            <th>Gender</th>
+            <td>{currentUser?.gender}</td>
+          </tr>
+
+          {/* BANK DETAILS */}
+          {currentUser?.bankDetails && (
+            <>
+              <tr>
+                <th>Bank Name</th>
+                <td>{currentUser.bankDetails.bankName}</td>
+              </tr>
+              <tr>
+                <th>Account Number</th>
+                <td>{currentUser.bankDetails.accountNumber}</td>
+              </tr>
+              <tr>
+                <th>IFSC</th>
+                <td>{currentUser.bankDetails.ifscCode}</td>
+              </tr>
+            </>
+          )}
+        </tbody>
+      </table>
+
+      <button className="close-btn-pro" onClick={() => setShowProfile(false)}>
         Close
       </button>
-
     </div>
   </div>
 )}
+
 
     </div>
   );
