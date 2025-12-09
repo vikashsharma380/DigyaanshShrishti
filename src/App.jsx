@@ -21,6 +21,10 @@ import UserList from "./components/UserList";
 // ⭐ Experience Certificate Component
 import DeepakExperience from "./components/ExperienceCertificate";
 
+
+import AdminNightGuardData from "./components/AdminNightGuardData";
+import NightGuardExcelUpload from "./components/ExcelUploadNightGuard";
+
 function Home() {
   return (
     <>
@@ -52,6 +56,9 @@ function App() {
         <Route path="/admin/sweeper-data" element={<AdminSweeperData />} />
 
         <Route path="/upload-excel" element={<ExcelUpload />} />
+        <Route path="/admin/nightguard-data" element={<AdminNightGuardData />} />
+<Route path="/upload-nightguard" element={<NightGuardExcelUpload />} />
+
 
         {/* ⭐ NEW ROUTE FIX ⭐ */}
         <Route

@@ -163,6 +163,19 @@ const addBlock = async () => {
       count: 0,
       type: "sweeper",
     },
+    {
+  title: "View Night Guard Data",
+  link: "/admin/nightguard-data",
+  icon: "🛡️",
+  type: "nightguard",
+},
+{
+  title: "Upload Night Guard Excel",
+  link: "/upload-nightguard",
+  icon: "📤",
+  type: "nightguard",
+},
+
   ];
 const deleteMessage = async (id) => {
   if (!window.confirm("Delete this message?")) return;
@@ -201,6 +214,12 @@ const deleteMessage = async (id) => {
       type: "sweeper",
       count: 2,
     },
+    {
+      title: "Night Guard Data",
+      icon: "🛡️",
+      type: "nightguard",
+      count: 2,
+    },
   ];
 
   // ================================
@@ -211,8 +230,10 @@ const deleteMessage = async (id) => {
     { id: "letters", label: "Letters", icon: "✉️" },
     { id: "users", label: "Users", icon: "👥" },
     { id: "sweeper", label: "Sweeper Data", icon: "🧹" },
+    { id: "nightguard", label: "Night Guard Data", icon: "🛡️" },
     { id: "reports", label: "Reports", icon: "📈" },
     { id: "settings", label: "Settings", icon: "⚙️" },
+
   ];
 
   // ================================
@@ -548,9 +569,12 @@ const deleteMessage = async (id) => {
               ? "Letters"
               : activeNav === "users"
               ? "User Management"
-              : activeNav === "sweeper"
-              ? "Sweeper Tools"
-              : "Section"}
+             : activeNav === "sweeper"
+? "Sweeper Tools"
+: activeNav === "nightguard"
+? "Night Guard Tools"
+: "Section"}
+
           </h2>
 
           <div className="actions-grid">
