@@ -72,5 +72,39 @@ router.get("/supervisor-data/:userId", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+// ADD NEW NIGHT GUARD
+router.post("/add", async (req, res) => {
+  try {
+    const newItem = new NightGuard({
+      district: req.body.district || "",
+      block: req.body.block || "",
+      schoolName: req.body.schoolName || "",
+      guardName: req.body.guardName || "",
+      accountNumber: req.body.accountNumber || "",
+      ifsc: req.body.ifsc || "",
+      salary: req.body.salary || 0,
+    });
+
+    await newItem.save();
+
+    res.json({ success: true, newData: newItem });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+});
+// UPDATE NIGHT GUARD DATA
+router.put("/update/:id", async (req, res) => {
+  try {
+    const updated = await NightGuard.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    res.json({ success: true, updated });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+});
 
 export default router;

@@ -306,7 +306,8 @@ export default function UserDashboard() {
           <thead>
             <tr>
               <th>#</th><th>Block</th><th>School</th><th>{roleType === "nightguard" ? "Guard Name" : "Sweeper"}</th>
-              <th>Toilets</th><th>Account No</th><th>IFSC</th><th>Salary</th><th>Edit</th><th>Delete</th>
+              {roleType !== "nightguard" && <th>Toilets</th>}
+<th>Account No</th><th>IFSC</th><th>Salary</th><th>Edit</th><th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -334,7 +335,8 @@ export default function UserDashboard() {
                     <td>{row.block}</td>
                     <td>{row.schoolName}</td>
                     <td>{roleType === "nightguard" ? row.guardName : row.sweeperName}</td>
-                    <td>{row.toilets}</td>
+                  {roleType !== "nightguard" && <td>{row.toilets}</td>}
+
                     <td>{row.accountNumber}</td>
                     <td>{row.ifsc}</td>
                     <td>{row.salary}</td>
