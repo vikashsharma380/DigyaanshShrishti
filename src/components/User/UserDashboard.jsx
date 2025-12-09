@@ -399,8 +399,8 @@ export default function UserDashboard() {
                 <input value={addForm.salary} onChange={(e)=>setAddForm({...addForm, salary: e.target.value})}/>
               </div>
 
-              <button style={{background:"green",color:"white", marginRight:300}} onClick={saveNew}>Save</button>
-              <button style={{background:"red",color:"white"}} onClick={()=>setShowAddForm(false)}>Cancel</button>
+              <button style={{background:"green",color:"white", marginRight:250, fontSize : "25px"}} onClick={saveNew}>Save</button>
+              <button style={{background:"red",color:"white" , fontSize : "25px"}} onClick={()=>setShowAddForm(false)}>Cancel</button>
             </div>
           </div>
         )}
