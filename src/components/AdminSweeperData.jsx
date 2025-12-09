@@ -11,6 +11,26 @@ export default function AdminSweeperData() {
   const [selectedBlock, setSelectedBlock] = useState("ALL");
   const [editingId, setEditingId] = useState(null);
   const [editRow, setEditRow] = useState({});
+
+  const [showDeleteForm, setShowDeleteForm] = useState(false);
+  const confirmDeleteAll = async () => {
+    if (window.confirm("Delete all data?")) {
+      const res = await fetch(
+        `https://digyaanshshrishti.onrender.com/api/sweeper/delete-all`,
+        { method: "DELETE" }
+      );  
+      const out = await res.json();
+
+      if (out.success) {
+        alert("All data deleted!");
+        setData([]);
+        setFiltered([]);
+      } else {
+        alert("Failed to delete all data!");
+      }
+    } 
+    
+  }
   const deleteSweeper = async (id) => {
     if (!window.confirm("Delete this sweeper?")) return;
 
@@ -202,6 +222,9 @@ export default function AdminSweeperData() {
           ⬇️ Download Excel
         </button>
 
+        <button onClick={() => setShowDeleteForm(true)} className="btn-blue">
+          Delete AllData
+        </button>
         <button onClick={() => setShowAddForm(true)} className="btn-blue">
           ➕ Add Sweeper
         </button>
