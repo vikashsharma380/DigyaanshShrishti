@@ -9,6 +9,7 @@ export default function UserDashboard() {
   // ---- SAFE USER ----
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const [currentUser, setCurrentUser] = useState(user);
+const [showProfile, setShowProfile] = useState(false);
 
   useEffect(() => {
     if (!user?.id) return;
@@ -210,12 +211,20 @@ export default function UserDashboard() {
       <div className="topbar modern-topbar">
         <h1 className="title">User Dashboard</h1>
 
-        <div className="profile">
-          <span>👤 {currentUser?.name}</span>
-          <button className="logout-btn" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
+       <div className="profile" onClick={() => setShowProfile(true)}>
+  <span>👤 {currentUser?.name}</span>
+  <button
+  className="logout-btn"
+  onClick={(e) => {
+    e.stopPropagation();
+    handleLogout();
+  }}
+>
+  Logout
+</button>
+
+</div>
+
       </div>
 
       {/* CONTENT WRAPPER */}
@@ -412,6 +421,46 @@ export default function UserDashboard() {
           </div>
         )}
       </div>
+    
+    
+    {showProfile && (
+  <div className="overlay">
+    <div className="popup profile-popup">
+
+      <h2>User Profile</h2>
+
+      <div className="profile-details">
+
+        <p><strong>Name:</strong> {currentUser?.name}</p>
+        <p><strong>Email:</strong> {currentUser?.email}</p>
+        <p><strong>Mobile:</strong> {currentUser?.phone}</p>
+        <p><strong>Block:</strong> {currentUser?.block}</p>
+        <p><strong>Access:</strong> {currentUser?.access}</p>
+        
+        <p><strong>Designation:</strong> {currentUser?.designation}</p>
+        <p><strong>Address:</strong> {currentUser?.address}</p>
+        <p><strong>District:</strong> {currentUser?.district}</p>
+        <p><strong>Father's Name:</strong> {currentUser?.fatherName}</p>
+        <p><strong>Aadhaar:</strong> {currentUser?.aadhaar}</p>
+        <p><strong>DOB:</strong> {currentUser?.dob}</p>
+        <p><strong>Gender:</strong> {currentUser?.gender}</p>
+        <p><strong>Bank Details:</strong> {currentUser?.bankDetails}</p>
+
+
+      </div>
+
+      <button
+        className="btn"
+        style={{ background: "red", color: "white", marginTop: "10px" }}
+        onClick={() => setShowProfile(false)}
+      >
+        Close
+      </button>
+
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

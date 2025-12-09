@@ -11,26 +11,29 @@ export default function AdminSweeperData() {
   const [selectedBlock, setSelectedBlock] = useState("ALL");
   const [editingId, setEditingId] = useState(null);
   const [editRow, setEditRow] = useState({});
+const [showDeleteForm, setShowDeleteForm] = useState(false);
 
-  const [showDeleteForm, setShowDeleteForm] = useState(false);
-  const confirmDeleteAll = async () => {
-    if (window.confirm("Delete all data?")) {
-      const res = await fetch(
-        `https://digyaanshshrishti.onrender.com/api/sweeper/delete-all`,
-        { method: "DELETE" }
-      );  
-      const out = await res.json();
+ 
+ const deleteAllSweepers = async () => {
+  if (!window.confirm("Are you sure you want to delete ALL data?")) return;
 
-      if (out.success) {
-        alert("All data deleted!");
-        setData([]);
-        setFiltered([]);
-      } else {
-        alert("Failed to delete all data!");
-      }
-    } 
-    
+  const res = await fetch(
+    "https://digyaanshshrishti.onrender.com/api/sweeper/delete-all",
+    { method: "DELETE" }
+  );
+
+  const out = await res.json();
+
+  if (out.success) {
+    alert("All data deleted!");
+    setData([]);
+    setFiltered([]);
+    setShowDeleteForm(false);
+  } else {
+    alert("Failed to delete all data!");
   }
+};
+
   const deleteSweeper = async (id) => {
     if (!window.confirm("Delete this sweeper?")) return;
 
@@ -483,6 +486,26 @@ export default function AdminSweeperData() {
           </div>
         </div>
       )}
+      {showDeleteForm && (
+  <div className="overlay">
+    <div className="popup">
+      <h2>Delete ALL Sweeper Data?</h2>
+
+      <p>This action cannot be undone.</p>
+
+      <div className="popup-actions">
+        <button className="btn-red" onClick={deleteAllSweepers}>
+          Yes, Delete All
+        </button>
+
+        <button className="btn-blue" onClick={() => setShowDeleteForm(false)}>
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

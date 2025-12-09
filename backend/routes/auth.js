@@ -35,6 +35,16 @@ router.post("/login", async (req, res) => {
         designation: user.designation,
         block: user.block,
         access: user.access,
+        email: user.email,
+        aadhaar: user.aadhaar,
+        address: user.address,
+        gender: user.gender,
+        dob: user.dob,
+        bankDetails: user.bankDetails,
+        fatherName: user.fatherName,
+        district: user.district,
+        
+
       },
     });
   } catch (err) {

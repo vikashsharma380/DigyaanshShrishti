@@ -115,10 +115,14 @@ router.delete("/delete/:id", async (req, res) => {
 
 router.delete("/delete-all", async (req, res) => {
   try {
-    await Sweeper.deleteMany({});
-    res.json({ success: true, message: "Deleted!" });
+    const result = await Sweeper.deleteMany({});
+    return res.status(200).json({
+      success: true,
+      message: "All sweeper data deleted!",
+      deletedCount: result.deletedCount
+    });
   } catch (err) {
-    res.json({ success: false, message: err.message });
+    return res.status(500).json({ success: false, message: err.message });
   }
 });
 
