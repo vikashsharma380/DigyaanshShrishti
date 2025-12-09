@@ -20,7 +20,7 @@ export default function UserDashboard() {
         if (updatedUser.success) {
           const u = {
             ...updatedUser.user,
-            id: updatedUser.user._id, // FIX - MongoDB ID always stored as id
+            id: updatedUser.user._id, 
           };
 
           localStorage.setItem(
@@ -46,7 +46,7 @@ export default function UserDashboard() {
 
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  // ---------------- DELETE SWEEPER ----------------
+  // ---------------- DELETE ----------------
   const deleteSweeper = async (id) => {
     if (!window.confirm("Delete this sweeper?")) return;
 

@@ -113,5 +113,15 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 
+router.delete("/delete-all", async (req, res) => {
+  try {
+    await Sweeper.deleteMany({});
+    res.json({ success: true, message: "Deleted!" });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+});
+
+
 
 export default router;
