@@ -40,5 +40,39 @@ router.get("/list", async (req, res) => {
     res.json({ success: false, error: err.message });
   }
 });
+router.delete("/delete-district/:name", async (req, res) => {
+  try {
+    const result = await District.findOneAndDelete({ name: req.params.name });
+
+    if (!result) {
+      return res.json({ success: false, message: "District not found" });
+    }
+
+    res.json({ success: true, message: "District deleted successfully" });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+});
+
+router.delete("/delete-block", async (req, res) => {
+  try {
+    const { districtName, block } = req.body;
+
+    const result = await District.findOneAndUpdate(
+      { name: districtName },
+      { $pull: { blocks: block } },
+      { new: true }
+    );
+
+    if (!result) {
+      return res.json({ success: false, message: "District not found" });
+    }
+
+    res.json({ success: true, message: "Block deleted", updated: result });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+});
+
 
 export default router;

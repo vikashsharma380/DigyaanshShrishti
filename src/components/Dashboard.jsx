@@ -400,6 +400,7 @@ const deleteMessage = async (id) => {
 <hr style={{ margin: "20px 0" }} />
 
 {/* SHOW BLOCK LIST OF SELECTED DISTRICT */}
+{/* SHOW BLOCK LIST OF SELECTED DISTRICT */}
 <h3>Existing Blocks</h3>
 
 <select
@@ -414,18 +415,99 @@ const deleteMessage = async (id) => {
   ))}
 </select>
 
-{/* Show blocks dynamically */}
+{/* 👉 DELETE DISTRICT BUTTON */}
+{selectedDistrict && (
+  <button
+    onClick={async () => {
+      if (!window.confirm("Delete this entire district? All blocks will be removed.")) return;
+
+      const res = await fetch(
+        `https://digyaanshshrishti.onrender.com/api/district/delete-district/${selectedDistrict}`,
+        { method: "DELETE" }
+      );
+
+      const out = await res.json();
+      if (out.success) {
+        alert("District deleted!");
+        setDistricts(districts.filter((d) => d.name !== selectedDistrict));
+        setSelectedDistrict("");
+      }
+    }}
+    style={{
+      padding: "8px 15px",
+      background: "red",
+      color: "white",
+      borderRadius: "6px",
+      border: "none",
+      cursor: "pointer",
+      marginBottom: "10px",
+    }}
+  >
+    Delete District
+  </button>
+)}
+
+{/* Show blocks dynamically with delete buttons */}
 {selectedDistrict && (
   <ul style={{ padding: "10px", background: "#f7f7f7", borderRadius: "10px" }}>
     {districts
       .find((d) => d.name === selectedDistrict)
       ?.blocks?.map((b, idx) => (
-        <li key={idx} style={{ marginBottom: "5px" }}>
+        <li
+          key={idx}
+          style={{
+            marginBottom: "5px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           • {b}
+
+          {/* 👉 DELETE BLOCK BUTTON */}
+          <button
+            onClick={async () => {
+              if (!window.confirm("Delete this block?")) return;
+
+              const res = await fetch(
+                "https://digyaanshshrishti.onrender.com/api/district/delete-block",
+                {
+                  method: "DELETE",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    districtName: selectedDistrict,
+                    block: b,
+                  }),
+                }
+              );
+
+              const out = await res.json();
+              if (out.success) {
+                alert("Block deleted!");
+
+                setDistricts(
+                  districts.map((d) =>
+                    d.name === selectedDistrict ? out.updated : d
+                  )
+                );
+              }
+            }}
+            style={{
+              background: "crimson",
+              color: "white",
+              border: "none",
+              padding: "4px 10px",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Delete
+          </button>
         </li>
       ))}
   </ul>
 )}
+
 
   </div>
 )}
