@@ -175,6 +175,14 @@ const addBlock = async () => {
   icon: "📤",
   type: "nightguard",
 },
+{
+  title: "Send Notification",
+  link: "/admin/send-notification",
+  icon: "📨",
+  type: "reports",
+  count: 0,
+},
+
 
   ];
 const deleteMessage = async (id) => {
