@@ -64,6 +64,33 @@ const toggleRole = async (user) => {
   }
 };
 
+const updateAllRoles = async (role) => {
+  if (!window.confirm(`Are you sure to change ALL users to ${role}?`)) return;
+
+  const res = await fetch(
+    "https://digyaanshshrishti.onrender.com/api/users/update-all-roles",
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ roleType: role }),
+    }
+  );
+
+  const out = await res.json();
+
+  if (out.success) {
+    alert("All user roles updated!");
+
+    // Update frontend state
+    setUsers((prev) =>
+      prev.map((u) =>
+        u.designation === "Admin"
+          ? u
+          : { ...u, roleType: role }
+      )
+    );
+  }
+};
 
   // ============= DELETE USER =================
   const deleteUser = async (id) => {
@@ -171,6 +198,22 @@ const toggleRole = async (user) => {
       
 
       <div style={{ display: "flex", gap: "10px", margin: "15px 0" }}>
+        <button
+  className="download-btn"
+  style={{ background: "black" }}
+  onClick={() => updateAllRoles("sweeper")}
+>
+  Set All as Sweeper
+</button>
+
+<button
+  className="download-btn"
+  style={{ background: "orange" }}
+  onClick={() => updateAllRoles("nightguard")}
+>
+  Set All as Night Guard
+</button>
+
         <button
           className="download-btn"
           style={{ background: "green" }}
