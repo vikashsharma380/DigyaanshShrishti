@@ -10,7 +10,7 @@ export default function AdminUsersExcelView() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://13.62.228.124:5000/api/users/list")
+    fetch("https://api.digyaanshshrishti.com/api/users/list")
       .then((res) => res.json())
       .then((out) => {
         if (out.success) setUsers(out.users);
@@ -20,7 +20,7 @@ export default function AdminUsersExcelView() {
     const newAccess = user.access === "active" ? "inactive" : "active";
 
     const res = await fetch(
-      `http://13.62.228.124:5000/api/users/update/${user._id}`,
+      `https://api.digyaanshshrishti.com/api/users/update/${user._id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -43,7 +43,7 @@ const toggleRole = async (user) => {
   if (!window.confirm(`Change ${user.name} role to ${newRole}?`)) return;
 
   const res = await fetch(
-    `http://13.62.228.124:5000/api/users/update/${user._id}`,
+    `https://api.digyaanshshrishti.com/api/users/update/${user._id}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -68,7 +68,7 @@ const updateAllRoles = async (role) => {
   if (!window.confirm(`Are you sure to change ALL users to ${role}?`)) return;
 
   const res = await fetch(
-    "http://13.62.228.124:5000/api/users/update-all-roles",
+    "https://api.digyaanshshrishti.com/api/users/update-all-roles",
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -97,7 +97,7 @@ const updateAllRoles = async (role) => {
     if (!window.confirm("Delete user?")) return;
 
     const res = await fetch(
-      `http://13.62.228.124:5000/api/users/delete/${id}`,
+      `https://api.digyaanshshrishti.com/api/users/delete/${id}`,
       { method: "DELETE" }
     );
 
@@ -120,7 +120,7 @@ const updateAllRoles = async (role) => {
     if (!window.confirm(`Are you sure to set all users as ${status}?`)) return;
 
     const res = await fetch(
-      "http://13.62.228.124:5000/api/users/update-all-status",
+      "https://api.digyaanshshrishti.com/api/users/update-all-status",
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -159,7 +159,7 @@ const updateAllRoles = async (role) => {
   // ============= SAVE EDIT =============
   const saveEdit = async () => {
     const res = await fetch(
-      `http://13.62.228.124:5000/api/users/update/${editingId}`,
+      `https://api.digyaanshshrishti.com/api/users/update/${editingId}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

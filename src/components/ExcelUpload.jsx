@@ -34,7 +34,7 @@ const [blockSummary, setBlockSummary] = useState([]);
   };
 const [dbData, setDbData] = useState([]);
 useEffect(() => {
-  fetch("http://13.62.228.124:5000/api/sweeper/all-data")
+  fetch("https://api.digyaanshshrishti.com/api/sweeper/all-data")
     .then(res => res.json())
     .then(out => {
       const clean = (Array.isArray(out) ? out : []).filter(item => item && item.block);
@@ -58,7 +58,7 @@ useEffect(() => {
 const [blockCounts, setBlockCounts] = useState([]);
 
 useEffect(() => {
-  fetch("http://localhost:5000/api/sweeper/blocks/count")
+  fetch("https://api.digyaanshshrishti.com/api/sweeper/blocks/count")
     .then((res) => res.json())
     .then((data) => setBlockCounts(data))
     .catch((err) => console.log(err));
@@ -67,7 +67,7 @@ useEffect(() => {
 
   const sendToBackend = async () => {
     const res = await fetch(
-      "http://13.62.228.124:5000/api/sweeper/upload-excel",
+      "https://api.digyaanshshrishti.com/api/sweeper/upload-excel",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

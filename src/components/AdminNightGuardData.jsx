@@ -29,7 +29,7 @@ export default function AdminNightGuardData() {
 
   // LOAD ALL DATA
   useEffect(() => {
-    fetch("http://13.62.228.124:5000/api/nightguard/all-data")
+    fetch("https://api.digyaanshshrishti.com/api/nightguard/all-data")
       .then((res) => res.json())
       .then((out) => {
         const clean = out.filter((i) => i && i.block);
@@ -83,7 +83,7 @@ export default function AdminNightGuardData() {
   // SAVE EDIT
   const saveEdit = async () => {
     const res = await fetch(
-      `http://13.62.228.124:5000/api/nightguard/update/${editingId}`,
+      `https://api.digyaanshshrishti.com/api/nightguard/update/${editingId}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -112,7 +112,7 @@ export default function AdminNightGuardData() {
     if (!window.confirm("Delete this record?")) return;
 
     const res = await fetch(
-      `http://13.62.228.124:5000/api/nightguard/delete/${id}`,
+      `https://api.digyaanshshrishti.com/api/nightguard/delete/${id}`,
       { method: "DELETE" }
     );
 
@@ -132,7 +132,7 @@ export default function AdminNightGuardData() {
     if (!window.confirm("Delete all Night Guard records?")) return;
 
     const res = await fetch(
-      "http://13.62.228.124:5000/api/nightguard/delete-all",
+      "https://api.digyaanshshrishti.com/api/nightguard/delete-all",
       { method: "DELETE" }
     );
 
@@ -154,7 +154,7 @@ export default function AdminNightGuardData() {
     };
 
     const res = await fetch(
-      "http://13.62.228.124:5000/api/nightguard/add",
+      "https://api.digyaanshshrishti.com/api/nightguard/add",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
