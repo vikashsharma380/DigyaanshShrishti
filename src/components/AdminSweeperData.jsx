@@ -18,7 +18,7 @@ const [showDeleteForm, setShowDeleteForm] = useState(false);
   if (!window.confirm("Are you sure you want to delete ALL data?")) return;
 
   const res = await fetch(
-    "http://13.62.228.124:5000/api/sweeper/delete-all",
+    "https://api.digyaanshshrishti.com/api/sweeper/delete-all",
     { method: "DELETE" }
   );
 
@@ -38,7 +38,7 @@ const [showDeleteForm, setShowDeleteForm] = useState(false);
     if (!window.confirm("Delete this sweeper?")) return;
 
     const res = await fetch(
-      `http://13.62.228.124:5000/api/sweeper/delete/${id}`,
+      `https://api.digyaanshshrishti.com/api/sweeper/delete/${id}`,
       { method: "DELETE" }
     );
 
@@ -71,7 +71,7 @@ const [showDeleteForm, setShowDeleteForm] = useState(false);
 
   // Load all data
   useEffect(() => {
-    fetch("http://13.62.228.124:5000/api/sweeper/all-data")
+    fetch("https://api.digyaanshshrishti.com/api/sweeper/all-data")
       .then((res) => res.json())
       .then((out) => {
         const clean = out.filter((i) => i && i.block);
@@ -105,7 +105,7 @@ const [showDeleteForm, setShowDeleteForm] = useState(false);
   // Save updated data
   const saveEdit = async () => {
     const res = await fetch(
-      `http://13.62.228.124:5000/api/sweeper/update/${editingId}`,
+      `https://api.digyaanshshrishti.com/api/sweeper/update/${editingId}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -167,7 +167,7 @@ const downloadExcel = () => {
     };
 
     const res = await fetch(
-      "http://13.62.228.124:5000/api//sweeper/add",
+      "https://api.digyaanshshrishti.com/api//sweeper/add",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

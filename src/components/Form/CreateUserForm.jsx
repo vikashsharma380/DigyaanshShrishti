@@ -12,7 +12,7 @@ export default function CreateUserForm() {
   const [designations, setDesignations] = useState([]);
 
 useEffect(() => {
-  fetch("http://13.62.228.124:5000/api/designations/all")
+  fetch("https://api.digyaanshshrishti.com/api/designations/all")
     .then(res => res.json())
     .then(out => out.success && setDesignations(out.list));
 }, []);
@@ -39,7 +39,7 @@ useEffect(() => {
     roleType: "sweeper",
   });
   useEffect(() => {
-    fetch("http://13.62.228.124:5000/api/district/list")
+    fetch("https://api.digyaanshshrishti.com/api/district/list")
       .then(res => res.json())
       .then(out => {
         if (out.success) {
@@ -69,7 +69,7 @@ useEffect(() => {
     e.preventDefault();
 
     const res = await fetch(
-      "http://13.62.228.124:5000/api/users/create",
+      "https://api.digyaanshshrishti.com/api/users/create",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

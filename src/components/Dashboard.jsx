@@ -13,7 +13,7 @@ const [openStates, setOpenStates] = useState({});
 
 const [designations, setDesignations] = useState([]);
 useEffect(() => {
-  fetch("http://13.62.228.124:5000/api/designations/all")
+  fetch("https://api.digyaanshshrishti.com/api/designations/all")
     .then(res => res.json())
     .then(out => {
       if (out.success) setDesignations(out.list);
@@ -21,7 +21,7 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-  fetch("http://13.62.228.124:5000/api/contact/list")
+  fetch("https://api.digyaanshshrishti.com/api/contact/list")
     .then(res => res.json())
     .then(out => {
       if (out.success) {
@@ -32,7 +32,7 @@ useEffect(() => {
 const [districts, setDistricts] = useState([]);
 
 useEffect(() => {
-  fetch("http://13.62.228.124:5000/api/district/list")
+  fetch("https://api.digyaanshshrishti.com/api/district/list")
     .then(res => res.json())
     .then(out => {
       if (out.success) setDistricts(out.list);
@@ -48,7 +48,7 @@ const toggleRole = async (user) => {
   if (!window.confirm(`Change ${user.name}'s role to ${newRole}?`)) return;
 
   const res = await fetch(
-    `http://13.62.228.124:5000/api/users/update-role/${user._id}`,
+    `https://api.digyaanshshrishti.com/api/users/update-role/${user._id}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -73,7 +73,7 @@ const addDistrict = async () => {
   if (!name) return alert("Enter district");
 
   const res = await fetch(
-    "http://13.62.228.124:5000/api/district/add-district",
+    "https://api.digyaanshshrishti.com/api/district/add-district",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -95,7 +95,7 @@ const addBlock = async () => {
   if (!block) return alert("Enter block name");
 
   const res = await fetch(
-    "http://13.62.228.124:5000/api/district/add-block",
+    "https://api.digyaanshshrishti.com/api/district/add-block",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -206,7 +206,7 @@ const deleteMessage = async (id) => {
   if (!window.confirm("Delete this message?")) return;
 
   const res = await fetch(
-    `http://13.62.228.124:5000/api/contact/delete/${id}`,
+    `https://api.digyaanshshrishti.com/api/contact/delete/${id}`,
     { method: "DELETE" }
   );
 
@@ -499,7 +499,7 @@ const deleteMessage = async (id) => {
       if (!window.confirm("Delete this entire district? All blocks will be removed.")) return;
 
       const res = await fetch(
-        `http://13.62.228.124:5000/api/district/delete-district/${selectedDistrict}`,
+        `https://api.digyaanshshrishti.com/api/district/delete-district/${selectedDistrict}`,
         { method: "DELETE" }
       );
 
@@ -547,7 +547,7 @@ const deleteMessage = async (id) => {
               if (!window.confirm("Delete this block?")) return;
 
               const res = await fetch(
-                "http://13.62.228.124:5000/api/district/delete-block",
+                "https://api.digyaanshshrishti.com/api/district/delete-block",
                 {
                   method: "DELETE",
                   headers: { "Content-Type": "application/json" },
@@ -648,7 +648,7 @@ const deleteMessage = async (id) => {
           const name = document.getElementById("designation-input").value;
           if (!name.trim()) return alert("Enter designation");
 
-          const res = await fetch("http://13.62.228.124:5000/api/designations/add", {
+          const res = await fetch("https://api.digyaanshshrishti.com/api/designations/add", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name }),
@@ -699,7 +699,7 @@ const deleteMessage = async (id) => {
               if (!window.confirm("Delete this designation?")) return;
 
               const res = await fetch(
-                `http://13.62.228.124:5000/api/designations/delete/${d._id}`,
+                `https://api.digyaanshshrishti.com/api/designations/delete/${d._id}`,
                 { method: "DELETE" }
               );
 

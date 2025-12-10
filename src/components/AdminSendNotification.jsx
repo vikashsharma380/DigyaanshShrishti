@@ -8,14 +8,14 @@ export default function AdminSendNotification() {
 
   // FETCH USERS
   useEffect(() => {
-    fetch("http://13.62.228.124:5000/api/users/list")
+    fetch("https://api.digyaanshshrishti.com/api/users/list")
       .then((res) => res.json())
       .then((out) => out.success && setUsers(out.users));
   }, []);
 
  useEffect(() => {
   const load = async () => {
-    const res = await fetch("http://13.62.228.124:5000/api/notifications/admin/all");
+    const res = await fetch("https://api.digyaanshshrishti.com/api/notifications/admin/all");
     const out = await res.json();
     if (out.success) setSentMessages(out.list);
   };
@@ -32,7 +32,7 @@ const sendMessage = async () => {
     userId: selectedUser === "all" ? null : selectedUser,
   };
 
-  const res = await fetch("http://13.62.228.124:5000/api/notifications/send", {
+  const res = await fetch("https://api.digyaanshshrishti.com/api/notifications/send", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -46,7 +46,7 @@ const sendMessage = async () => {
     setSelectedUser("all");
 
     // FETCH AGAIN FROM SERVER (ONLY THIS)
-    const updated = await fetch("http://13.62.228.124:5000/api/notifications/admin/all")
+    const updated = await fetch("https://api.digyaanshshrishti.com/api/notifications/admin/all")
       .then((res) => res.json());
 
     if (updated.success) setSentMessages(updated.list);
@@ -58,7 +58,7 @@ const sendMessage = async () => {
     if (!window.confirm("Delete this message?")) return;
 
     const res = await fetch(
-      `http://13.62.228.124:5000/api/notifications/delete/${id}`,
+      `https://api.digyaanshshrishti.com/api/notifications/delete/${id}`,
       { method: "DELETE" }
     );
 

@@ -18,7 +18,7 @@ export default function DeepakExperience() {
 const [list, setList] = useState([]);
 const fetchList = async () => {
   const res = await fetch(
-    "http://13.62.228.124:5000/api/experience/list"
+    "https://api.digyaanshshrishti.com/api/experience/list"
   );
 
   const result = await res.json();
@@ -34,7 +34,7 @@ const deleteExperience = async (id) => {
   if (!window.confirm("Are you sure?")) return;
 
   const res = await fetch(
-    `http://13.62.228.124:5000/api/experience/delete/${id}`,
+    `https://api.digyaanshshrishti.com/api/experience/delete/${id}`,
     { method: "DELETE" }
   );
 
@@ -83,7 +83,7 @@ const downloadExcel = () => {
 
   const saveExperience = async () => {
   const res = await fetch(
-    "http://13.62.228.124:5000/api/experience/add",
+    "https://api.digyaanshshrishti.com/api/experience/add",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },

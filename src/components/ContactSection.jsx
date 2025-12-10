@@ -46,7 +46,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    const res = await fetch("http://13.62.228.124:5000/api/contact/create", {
+    const res = await fetch("https://api.digyaanshshrishti.com/api/contact/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),

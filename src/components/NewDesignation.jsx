@@ -6,7 +6,7 @@ export default function AddDesignation() {
   const handleAdd = async () => {
     if (!name.trim()) return alert("Enter designation!");
 
-    const res = await fetch("http://13.62.228.124:5000/api/designations/add", {
+    const res = await fetch("https://api.digyaanshshrishti.com/api/designations/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
