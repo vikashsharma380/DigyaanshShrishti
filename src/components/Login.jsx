@@ -19,7 +19,7 @@ export default function Login() {
 
     try {
       const res = await axios.post(
-        "http://13.62.228.124:5000/api/auth/login",
+        "https://www.digyaanshshrishti.com/api/auth/login",
         {
           mobile: mobile,
           password: password,
