@@ -8,6 +8,15 @@ export default function CreateUserForm() {
   district.forEach((d) => {
     districtBlocks[d.name] = d.blocks;
   });
+
+  const [designations, setDesignations] = useState([]);
+
+useEffect(() => {
+  fetch("http://13.62.228.124:5000/api/designations/all")
+    .then(res => res.json())
+    .then(out => out.success && setDesignations(out.list));
+}, []);
+
   const [data, setData] = useState({
     name: "",
     fatherName: "",
@@ -144,7 +153,7 @@ export default function CreateUserForm() {
             </select>
           </div>
 
-         <div>
+<div>
   <label>Designation:</label>
   <select
     name="designation"
@@ -153,10 +162,11 @@ export default function CreateUserForm() {
       const value = e.target.value;
 
       // Auto Set Role Type
-      let role = "supervisor"; // default
+      let role = "supervisor"; 
 
       if (value === "Sweeper") role = "sweeper";
       if (value === "Night Guard") role = "nightguard";
+      if (value === "Admin") role = "admin";
 
       setData({
         ...data,
@@ -167,12 +177,12 @@ export default function CreateUserForm() {
     required
   >
     <option value="">Select Designation</option>
-    <option value="Admin">Admin</option>
-    <option value="Supervisor">Supervisor</option>
-   
-    <option value="Coordinator">Coordinator</option>
-    <option value="Staff">Staff</option>
-    <option value="Other">Other</option>
+
+    {designations.map((d) => (
+      <option key={d._id} value={d.name}>
+        {d.name}
+      </option>
+    ))}
   </select>
 </div>
 

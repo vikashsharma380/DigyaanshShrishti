@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema(
     block: String,
     designation: {
       type: String,
-      enum: ["Admin", "Supervisor", "Coordinator", "Staff", "Other"],
+     
       default: "Supervisor",
     },
     aadhaar: String,
