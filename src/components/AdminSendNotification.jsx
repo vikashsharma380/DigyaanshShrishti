@@ -13,44 +13,46 @@ export default function AdminSendNotification() {
       .then((out) => out.success && setUsers(out.users));
   }, []);
 
-  // FETCH SENT NOTIFICATIONS
-  useEffect(() => {
-    fetch("http://13.62.228.124:5000/api/notifications/admin/all")
-      .then((res) => res.json())
-      .then((out) => out.success && setSentMessages(out.list));
-  }, []);
-
-  const sendMessage = async () => {
-    if (!message.trim()) return alert("Please type a message!");
-
-    const payload = {
-      message,
-      userId: selectedUser === "all" ? null : selectedUser,
-    };
-
-    const res = await fetch(
-      "http://13.62.228.124:5000/api/notifications/send",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      }
-    );
-
+ useEffect(() => {
+  const load = async () => {
+    const res = await fetch("http://13.62.228.124:5000/api/notifications/admin/all");
     const out = await res.json();
-
-    if (out.success) {
-      alert("Notification Sent! 🚀");
-      setMessage("");
-      setSelectedUser("all");
-
-      fetch(
-        "http://13.62.228.124:5000/api/notifications/admin/all"
-      )
-        .then((res) => res.json())
-        .then((out) => out.success && setSentMessages(out.list));
-    }
+    if (out.success) setSentMessages(out.list);
   };
+
+  load();
+}, []);
+
+
+const sendMessage = async () => {
+  if (!message.trim()) return alert("Please type a message!");
+
+  const payload = {
+    message,
+    userId: selectedUser === "all" ? null : selectedUser,
+  };
+
+  const res = await fetch("http://13.62.228.124:5000/api/notifications/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  const out = await res.json();
+
+  if (out.success) {
+    alert("Notification Sent! 🚀");
+    setMessage("");
+    setSelectedUser("all");
+
+    // FETCH AGAIN FROM SERVER (ONLY THIS)
+    const updated = await fetch("http://13.62.228.124:5000/api/notifications/admin/all")
+      .then((res) => res.json());
+
+    if (updated.success) setSentMessages(updated.list);
+  }
+};
+
 
   const deleteMsg = async (id) => {
     if (!window.confirm("Delete this message?")) return;

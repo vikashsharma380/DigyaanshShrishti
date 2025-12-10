@@ -30,6 +30,7 @@ router.post("/send", async (req, res) => {
   }
 });
 
+
 // ---------- GET ALL SENT (ADMIN) ----------
 router.get("/admin/all", async (req, res) => {
   try {
@@ -39,6 +40,7 @@ router.get("/admin/all", async (req, res) => {
     res.json({ success: false, message: "Error fetching notifications" });
   }
 });
+
 
 // ---------- DELETE NOTIFICATION ----------
 router.delete("/delete/:id", async (req, res) => {
@@ -53,17 +55,18 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// ---------- GET USER NOTIFICATIONS (KEEP LAST) ----------
-router.get("/:userId", async (req, res) => {
+
+// ---------- USER NOTIFICATIONS (LAST ME) ----------
+router.get("/user/:userId", async (req, res) => {
   try {
-    const list = await Notification.find({ userId: req.params.userId }).sort({
-      createdAt: -1,
-    });
+    const list = await Notification.find({ userId: req.params.userId })
+      .sort({ createdAt: -1 });
 
     res.json({ success: true, notifications: list });
   } catch {
     res.json({ success: false, message: "Error fetching notifications" });
   }
 });
+
 
 export default router;
