@@ -8,14 +8,14 @@ export default function AdminSendNotification() {
 
   // FETCH USERS
   useEffect(() => {
-    fetch("https://digyaanshshrishti.onrender.com/api/users/list")
+    fetch("http://13.62.228.124:5000/api/users/list")
       .then((res) => res.json())
       .then((out) => out.success && setUsers(out.users));
   }, []);
 
   // FETCH SENT NOTIFICATIONS
   useEffect(() => {
-    fetch("https://digyaanshshrishti.onrender.com/api/notifications/admin/all")
+    fetch("http://13.62.228.124:5000/api/notifications/admin/all")
       .then((res) => res.json())
       .then((out) => out.success && setSentMessages(out.list));
   }, []);
@@ -29,7 +29,7 @@ export default function AdminSendNotification() {
     };
 
     const res = await fetch(
-      "https://digyaanshshrishti.onrender.com/api/notifications/send",
+      "http://13.62.228.124:5000/api/notifications/send",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -45,7 +45,7 @@ export default function AdminSendNotification() {
       setSelectedUser("all");
 
       fetch(
-        "https://digyaanshshrishti.onrender.com/api/notifications/admin/all"
+        "http://13.62.228.124:5000/api/notifications/admin/all"
       )
         .then((res) => res.json())
         .then((out) => out.success && setSentMessages(out.list));
@@ -56,7 +56,7 @@ export default function AdminSendNotification() {
     if (!window.confirm("Delete this message?")) return;
 
     const res = await fetch(
-      `https://digyaanshshrishti.onrender.com/api/notifications/delete/${id}`,
+      `http://13.62.228.124:5000/api/notifications/delete/${id}`,
       { method: "DELETE" }
     );
 
