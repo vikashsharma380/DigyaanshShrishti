@@ -11,7 +11,7 @@ export default function NightGuardExcelUpload() {
 
   // Load DB Data for summary
   useEffect(() => {
-    fetch("https://digyaanshshrishti.onrender.com/api/nightguard/all-data")
+    fetch("http://13.62.228.124:5000/api/nightguard/all-data")
       .then((res) => res.json())
       .then((out) => {
         const clean = (Array.isArray(out) ? out : []).filter(
@@ -62,7 +62,7 @@ export default function NightGuardExcelUpload() {
   // Upload to backend
   const sendToBackend = async () => {
     const res = await fetch(
-      "https://digyaanshshrishti.onrender.com/api/nightguard/upload-excel",
+      "http://13.62.228.124:5000/api/nightguard/upload-excel",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

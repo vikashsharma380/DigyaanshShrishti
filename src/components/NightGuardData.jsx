@@ -4,7 +4,7 @@ export default function NightGuardData() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("https://digyaanshshrishti.onrender.com/api/nightguard/all-data")
+    fetch("http://13.62.228.124:5000/api/nightguard/all-data")
       .then((res) => res.json())
       .then((out) => setData(out));
   }, []);

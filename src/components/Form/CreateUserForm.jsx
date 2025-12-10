@@ -30,7 +30,7 @@ export default function CreateUserForm() {
     roleType: "sweeper",
   });
   useEffect(() => {
-    fetch("https://digyaanshshrishti.onrender.com/api/district/list")
+    fetch("http://13.62.228.124:5000/api/district/list")
       .then(res => res.json())
       .then(out => {
         if (out.success) {
@@ -60,7 +60,7 @@ export default function CreateUserForm() {
     e.preventDefault();
 
     const res = await fetch(
-      "https://digyaanshshrishti.onrender.com/api/users/create",
+      "http://13.62.228.124:5000/api/users/create",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -24,7 +24,7 @@ export default function DigyaanshAppointmentForm() {
     };
 
     const res = await fetch(
-      "https://digyaanshshrishti.onrender.com/api/appointments/add",
+      "http://13.62.228.124:5000/api/appointments/add",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -75,7 +75,7 @@ const downloadExcel = () => {
 
   const generatePDF = async () => {
     // Step 1: Save to database before generating PDF
-    await fetch("https://digyaanshshrishti.onrender.com/api/appointments/add", {
+    await fetch("http://13.62.228.124:5000/api/appointments/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -89,7 +89,7 @@ const downloadExcel = () => {
   if (!window.confirm("Are you sure you want to delete this record?")) return;
 
   const res = await fetch(
-    `https://digyaanshshrishti.onrender.com/api/appointments/delete/${id}`,
+    `http://13.62.228.124:5000/api/appointments/delete/${id}`,
     { method: "DELETE" }
   );
 
@@ -129,7 +129,7 @@ const downloadExcel = () => {
   const [list, setList] = useState([]);
   const fetchList = async () => {
     const res = await fetch(
-      "https://digyaanshshrishti.onrender.com/api/appointments/list"
+      "http://13.62.228.124:5000/api/appointments/list"
     );
     const result = await res.json();
     if (result.success) {

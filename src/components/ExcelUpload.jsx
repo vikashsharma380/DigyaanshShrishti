@@ -34,7 +34,7 @@ const [blockSummary, setBlockSummary] = useState([]);
   };
 const [dbData, setDbData] = useState([]);
 useEffect(() => {
-  fetch("https://digyaanshshrishti.onrender.com/api/sweeper/all-data")
+  fetch("http://13.62.228.124:5000/api/sweeper/all-data")
     .then(res => res.json())
     .then(out => {
       const clean = (Array.isArray(out) ? out : []).filter(item => item && item.block);
@@ -67,7 +67,7 @@ useEffect(() => {
 
   const sendToBackend = async () => {
     const res = await fetch(
-      "https://digyaanshshrishti.onrender.com/api/sweeper/upload-excel",
+      "http://13.62.228.124:5000/api/sweeper/upload-excel",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

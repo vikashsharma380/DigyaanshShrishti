@@ -13,7 +13,7 @@ const [openStates, setOpenStates] = useState({});
 
 
 useEffect(() => {
-  fetch("https://digyaanshshrishti.onrender.com/api/contact/list")
+  fetch("http://13.62.228.124:5000/api/contact/list")
     .then(res => res.json())
     .then(out => {
       if (out.success) {
@@ -24,7 +24,7 @@ useEffect(() => {
 const [districts, setDistricts] = useState([]);
 
 useEffect(() => {
-  fetch("https://digyaanshshrishti.onrender.com/api/district/list")
+  fetch("http://13.62.228.124:5000/api/district/list")
     .then(res => res.json())
     .then(out => {
       if (out.success) setDistricts(out.list);
@@ -40,7 +40,7 @@ const toggleRole = async (user) => {
   if (!window.confirm(`Change ${user.name}'s role to ${newRole}?`)) return;
 
   const res = await fetch(
-    `https://digyaanshshrishti.onrender.com/api/users/update-role/${user._id}`,
+    `http://13.62.228.124:5000/api/users/update-role/${user._id}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -65,7 +65,7 @@ const addDistrict = async () => {
   if (!name) return alert("Enter district");
 
   const res = await fetch(
-    "https://digyaanshshrishti.onrender.com/api/district/add-district",
+    "http://13.62.228.124:5000/api/district/add-district",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -87,7 +87,7 @@ const addBlock = async () => {
   if (!block) return alert("Enter block name");
 
   const res = await fetch(
-    "https://digyaanshshrishti.onrender.com/api/district/add-block",
+    "http://13.62.228.124:5000/api/district/add-block",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -190,7 +190,7 @@ const deleteMessage = async (id) => {
   if (!window.confirm("Delete this message?")) return;
 
   const res = await fetch(
-    `https://digyaanshshrishti.onrender.com/api/contact/delete/${id}`,
+    `http://13.62.228.124:5000/api/contact/delete/${id}`,
     { method: "DELETE" }
   );
 
@@ -481,7 +481,7 @@ const deleteMessage = async (id) => {
       if (!window.confirm("Delete this entire district? All blocks will be removed.")) return;
 
       const res = await fetch(
-        `https://digyaanshshrishti.onrender.com/api/district/delete-district/${selectedDistrict}`,
+        `http://13.62.228.124:5000/api/district/delete-district/${selectedDistrict}`,
         { method: "DELETE" }
       );
 
@@ -529,7 +529,7 @@ const deleteMessage = async (id) => {
               if (!window.confirm("Delete this block?")) return;
 
               const res = await fetch(
-                "https://digyaanshshrishti.onrender.com/api/district/delete-block",
+                "http://13.62.228.124:5000/api/district/delete-block",
                 {
                   method: "DELETE",
                   headers: { "Content-Type": "application/json" },
