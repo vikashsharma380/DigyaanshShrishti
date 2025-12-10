@@ -31,4 +31,14 @@ router.get("/all", async (req, res) => {
   }
 });
 
+// DELETE DESIGNATION
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    await DesignationList.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    res.json({ success: false, error: err.message });
+  }
+});
+
 export default router;
