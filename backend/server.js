@@ -42,6 +42,9 @@ app.use("/api/district", districtRoutes);
 import nightguardRoutes from "./routes/nightguard.js";
 app.use("/api/nightguard", nightguardRoutes);
 import notificationRoutes from "./routes/notification.js";
+import designationRoutes from "./routes/designationRoutes.js";
+
+app.use("/api/designations", designationRoutes);
 
 app.use("/api/notifications", notificationRoutes);
 

@@ -11,6 +11,14 @@ const [selectedDistrict, setSelectedDistrict] = useState("");
 const [selectedBlock, setSelectedBlock] = useState("");
 const [openStates, setOpenStates] = useState({});
 
+const [designations, setDesignations] = useState([]);
+useEffect(() => {
+  fetch("http://13.62.228.124:5000/api/designations/all")
+    .then(res => res.json())
+    .then(out => {
+      if (out.success) setDesignations(out.list);
+    });
+}, []);
 
 useEffect(() => {
   fetch("http://13.62.228.124:5000/api/contact/list")
@@ -183,6 +191,14 @@ const addBlock = async () => {
   type: "reports",
   count: 0,
 },
+{
+  title: "Manage Designation",
+  link: "/admin/designations",
+  icon: "🏷️",
+  type: "settings",
+  count: 0,
+},
+
 
 
   ];
@@ -242,6 +258,8 @@ const deleteMessage = async (id) => {
     { id: "nightguard", label: "Night Guard Data", icon: "🛡️" },
     { id: "reports", label: "Reports", icon: "📈" },
     { id: "settings", label: "Settings", icon: "⚙️" },
+    { id: "designations", label: "Designations", icon: "🏷️" },
+
 
   ];
 
@@ -609,6 +627,105 @@ const deleteMessage = async (id) => {
             ))}
           </div>
         </div>
+
+{activeNav === "designations" && (
+  <div style={{ maxWidth: "500px", marginTop: "20px" }}>
+    <h2 className="section-title">Manage Designations</h2>
+
+    {/* ADD NEW DESIGNATION */}
+    <div style={{ marginBottom: "20px" }}>
+      <h3>Add New Designation</h3>
+
+      <input
+        id="designation-input"
+        type="text"
+        placeholder="Enter designation name"
+        style={{ padding: "10px", width: "100%", marginBottom: "10px" }}
+      />
+
+      <button
+        onClick={async () => {
+          const name = document.getElementById("designation-input").value;
+          if (!name.trim()) return alert("Enter designation");
+
+          const res = await fetch("http://13.62.228.124:5000/api/designations/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name }),
+          });
+
+          const out = await res.json();
+          if (out.success) {
+            alert("Designation Added!");
+            setDesignations([...designations, out.designation]);
+          }
+        }}
+        style={{
+          padding: "10px 18px",
+          background: "green",
+          color: "white",
+          borderRadius: "6px",
+        }}
+      >
+        Add Designation
+      </button>
+    </div>
+
+    <hr />
+
+    {/* LIST ALL DESIGNATIONS */}
+    <h3>Existing Designations</h3>
+
+    {designations.length === 0 && <p>No designations found</p>}
+
+    <ul style={{ padding: "0", listStyle: "none" }}>
+      {designations.map((d) => (
+        <li
+          key={d._id}
+          style={{
+            padding: "10px",
+            background: "#f2f2f2",
+            marginBottom: "8px",
+            borderRadius: "8px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {d.name}
+
+          <button
+            onClick={async () => {
+              if (!window.confirm("Delete this designation?")) return;
+
+              const res = await fetch(
+                `http://13.62.228.124:5000/api/designations/delete/${d._id}`,
+                { method: "DELETE" }
+              );
+
+              const out = await res.json();
+              if (out.success) {
+                alert("Deleted!");
+                setDesignations(designations.filter((x) => x._id !== d._id));
+              }
+            }}
+            style={{
+              background: "red",
+              color: "white",
+              border: "none",
+              padding: "5px 10px",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Delete
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
       </div>
     </div>
   );

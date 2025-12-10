@@ -25,7 +25,7 @@ import DeepakExperience from "./components/ExperienceCertificate";
 import AdminNightGuardData from "./components/AdminNightGuardData";
 import NightGuardExcelUpload from "./components/ExcelUploadNightGuard";
 import AdminSendNotification from "./components/AdminSendNotification";
-
+import AddDesignation from "./components/NewDesignation";
 function Home() {
   return (
     <>
@@ -60,6 +60,9 @@ function App() {
         <Route path="/admin/nightguard-data" element={<AdminNightGuardData />} />
 <Route path="/upload-nightguard" element={<NightGuardExcelUpload />} />
 <Route path="/admin/send-notification" element={<AdminSendNotification />} />
+
+
+<Route path="/add-designation" element={<AddDesignation />} />
 
 
         {/* ⭐ NEW ROUTE FIX ⭐ */}
