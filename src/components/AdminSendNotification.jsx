@@ -196,42 +196,43 @@ const sendMessage = async () => {
         </p>
       )}
 
-      {sentMessages.map((m) => (
-        <div
-          key={m._id}
-          style={{
-            background: "rgba(255,255,255,0.15)",
-            padding: "14px",
-            borderRadius: "12px",
-            marginTop: "12px",
-            border: "1px solid rgba(255,255,255,0.2)",
-          }}
-        >
-          <strong style={{ fontSize: "17px", color: "#000000ff" }}>
-            {m.message}
-          </strong>
-          <br />
-          <small style={{ color: "#000000ff" }}>
-            {new Date(m.createdAt).toLocaleString()}
-          </small>
+{[...new Map(sentMessages.map(item => [item.message, item])).values()].map((m) => (
+  <div
+    key={m._id}
+    style={{
+      background: "rgba(255,255,255,0.15)",
+      padding: "14px",
+      borderRadius: "12px",
+      marginTop: "12px",
+      border: "1px solid rgba(255,255,255,0.2)",
+    }}
+  >
+    <strong style={{ fontSize: "17px", color: "#000000ff" }}>
+      {m.message}
+    </strong>
+    <br />
+    <small style={{ color: "#000000ff" }}>
+      {new Date(m.createdAt).toLocaleString()}
+    </small>
 
-          <button
-            style={{
-              float: "right",
-              background: "red",
-              color: "white",
-              border: "none",
-              padding: "6px 12px",
-              borderRadius: "6px",
-              cursor: "pointer",
-              marginTop: "8px",
-            }}
-            onClick={() => deleteMsg(m._id)}
-          >
-            Delete
-          </button>
-        </div>
-      ))}
+    <button
+      style={{
+        float: "right",
+        background: "red",
+        color: "white",
+        border: "none",
+        padding: "6px 12px",
+        borderRadius: "6px",
+        cursor: "pointer",
+        marginTop: "8px",
+      }}
+      onClick={() => deleteMsg(m._id)}
+    >
+      Delete
+    </button>
+  </div>
+))}
+
     </div>
   );
 }
