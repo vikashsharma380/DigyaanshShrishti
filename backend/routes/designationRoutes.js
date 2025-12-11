@@ -26,7 +26,7 @@ router.get("/all", async (req, res) => {
     const list = await DesignationList.find().sort({ name: 1 });
 
     const cleaned = list
-      .filter(d => d.name) 
+      .filter(d => d && d.name)   // remove undefined, null and missing names
       .map(d => ({
         _id: d._id,
         name: d.name
@@ -37,6 +37,7 @@ router.get("/all", async (req, res) => {
     res.json({ success: false, message: "Error fetching designation list" });
   }
 });
+
 
 
 
