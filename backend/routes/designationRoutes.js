@@ -13,9 +13,9 @@ router.post("/add", async (req, res) => {
     const exist = await DesignationList.findOne({ name });
     if (exist) return res.json({ success: false, message: "Already exists" });
 
-    await DesignationList.create({ name });
+const newDesignation = await DesignationList.create({ name });
+res.json({ success: true, message: "Designation added", designation: newDesignation });
 
-    res.json({ success: true, message: "Designation added" });
   } catch (err) {
     res.json({ success: false, message: "Server error" });
   }
