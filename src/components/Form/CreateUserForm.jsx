@@ -178,11 +178,14 @@ useEffect(() => {
   >
     <option value="">Select Designation</option>
 
-    {designations.map((d) => (
-      <option key={d._id} value={d.name}>
-        {d.name}
-      </option>
-    ))}
+    {designations
+  .filter(d => d?.name)
+  .map(d => (
+    <option key={d._id} value={d.name}>
+      {d.name}
+    </option>
+  ))}
+
   </select>
 </div>
 
