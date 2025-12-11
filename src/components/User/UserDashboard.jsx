@@ -45,7 +45,7 @@ const [showNotifications, setShowNotifications] = useState(false);
     const id = currentUser._id || stored.id || stored._id;
     try {
       const res = await fetch(
-        `http://13.62.228.124:5000/api/users/${id}`
+        `https://api.digyaanshshrishti.com/api/users/${id}`
       );
       const out = await res.json();
       if (out.success && out.user) {
@@ -112,7 +112,7 @@ const [showNotifications, setShowNotifications] = useState(false);
   const id = currentUser._id || stored.id || stored._id;
   if (!id) return;
 
-  fetch(`http://13.62.228.124:5000/api/notifications/${id}`)
+  fetch(`https://api.digyaanshshrishti.com/api/notifications/${id}`)
     .then(res => res.json())
     .then(out => {
       if (out.success) {
@@ -131,7 +131,7 @@ const [showNotifications, setShowNotifications] = useState(false);
         ? "nightguard/supervisor-data"
         : "sweeper/supervisor-data";
 
-    fetch(`http://13.62.228.124:5000/api/${apiPath}/${id}`)
+    fetch(`https://api.digyaanshshrishti.com/api/${apiPath}/${id}`)
       .then((res) => res.json())
       .then((out) => {
         // handle both array response or wrapped object
@@ -184,7 +184,7 @@ const [showNotifications, setShowNotifications] = useState(false);
     const apiPath = roleType === "nightguard" ? "nightguard" : "sweeper";
 
     const res = await fetch(
-      `http://13.62.228.124:5000/api/${apiPath}/delete/${id}`,
+      `https://api.digyaanshshrishti.com/api/${apiPath}/delete/${id}`,
       { method: "DELETE" }
     );
 
@@ -210,7 +210,7 @@ const [showNotifications, setShowNotifications] = useState(false);
     const apiPath = roleType === "nightguard" ? "nightguard" : "sweeper";
 
     const res = await fetch(
-      `http://13.62.228.124:5000/api/${apiPath}/update/${editingId}`,
+      `https://api.digyaanshshrishti.com/api/${apiPath}/update/${editingId}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -238,7 +238,7 @@ const [showNotifications, setShowNotifications] = useState(false);
     else delete payload.guardName;
 
     const res = await fetch(
-      `http://13.62.228.124:5000/api/${apiPath}`,
+      `https://api.digyaanshshrishti.com/api/${apiPath}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
