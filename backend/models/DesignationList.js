@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const designationSchema = new mongoose.Schema(
   {
-    name: { type: String, unique: true }
+    name: { type: String }
   },
   { timestamps: true }
 );
