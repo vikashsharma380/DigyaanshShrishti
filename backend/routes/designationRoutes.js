@@ -21,24 +21,23 @@ router.post("/add", async (req, res) => {
   }
 });
 
-// Get All Designations
 router.get("/all", async (req, res) => {
   try {
     const list = await DesignationList.find().sort({ name: 1 });
 
-    // Clean data (prevent blank screen)
     const cleaned = list
+      .filter(d => d.name) 
       .map(d => ({
         _id: d._id,
-        name: d?.name || ""
-      }))
-      .filter(d => d.name !== ""); // remove bad records
+        name: d.name
+      }));
 
     res.json({ success: true, list: cleaned });
   } catch {
     res.json({ success: false, message: "Error fetching designation list" });
   }
 });
+
 
 
 // DELETE DESIGNATION
