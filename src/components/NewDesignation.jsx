@@ -14,8 +14,8 @@ export default function AddDesignation() {
 
     const out = await res.json();
     if (out.success) {
-      alert("Designation added!");
-      setName("");
+    
+
     } else {
       alert("Already exists!");
     }

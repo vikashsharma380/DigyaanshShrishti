@@ -657,7 +657,15 @@ const deleteMessage = async (id) => {
           const out = await res.json();
           if (out.success) {
             alert("Designation Added!");
-            setDesignations([...designations, out.designation]);
+           if (out.designation) {
+   setDesignations([...designations, out.designation]);
+} else {
+   // fallback: refetch complete list
+   fetch("https://api.digyaanshshrishti.com/api/designations/all")
+     .then(res => res.json())
+     .then(o => setDesignations(o.list));
+}
+
           }
         }}
         style={{
