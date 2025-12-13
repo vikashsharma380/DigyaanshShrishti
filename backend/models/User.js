@@ -30,7 +30,12 @@ const userSchema = new mongoose.Schema(
       enum: ["active", "inactive"],
       default: "active",
     },
-    roleType: { type: String, default: "sweeper" }
+    roleType: { type: String, default: "sweeper" },
+
+    forcePasswordChange: {
+    type: Boolean,
+    default: true   
+  }
 
   },
   { timestamps: true }

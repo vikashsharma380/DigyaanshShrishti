@@ -1,5 +1,6 @@
 import express from "express";
 import User from "../models/User.js";
+import { formatPostcssSourceMap } from "vite";
 const router = express.Router();
 router.post("/create", async (req, res) => {
   try {
@@ -26,6 +27,7 @@ router.post("/create", async (req, res) => {
       email: mobile,     // FIXED → store mobile as email field
       mobile: mobile,
       password: password,
+      forcePasswordChange: true,
     });
 
     await newUser.save();

@@ -17,7 +17,7 @@ import UserDashboard from "./components/User/UserDashboard";
 import ExcelUpload from "./components/ExcelUpload";
 import AdminSweeperData from "./components/AdminSweeperData";
 import UserList from "./components/UserList";
-
+ import ChangePassword from "./components/ChangePassword";
 // ⭐ Experience Certificate Component
 import DeepakExperience from "./components/ExperienceCertificate";
 
@@ -71,6 +71,10 @@ function App() {
           element={<DeepakExperience />}
         />
         <Route path="/form/create-user" element={<CreateUserForm />} />
+       
+
+<Route path="/change-password" element={<ChangePassword />} />
+
       </Routes>
     </BrowserRouter>
   );
