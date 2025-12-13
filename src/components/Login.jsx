@@ -26,6 +26,14 @@ export default function Login() {
         }
       );
 
+      if (res.data.forcePasswordChange) {
+      setLoading(false);
+      navigate("/change-password", {
+        state: { userId: res.data.userId },
+      });
+      return;
+    }
+
       const { token, user } = res.data;
 
       // Save token + user

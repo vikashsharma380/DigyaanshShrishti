@@ -22,6 +22,15 @@ router.post("/login", async (req, res) => {
     if (password !== user.password)
       return res.status(401).json({ message: "Invalid mobile or password" });
 
+
+
+    if (user.forcePasswordChange) {
+      return res.json({
+        forcePasswordChange: true,
+        userId: user._id,
+        message: "Password change required",
+      });
+    }
     const token = jwt.sign({ id: user._id }, JWT_SECRET, {
       expiresIn: "2h",
     });
@@ -53,6 +62,36 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+router.post("/change-password", async (req, res) => {
+  try {
+    const { userId, newPassword } = req.body;
+
+    if (!newPassword)
+      return res.status(400).json({ message: "New password required" });
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        password: newPassword,
+        forcePasswordChange: false,
+      },
+      { new: true }
+    );
+
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, {
+      expiresIn: "2h",
+    });
+
+    res.json({
+      success: true,
+      token,
+      user,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 
 export default router;
