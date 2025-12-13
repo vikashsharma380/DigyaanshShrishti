@@ -16,28 +16,31 @@ useEffect(() => {
     .then(res => res.json())
     .then(out => out.success && setDesignations(out.list));
 }, []);
+const initialState = {
+  name: "",
+  fatherName: "",
+  district: "",
+  block: "",
+  designation: "",
+  aadhaar: "",
+  mobile: "",
+  email: "",
+  password: "",
+  address: "",
+  gender: "",
+  dob: "",
+  bankDetails: {
+    accountNumber: "",
+    ifscCode: "",
+    bankName: "",
+  },
+  access: "active",
+  roleType: "sweeper",
+};
 
-  const [data, setData] = useState({
-    name: "",
-    fatherName: "",
-    district: "",
-    block: "",
-    designation: "",
-    aadhaar: "",
-    mobile: "",
-    email: "",
-    password: "",
-    address: "",
-    gender: "",
-    dob: "",
-    bankDetails: {
-      accountNumber: "",
-      ifscCode: "",
-      bankName: "",
-    },
-    access: "active",
-    roleType: "sweeper",
-  });
+
+const [data, setData] = useState(initialState);
+
   useEffect(() => {
     fetch("https://api.digyaanshshrishti.com/api/district/list")
       .then(res => res.json())
@@ -80,6 +83,9 @@ useEffect(() => {
     const result = await res.json();
 
     if (result.success) {
+      alert("✅ User successfully created!");
+       setData(initialState);
+    setShowPassword(false);
       
     } else {
       alert("Error: " + result.message);
