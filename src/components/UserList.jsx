@@ -286,243 +286,231 @@ const updateAllRoles = async (role) => {
               </tr>
             </thead>
 
-            <tbody>
-             {filteredUsers.map((u, i) => (
+          <tbody>
+  {/* NO DATA */}
+  {filteredUsers.length === 0 && (
+    <tr>
+      <td colSpan="20" style={{ textAlign: "center", padding: "20px" }}>
+        No users found
+      </td>
+    </tr>
+  )}
 
-                editingId === u._id ? (
-                  <tr key={u._id}>
-                    <td>{i + 1}</td>
+  {filteredUsers.map((u, i) => {
+    // ================= EDIT MODE =================
+    if (editingId === u._id) {
+      return (
+        <tr key={u._id}>
+          <td>{i + 1}</td>
 
-                    <td>
-                      <input
-                        value={editRow.name}
-                        onChange={(e) =>
-                          handleEditChange("name", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.name || ""}
+              onChange={(e) => handleEditChange("name", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.fatherName}
-                        onChange={(e) =>
-                          handleEditChange("fatherName", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.fatherName || ""}
+              onChange={(e) => handleEditChange("fatherName", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.gender}
-                        onChange={(e) =>
-                          handleEditChange("gender", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.gender || ""}
+              onChange={(e) => handleEditChange("gender", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.dob}
-                        onChange={(e) =>
-                          handleEditChange("dob", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.dob || ""}
+              onChange={(e) => handleEditChange("dob", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.mobile}
-                        onChange={(e) =>
-                          handleEditChange("mobile", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.mobile || ""}
+              onChange={(e) => handleEditChange("mobile", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.email}
-                        onChange={(e) =>
-                          handleEditChange("email", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        value={editRow.password}
-                        onChange={(e) =>
-                          handleEditChange("password", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        value={editRow.aadhaar}
-                        onChange={(e) =>
-                          handleEditChange("aadhaar", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.email || ""}
+              onChange={(e) => handleEditChange("email", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.district}
-                        onChange={(e) =>
-                          handleEditChange("district", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.password || ""}
+              onChange={(e) => handleEditChange("password", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.block}
-                        onChange={(e) =>
-                          handleEditChange("block", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.aadhaar || ""}
+              onChange={(e) => handleEditChange("aadhaar", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.designation}
-                        onChange={(e) =>
-                          handleEditChange("designation", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.district || ""}
+              onChange={(e) => handleEditChange("district", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.address}
-                        onChange={(e) =>
-                          handleEditChange("address", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.block || ""}
+              onChange={(e) => handleEditChange("block", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.bankDetails?.accountNumber || ""}
-                        onChange={(e) =>
-                          handleEditChange("bank.accountNumber", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.designation || ""}
+              onChange={(e) => handleEditChange("designation", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.bankDetails?.ifscCode || ""}
-                        onChange={(e) =>
-                          handleEditChange("bank.ifscCode", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.address || ""}
+              onChange={(e) => handleEditChange("address", e.target.value)}
+            />
+          </td>
 
-                    <td>
-                      <input
-                        value={editRow.bankDetails?.bankName || ""}
-                        onChange={(e) =>
-                          handleEditChange("bank.bankName", e.target.value)
-                        }
-                      />
-                    </td>
+          <td>
+            <input
+              value={editRow.bankDetails?.accountNumber || ""}
+              onChange={(e) =>
+                handleEditChange("bank.accountNumber", e.target.value)
+              }
+            />
+          </td>
 
-                    <td>{u.access}</td>
-                  
+          <td>
+            <input
+              value={editRow.bankDetails?.ifscCode || ""}
+              onChange={(e) =>
+                handleEditChange("bank.ifscCode", e.target.value)
+              }
+            />
+          </td>
 
-                    <td>{u.createdAt?.slice(0, 10)}</td>
+          <td>
+            <input
+              value={editRow.bankDetails?.bankName || ""}
+              onChange={(e) =>
+                handleEditChange("bank.bankName", e.target.value)
+              }
+            />
+          </td>
 
-                    <td>
-                      <div className="action-buttons">
-                        <button
-                          onClick={saveEdit}
-                          className="action-btn save-btn"
-                        >
-                          Save
-                        </button>
-                        <button
-                          onClick={() => setEditingId(null)}
-                          className="action-btn cancel-btn"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ) : (
-                  <tr key={u._id}>
-                    <td>{i + 1}</td>
-                    <td>{u.name}</td>
-                    <td>{u.fatherName}</td>
-                    <td>{u.gender}</td>
-                    <td>{u.dob}</td>
-                    <td>{u.mobile}</td>
-                    <td>{u.email}</td>
-                    <td>{u.password}</td>
-                    <td>{u.aadhaar}</td>
-                    <td>{u.district}</td>
-                    <td>{u.block}</td>
-                    <td>{u.designation}</td>
-                    <td>{u.address}</td>
-                    <td>{u.bankDetails?.accountNumber}</td>
-                    <td>{u.bankDetails?.ifscCode}</td>
-                    <td>{u.bankDetails?.bankName}</td>
-                    <td>
-                      <button
-                        onClick={() => toggleAccess(u)}
-                        style={{
-                          padding: "4px 10px",
-                          borderRadius: "6px",
-                          border: "none",
-                          cursor: "pointer",
-                          background: u.access === "active" ? "green" : "red",
-                          color: "white",
-                          fontWeight: "600",
-                        }}
-                      >
-                        {u.access === "active" ? "active" : "inactive"}
-                      </button>
-                    </td>
-                    
+          <td>{u.access}</td>
+          <td>{u.createdAt?.slice(0, 10)}</td>
 
-                    <td>{u.createdAt?.slice(0, 10)}</td>
-                    <td>
-                      <div className="action-buttons">
-                        <button
-                          onClick={() => enableEdit(u)}
-                          className="action-btn edit-btn"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => deleteUser(u._id)}
-                          className="action-btn delete-btn"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
+          <td>
+            <button onClick={saveEdit} className="action-btn save-btn">
+              Save
+            </button>
+            <button
+              onClick={() => setEditingId(null)}
+              className="action-btn cancel-btn"
+            >
+              Cancel
+            </button>
+          </td>
 
-                    <td>
-  <button
-    onClick={() => toggleRole(u)}
-    style={{
-      padding: "6px 12px",
-      background: u.roleType === "nightguard" ? "orange" : "blue",
-      color: "white",
-      border: "none",
-      borderRadius: "6px",
-      cursor: "pointer",
-      fontWeight: "600"
-    }}
-  >
-    {u.roleType === "nightguard" ? "Make Sweeper" : "Make Night Guard"}
-  </button>
-</td>
+          <td>—</td>
+        </tr>
+      );
+    }
 
-                  </tr>
-                )
-              )}
-            </tbody>
+    // ================= NORMAL VIEW =================
+    return (
+      <tr key={u._id}>
+        <td>{i + 1}</td>
+        <td>{u.name}</td>
+        <td>{u.fatherName}</td>
+        <td>{u.gender}</td>
+        <td>{u.dob}</td>
+        <td>{u.mobile}</td>
+        <td>{u.email}</td>
+        <td>{u.password}</td>
+        <td>{u.aadhaar}</td>
+        <td>{u.district}</td>
+        <td>{u.block}</td>
+        <td>{u.designation}</td>
+        <td>{u.address}</td>
+        <td>{u.bankDetails?.accountNumber}</td>
+        <td>{u.bankDetails?.ifscCode}</td>
+        <td>{u.bankDetails?.bankName}</td>
+
+        <td>
+          <button
+            onClick={() => toggleAccess(u)}
+            style={{
+              padding: "4px 10px",
+              borderRadius: "6px",
+              border: "none",
+              cursor: "pointer",
+              background: u.access === "active" ? "green" : "red",
+              color: "white",
+              fontWeight: "600",
+            }}
+          >
+            {u.access}
+          </button>
+        </td>
+
+        <td>{u.createdAt?.slice(0, 10)}</td>
+
+        <td>
+          <button
+            onClick={() => enableEdit(u)}
+            className="action-btn edit-btn"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => deleteUser(u._id)}
+            className="action-btn delete-btn"
+          >
+            Delete
+          </button>
+        </td>
+
+        <td>
+          <button
+            onClick={() => toggleRole(u)}
+            style={{
+              padding: "6px 12px",
+              background: u.roleType === "nightguard" ? "orange" : "blue",
+              color: "white",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+              fontWeight: "600",
+            }}
+          >
+            {u.roleType === "nightguard"
+              ? "Make Sweeper"
+              : "Make Night Guard"}
+          </button>
+        </td>
+      </tr>
+    );
+  })}
+</tbody>
+
           </table>
         </div>
       </div>
