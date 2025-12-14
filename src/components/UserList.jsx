@@ -12,7 +12,6 @@ const filteredUsers = users.filter((u) => {
 
   return (
     u.name?.toLowerCase().includes(q) ||
-    u.mobile?.toLowerCase().includes(q) ||
     u.email?.toLowerCase().includes(q) ||
     u.district?.toLowerCase().includes(q) ||
     u.designation?.toLowerCase().includes(q)
