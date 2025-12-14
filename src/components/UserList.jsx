@@ -6,6 +6,18 @@ export default function AdminUsersExcelView() {
   const [users, setUsers] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editRow, setEditRow] = useState({});
+const [search, setSearch] = useState("");
+const filteredUsers = users.filter((u) => {
+  const q = search.toLowerCase();
+
+  return (
+    u.name?.toLowerCase().includes(q) ||
+    u.mobile?.toLowerCase().includes(q) ||
+    u.email?.toLowerCase().includes(q) ||
+    u.district?.toLowerCase().includes(q) ||
+    u.designation?.toLowerCase().includes(q)
+  );
+});
 
   const navigate = useNavigate();
 
@@ -195,7 +207,21 @@ const updateAllRoles = async (role) => {
       <button className="download-btn" onClick={downloadExcel}>
         Download Excel ⬇️
       </button>
-      
+      <input
+  type="text"
+  placeholder="Search by name, mobile, email, district..."
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+  style={{
+    margin: "15px 0",
+    padding: "10px 14px",
+    width: "320px",
+    borderRadius: "8px",
+    border: "1px solid #cfd6e1",
+    fontSize: "14px",
+  }}
+/>
+
 
       <div style={{ display: "flex", gap: "10px",justifyContent: "space-evenly", margin: "15px 0" }}>
         <button
@@ -262,7 +288,8 @@ const updateAllRoles = async (role) => {
             </thead>
 
             <tbody>
-              {users.map((u, i) =>
+             {filteredUsers.map((u, i) => (
+
                 editingId === u._id ? (
                   <tr key={u._id}>
                     <td>{i + 1}</td>
