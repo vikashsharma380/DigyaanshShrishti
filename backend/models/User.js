@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema(
     access: {
       type: String,
       enum: ["active", "inactive"],
-      default: "active",
+      default: "inactive",
     },
     roleType: { type: String, default: "sweeper" },
 
