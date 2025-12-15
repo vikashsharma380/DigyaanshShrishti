@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
     },
     aadhaar: String,
     mobile: String,
-    email: { type: String, unique: true },
+    email: { type: String, unique: true, sparse: true, trim: true },
     password: String,
     address: String,
     gender: String,

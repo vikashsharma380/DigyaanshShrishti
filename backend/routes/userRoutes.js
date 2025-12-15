@@ -151,29 +151,38 @@ router.post("/bulk-upload", async (req, res) => {
     if (!users || users.length === 0)
       return res.json({ success: false });
 
-    const prepared = users.map((u) => ({
-      name: u.name,
-      fatherName: u.fatherName,
-      gender: u.gender,
-      dob: u.dob,
-      mobile: u.mobile,
-      email: u.email || "",
-      aadhaar: u.aadhaar,
-      district: u.district,
-      block: u.block,
-      designation: u.designation,
-      address: u.address,
-      password: u.password || "123456",
+  const prepared = users.map((u) => {
+  const obj = {
+    name: u.name,
+    fatherName: u.fatherName,
+    gender: u.gender,
+    dob: u.dob,
+    mobile: u.mobile,
+    aadhaar: u.aadhaar,
+    district: u.district,
+    block: u.block,
+    designation: u.designation,
+    address: u.address,
+    password: u.password || "123456",
 
-      bankDetails: {
-        accountNumber: u.accountNumber || "",
-        ifscCode: u.ifscCode || "",
-        bankName: u.bankName || "",
-      },
+    bankDetails: {
+      accountNumber: u.accountNumber || "",
+      ifscCode: u.ifscCode || "",
+      bankName: u.bankName || "",
+    },
 
-      access: "inactive",
-      roleType: "sweeper",
-    }));
+    access: "inactive",
+    roleType: "sweeper",
+  };
+
+  // ⭐ EMAIL ONLY IF EXISTS
+  if (u.email && u.email.trim() !== "") {
+    obj.email = u.email.trim();
+  }
+
+  return obj;
+});
+
 
     const inserted = await User.insertMany(prepared, {
       ordered: false,
