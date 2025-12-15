@@ -171,7 +171,7 @@ router.post("/bulk-upload", async (req, res) => {
         bankName: u.bankName || "",
       },
 
-      access: "active",
+      access: "inactive",
       roleType: "sweeper",
     }));
 

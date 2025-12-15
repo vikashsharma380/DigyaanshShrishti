@@ -32,44 +32,7 @@ const uploadExcel = async (e) => {
     const workbook = XLSX.read(data, { type: "binary" });
     const sheetName = workbook.SheetNames[0];
     const sheet = workbook.Sheets[sheetName];
-const deleteAllUsers = async () => {
-  const confirm1 = window.confirm(
-    "⚠️ WARNING: This will delete ALL users except Super Admin. Continue?"
-  );
-  if (!confirm1) return;
 
-  const confirm2 = window.prompt(
-    'Type "DELETE ALL" to confirm'
-  );
-  if (confirm2 !== "DELETE ALL") {
-    alert("Cancelled");
-    return;
-  }
-
-  try {
-    const res = await fetch(
-      "https://api.digyaanshshrishti.com/api/users/delete-all-users",
-      {
-        method: "DELETE",
-      }
-    );
-
-    const out = await res.json();
-
-    if (out.success) {
-      alert(`✅ ${out.deletedCount} users deleted`);
-      
-      // Frontend state update (keep only admin)
-      setUsers((prev) =>
-        prev.filter((u) => u.designation === "Admin")
-      );
-    } else {
-      alert("Failed to delete users");
-    }
-  } catch (err) {
-    alert("Server error");
-  }
-};
 
     const rows = XLSX.utils.sheet_to_json(sheet);
 
@@ -108,6 +71,44 @@ const deleteAllUsers = async () => {
   reader.readAsBinaryString(file);
 };
 
+const deleteAllUsers = async () => {
+  const confirm1 = window.confirm(
+    "⚠️ WARNING: This will delete ALL users except Super Admin. Continue?"
+  );
+  if (!confirm1) return;
+
+  const confirm2 = window.prompt(
+    'Type "DELETE ALL" to confirm'
+  );
+  if (confirm2 !== "DELETE ALL") {
+    alert("Cancelled");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      "https://api.digyaanshshrishti.com/api/users/delete-all-users",
+      {
+        method: "DELETE",
+      }
+    );
+
+    const out = await res.json();
+
+    if (out.success) {
+      alert(`✅ ${out.deletedCount} users deleted`);
+      
+      // Frontend state update (keep only admin)
+      setUsers((prev) =>
+        prev.filter((u) => u.designation === "Admin")
+      );
+    } else {
+      alert("Failed to delete users");
+    }
+  } catch (err) {
+    alert("Server error");
+  }
+};
   const navigate = useNavigate();
 
   useEffect(() => {
