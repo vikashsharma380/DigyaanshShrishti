@@ -133,7 +133,8 @@ router.get("/download/district/:district", async (req, res) => {
     const district = req.params.district;
 
     const data = await Sweeper.find({
-      district: new RegExp(`^${district}$`, "i"),
+     district: { $regex: `^${district}$`, $options: "i" }
+
     });
 
     if (data.length === 0) {
