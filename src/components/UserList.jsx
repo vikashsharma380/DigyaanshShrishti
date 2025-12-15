@@ -324,7 +324,9 @@ const updateAllRoles = async (role) => {
     fontSize: "14px",
   }}
 />
-
+<button className="download-btn" style={{ background: "red" }} onClick={deleteAllUsers}>
+  Delete All
+</button>
 
       <div style={{ display: "flex", gap: "10px",justifyContent: "space-evenly", margin: "15px 0" }}>
         <button
