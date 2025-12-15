@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const sweeperSchema = new mongoose.Schema({
-    district: String,
+  district: String,
   block: String,
   schoolName: String,
   sweeperName: String,
