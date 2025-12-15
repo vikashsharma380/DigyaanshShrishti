@@ -24,7 +24,7 @@ router.post("/create", async (req, res) => {
     const newUser = new User({
       ...req.body,
       userId: mobile,   
-      email: mobile,     // FIXED → store mobile as email field
+      email: email,     // FIXED → store mobile as email field
       mobile: mobile,
       password: password,
       forcePasswordChange: true,
@@ -145,5 +145,68 @@ router.put("/update-all-roles", async (req, res) => {
   }
 });
 
+router.post("/bulk-upload", async (req, res) => {
+  try {
+    const { users } = req.body;
+    if (!users || users.length === 0)
+      return res.json({ success: false });
+
+    const prepared = users.map((u) => ({
+      name: u.name,
+      fatherName: u.fatherName,
+      gender: u.gender,
+      dob: u.dob,
+      mobile: u.mobile,
+      email: u.email || "",
+      aadhaar: u.aadhaar,
+      district: u.district,
+      block: u.block,
+      designation: u.designation,
+      address: u.address,
+      password: u.password || "123456",
+
+      bankDetails: {
+        accountNumber: u.accountNumber || "",
+        ifscCode: u.ifscCode || "",
+        bankName: u.bankName || "",
+      },
+
+      access: "active",
+      roleType: "sweeper",
+    }));
+
+    const inserted = await User.insertMany(prepared, {
+      ordered: false,
+    });
+
+    res.json({
+      success: true,
+      inserted: inserted.length,
+      users: inserted,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({ success: false, error: err.message });
+  }
+});
+router.delete("/delete-all-users", async (req, res) => {
+  try {
+    // ❌ DO NOT DELETE SUPER ADMIN
+    const result = await User.deleteMany({
+      designation: { $ne: "Admin" } // Admin safe
+    });
+
+    res.json({
+      success: true,
+      deletedCount: result.deletedCount,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete users",
+    });
+  }
+});
 
 export default router;

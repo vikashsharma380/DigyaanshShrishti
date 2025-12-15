@@ -6,6 +6,8 @@ export default function AdminUsersExcelView() {
   const [users, setUsers] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editRow, setEditRow] = useState({});
+  const [uploading, setUploading] = useState(false);
+
 const [search, setSearch] = useState("");
 const filteredUsers = users.filter((u) => {
   const q = search.toLowerCase();
@@ -17,6 +19,94 @@ const filteredUsers = users.filter((u) => {
     u.designation?.toLowerCase().includes(q)
   );
 });
+const uploadExcel = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  setUploading(true);
+
+  const reader = new FileReader();
+
+  reader.onload = async (evt) => {
+    const data = evt.target.result;
+    const workbook = XLSX.read(data, { type: "binary" });
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+const deleteAllUsers = async () => {
+  const confirm1 = window.confirm(
+    "⚠️ WARNING: This will delete ALL users except Super Admin. Continue?"
+  );
+  if (!confirm1) return;
+
+  const confirm2 = window.prompt(
+    'Type "DELETE ALL" to confirm'
+  );
+  if (confirm2 !== "DELETE ALL") {
+    alert("Cancelled");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      "https://api.digyaanshshrishti.com/api/users/delete-all-users",
+      {
+        method: "DELETE",
+      }
+    );
+
+    const out = await res.json();
+
+    if (out.success) {
+      alert(`✅ ${out.deletedCount} users deleted`);
+      
+      // Frontend state update (keep only admin)
+      setUsers((prev) =>
+        prev.filter((u) => u.designation === "Admin")
+      );
+    } else {
+      alert("Failed to delete users");
+    }
+  } catch (err) {
+    alert("Server error");
+  }
+};
+
+    const rows = XLSX.utils.sheet_to_json(sheet);
+
+    if (rows.length === 0) {
+      alert("Excel is empty!");
+      setUploading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        "https://api.digyaanshshrishti.com/api/users/bulk-upload",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ users: rows }),
+        }
+      );
+
+      const out = await res.json();
+
+      if (out.success) {
+        alert(`✅ ${out.inserted} users uploaded`);
+        setUsers((prev) => [...out.users, ...prev]);
+      } else {
+        alert("Upload failed");
+      }
+    } catch (err) {
+      alert("Server error");
+    } finally {
+      setUploading(false);
+      e.target.value = "";
+    }
+  };
+
+  reader.readAsBinaryString(file);
+};
 
   const navigate = useNavigate();
 
@@ -206,6 +296,19 @@ const updateAllRoles = async (role) => {
       <button className="download-btn" onClick={downloadExcel}>
         Download Excel ⬇️
       </button>
+      <label
+  className="download-btn"
+  style={{ background: "#0a7cff", cursor: "pointer" }}
+>
+  {uploading ? "Uploading..." : "Upload Excel ⬆️"}
+  <input
+    type="file"
+    accept=".xlsx, .xls"
+    hidden
+    onChange={uploadExcel}
+  />
+</label>
+
       <input
   type="text"
   placeholder="Search by name, mobile, email, district..."
