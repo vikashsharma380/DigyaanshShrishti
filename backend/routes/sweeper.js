@@ -43,7 +43,7 @@ router.post("/upload-excel", async (req, res) => {
       if (isNaN(toilets)) toilets = 0; // fallback
 
       return {
-        district: row["District"]?.trim() ,
+       district: row["District Name"]?.trim(),
         block: row["Block Name"]?.trim(),
         schoolName: row["School Name"]?.trim(),
         sweeperName: row["Sweeper Name"]?.trim(),
