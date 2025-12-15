@@ -282,6 +282,7 @@ const downloadExcel = () => {
             <thead>
               <tr>
                 <th>SI.No</th>
+                <th>District</th>
                 <th>Block</th>
                 <th>School Name</th>
                 <th>Sweeper Name</th>
