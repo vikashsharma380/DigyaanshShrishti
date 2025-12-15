@@ -12,6 +12,17 @@ export default function AdminSweeperData() {
   const [editingId, setEditingId] = useState(null);
   const [editRow, setEditRow] = useState({});
 const [showDeleteForm, setShowDeleteForm] = useState(false);
+const [districts, setDistricts] = useState([]);
+useEffect(() => {
+  fetch("https://api.digyaanshshrishti.com/api/district/list")
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        setDistricts(data.list);
+      }
+    })
+    .catch((err) => console.log(err));
+}, []);
 
  
  const deleteAllSweepers = async () => {
@@ -128,6 +139,26 @@ const [showDeleteForm, setShowDeleteForm] = useState(false);
       setEditingId(null);
     }
   };
+const downloadDistrictData = async (district) => {
+  const res = await fetch(
+    `https://api.digyaanshshrishti.com/api/sweeper/download/district/${district}`
+  );
+
+  if (!res.ok) {
+    alert("No data found for this district");
+    return;
+  }
+
+  const blob = await res.blob();
+  const url = window.URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${district}_data.xlsx`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+};
 
   // Download Excel
 const downloadExcel = () => {
@@ -239,6 +270,25 @@ const downloadExcel = () => {
         <button onClick={downloadExcel} className="btn-green">
           ⬇️ Download Excel
         </button>
+<select
+  onChange={(e) => downloadDistrictData(e.target.value)}
+  style={{
+    padding: "10px",
+    width: "100%",
+    borderRadius: "8px",
+    border: "1px solid #ccc",
+    fontSize: "15px",
+  }}
+>
+  <option value="">Select District</option>
+
+  {districts.map((d) => (
+    <option key={d._id} value={d.name}>
+      {d.name}
+    </option>
+  ))}
+</select>
+
 
         <button onClick={() => setShowDeleteForm(true)} className="btn-blue">
           Delete AllData
@@ -300,6 +350,16 @@ const downloadExcel = () => {
                 editingId === item._id ? (
                   <tr key={item._id}>
                     <td>{index + 1}</td>
+
+                    <td>
+                      <input
+                        className="input-edit"
+                        value={editRow.district}
+                        onChange={(e) =>
+                          handleEditChange("district", e.target.value)
+                        }
+                      />
+                    </td>
 
                     <td>
                       <input

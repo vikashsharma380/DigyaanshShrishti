@@ -127,5 +127,55 @@ router.delete("/delete-all", async (req, res) => {
 });
 
 
+// DOWNLOAD district-wise Excel
+router.get("/download/district/:district", async (req, res) => {
+  try {
+    const district = req.params.district;
+
+    const data = await Sweeper.find({
+      district: new RegExp(`^${district}$`, "i"),
+    });
+
+    if (data.length === 0) {
+      return res.status(404).json({ message: "No data found" });
+    }
+
+    const excelData = data.map((item) => ({
+      "District Name": item.district,
+      "Block Name": item.block,
+      "School Name": item.schoolName,
+      "Sweeper Name": item.sweeperName,
+      "Number of Toilet": item.toilets,
+      "Account Number": item.accountNumber,
+      "IFSC Code": item.ifsc,
+      "Salary": item.salary,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sweeper Data");
+
+    const buffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "buffer",
+    });
+
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=${district}_data.xlsx`
+    );
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    res.send(buffer);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Download failed" });
+  }
+});
+
+
 
 export default router;
