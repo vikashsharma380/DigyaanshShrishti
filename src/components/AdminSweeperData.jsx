@@ -380,6 +380,7 @@ const downloadExcel = () => {
                 ) : (
                   <tr key={item._id}>
                     <td>{index + 1}</td>
+                    <td>{item.district}</td>
                     <td>{item.block}</td>
                     <td>{item.schoolName}</td>
                     <td>{item.sweeperName}</td>
