@@ -153,21 +153,33 @@ router.post("/bulk-upload", async (req, res) => {
 function parseDOB(dob) {
   if (!dob) return null;
 
-  // ✅ Excel SERIAL NUMBER (34380)
+  // trim safety
+  if (typeof dob === "string") {
+    dob = dob.trim();
+  }
+
+  // ✅ CASE 1: Excel serial number (34380)
   if (typeof dob === "number") {
     const excelEpoch = new Date(Date.UTC(1899, 11, 30));
     return new Date(excelEpoch.getTime() + dob * 86400000);
   }
 
-  // ✅ DD-MM-YYYY
-  if (typeof dob === "string" && /^\d{2}-\d{2}-\d{4}$/.test(dob)) {
+  // ✅ CASE 2: DD-MM-YYYY
+  if (/^\d{2}-\d{2}-\d{4}$/.test(dob)) {
     const [dd, mm, yyyy] = dob.split("-");
     return new Date(`${yyyy}-${mm}-${dd}`);
   }
 
-  // ✅ YYYY-MM-DD
-  if (typeof dob === "string" && /^\d{4}-\d{2}-\d{2}$/.test(dob)) {
+  // ✅ CASE 3: YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
     return new Date(dob);
+  }
+
+  // ✅ CASE 4: M/D/YY or MM/DD/YYYY (EXCEL DEFAULT)
+  if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(dob)) {
+    const [m, d, y] = dob.split("/");
+    const yyyy = y.length === 2 ? `19${y}` : y; // 94 → 1994
+    return new Date(`${yyyy}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`);
   }
 
   return null;
