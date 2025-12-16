@@ -175,6 +175,7 @@ function parseDOB(dob) {
 
 
   const prepared = users.map((u) => {
+    console.log("RAW DOB:", u.dob, "PARSED:", parseDOB(u.dob));
   const obj = {
     name: u.name,
     fatherName: u.fatherName,
@@ -206,7 +207,7 @@ function parseDOB(dob) {
 
   return obj;
 });
-console.log("RAW DOB:", u.dob, "PARSED:", parseDOB(u.dob));
+
 
     const inserted = await User.insertMany(prepared, {
       ordered: false,
