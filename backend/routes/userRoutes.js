@@ -172,6 +172,7 @@ function parseDOB(dob) {
 
   return null;
 }
+console.log("RAW DOB:", u.dob, "PARSED:", parseDOB(u.dob));
 
   const prepared = users.map((u) => {
   const obj = {
