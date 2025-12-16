@@ -563,7 +563,12 @@ const updateAllRoles = async (role) => {
         <td>{u.name}</td>
         <td>{u.fatherName}</td>
         <td>{u.gender}</td>
-        <td>{u.dob}</td>
+        <td>
+  {u.dob
+    ? new Date(u.dob).toLocaleDateString("en-GB")
+    : ""}
+</td>
+
         <td>{u.mobile}</td>
         <td>{u.email}</td>
         <td>{u.password}</td>
