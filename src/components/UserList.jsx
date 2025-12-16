@@ -7,6 +7,7 @@ export default function AdminUsersExcelView() {
   const [editingId, setEditingId] = useState(null);
   const [editRow, setEditRow] = useState({});
   const [uploading, setUploading] = useState(false);
+const [viewUser, setViewUser] = useState(null);
 
 const [search, setSearch] = useState("");
 const filteredUsers = users.filter((u) => {
@@ -619,6 +620,13 @@ const updateAllRoles = async (role) => {
           >
             Delete
           </button>
+          <button
+    onClick={() => setViewUser(u)}
+    className="action-btn"
+    style={{ background: "#0a7cff", color: "white" }}
+  >
+    View
+  </button>
         </td>
 
         <td>
@@ -645,6 +653,50 @@ const updateAllRoles = async (role) => {
 </tbody>
 
           </table>
+
+          {viewUser && (
+  <div className="modal-overlay">
+    <div className="modal-card">
+      <h2>User Details</h2>
+
+      <div className="modal-grid">
+        <p><b>Name:</b> {viewUser.name}</p>
+        <p><b>Father:</b> {viewUser.fatherName}</p>
+        <p><b>Gender:</b> {viewUser.gender}</p>
+        <p><b>DOB:</b> {viewUser.dob
+          ? new Date(viewUser.dob).toLocaleDateString("en-GB")
+          : ""}</p>
+
+        <p><b>Mobile:</b> {viewUser.mobile}</p>
+        <p><b>Email:</b> {viewUser.email}</p>
+        <p><b>Aadhaar:</b> {viewUser.aadhaar}</p>
+
+        <p><b>District:</b> {viewUser.district}</p>
+        <p><b>Block:</b> {viewUser.block}</p>
+        <p><b>Designation:</b> {viewUser.designation}</p>
+
+        <p><b>Address:</b> {viewUser.address}</p>
+
+        <p><b>Account No:</b> {viewUser.bankDetails?.accountNumber}</p>
+        <p><b>IFSC:</b> {viewUser.bankDetails?.ifscCode}</p>
+        <p><b>Bank:</b> {viewUser.bankDetails?.bankName}</p>
+
+        <p><b>Status:</b> {viewUser.access}</p>
+        <p><b>Role:</b> {viewUser.roleType}</p>
+        <p><b>Created:</b> {viewUser.createdAt?.slice(0,10)}</p>
+      </div>
+
+      <button
+        className="download-btn"
+        style={{ marginTop: "15px" }}
+        onClick={() => setViewUser(null)}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
         </div>
       </div>
       {/* STYLE */}
@@ -677,6 +729,40 @@ const updateAllRoles = async (role) => {
 }
 .download-btn:hover {
   background: #3d59e5;
+}
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: white;
+  padding: 24px;
+  width: 700px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 12px;
+}
+
+.modal-card h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 20px;
+}
+
+.modal-grid p {
+  font-size: 14px;
 }
 
 /* ================= TABLE CARD ================= */
