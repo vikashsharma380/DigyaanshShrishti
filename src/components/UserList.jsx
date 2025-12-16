@@ -33,8 +33,7 @@ const uploadExcel = async (e) => {
     const sheetName = workbook.SheetNames[0];
     const sheet = workbook.Sheets[sheetName];
 
-
-    const rows = XLSX.utils.sheet_to_json(sheet);
+    const rows = XLSX.utils.sheet_to_json(sheet, { raw: false });
 
     if (rows.length === 0) {
       alert("Excel is empty!");
@@ -42,13 +41,29 @@ const uploadExcel = async (e) => {
       return;
     }
 
+    const formattedRows = rows.map((row) => {
+      let dob = row.dob || row.DOB || row["Date of Birth"];
+
+      if (typeof dob === "string" && dob.includes("-")) {
+        const [dd, mm, yyyy] = dob.split("-");
+        dob = `${yyyy}-${mm}-${dd}`;
+      }
+
+      if (typeof dob === "number") {
+        const jsDate = new Date(Math.round((dob - 25569) * 86400 * 1000));
+        dob = jsDate.toISOString().split("T")[0];
+      }
+
+      return { ...row, dob };
+    });
+
     try {
       const res = await fetch(
         "https://api.digyaanshshrishti.com/api/users/bulk-upload",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ users: rows }),
+          body: JSON.stringify({ users: formattedRows }),
         }
       );
 
@@ -70,6 +85,7 @@ const uploadExcel = async (e) => {
 
   reader.readAsBinaryString(file);
 };
+
 
 const deleteAllUsers = async () => {
   const confirm1 = window.confirm(
