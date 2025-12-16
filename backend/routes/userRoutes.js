@@ -150,13 +150,36 @@ router.post("/bulk-upload", async (req, res) => {
     const { users } = req.body;
     if (!users || users.length === 0)
       return res.json({ success: false });
+function parseDOB(dob) {
+  if (!dob) return null;
+
+  // ✅ Excel SERIAL NUMBER (34380)
+  if (typeof dob === "number") {
+    const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+    return new Date(excelEpoch.getTime() + dob * 86400000);
+  }
+
+  // ✅ DD-MM-YYYY
+  if (typeof dob === "string" && /^\d{2}-\d{2}-\d{4}$/.test(dob)) {
+    const [dd, mm, yyyy] = dob.split("-");
+    return new Date(`${yyyy}-${mm}-${dd}`);
+  }
+
+  // ✅ YYYY-MM-DD
+  if (typeof dob === "string" && /^\d{4}-\d{2}-\d{2}$/.test(dob)) {
+    return new Date(dob);
+  }
+
+  return null;
+}
 
   const prepared = users.map((u) => {
   const obj = {
     name: u.name,
     fatherName: u.fatherName,
     gender: u.gender,
-    dob: u.dob,
+    dob: parseDOB(u.dob),
+
     mobile: u.mobile,
     aadhaar: u.aadhaar,
     district: u.district,
