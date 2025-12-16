@@ -448,9 +448,15 @@ const updateAllRoles = async (role) => {
 
           <td>
             <input
-              value={editRow.dob || ""}
-              onChange={(e) => handleEditChange("dob", e.target.value)}
-            />
+  type="date"
+  value={
+    editRow.dob
+      ? new Date(editRow.dob).toISOString().split("T")[0]
+      : ""
+  }
+  onChange={(e) => handleEditChange("dob", e.target.value)}
+/>
+
           </td>
 
           <td>
