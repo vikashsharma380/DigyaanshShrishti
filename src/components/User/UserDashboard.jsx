@@ -12,6 +12,7 @@ export default function UserDashboard() {
   const [showProfile, setShowProfile] = useState(false);
   const [notifications, setNotifications] = useState([]);
 const [showNotifications, setShowNotifications] = useState(false);
+const adminBackup = JSON.parse(localStorage.getItem("admin_backup"));
 
 
   // ⭐ role + permission derived state
@@ -112,7 +113,7 @@ const [showNotifications, setShowNotifications] = useState(false);
   const id = currentUser._id || stored.id || stored._id;
   if (!id) return;
 
-  fetch(`https://api.digyaanshshrishti.com/api/notifications/${id}`)
+  fetch(`https://api.digyaanshshrishti.com/api/notifications/user/${id}`)
     .then(res => res.json())
     .then(out => {
       if (out.success) {
@@ -285,6 +286,31 @@ const [showNotifications, setShowNotifications] = useState(false);
     <div className="dashboard-bg">
       {/* TOPBAR */}
       <div className="topbar modern-topbar">
+        {/* 🔙 BACK TO ADMIN (ONLY WHEN IMPERSONATING) */}
+  {adminBackup && (
+    <button
+      onClick={() => {
+        localStorage.setItem("token", adminBackup.token);
+        localStorage.setItem("user", JSON.stringify(adminBackup.user));
+        localStorage.removeItem("admin_backup");
+        window.location.replace("/dashboard");
+      }}
+      style={{
+        background: "#ff9800",
+        color: "#fff",
+        border: "none",
+        padding: "8px 14px",
+        borderRadius: "6px",
+        cursor: "pointer",
+        fontWeight: "600",
+        marginRight: "15px",
+      }}
+    >
+      ⬅ Back to Admin
+    </button>
+  )}
+
+  
         <h1 className="title">
           {roleType === "nightguard" ? "Night Guard Dashboard" : "Sweeper Dashboard"}
         </h1>

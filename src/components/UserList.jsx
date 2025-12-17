@@ -17,7 +17,12 @@ const filteredUsers = users.filter((u) => {
     u.name?.toLowerCase().includes(q) ||
     u.email?.toLowerCase().includes(q) ||
     u.district?.toLowerCase().includes(q) ||
-    u.designation?.toLowerCase().includes(q)
+    u.designation?.toLowerCase().includes(q) ||
+    u.roleType?.toLowerCase().includes(q) ||
+    u.block?.toLowerCase().includes(q) ||
+    u.schoolName?.toLowerCase().includes(q)|| 
+    u.aadhaar?.toLowerCase().includes(q) ||
+    u.mobile?.toLowerCase().includes(q) 
   );
 });
 const uploadExcel = async (e) => {
@@ -258,6 +263,42 @@ const updateAllRoles = async (role) => {
       );
     }
   };
+const loginAsUser = async (userId) => {
+  if (!window.confirm("Login as this user?")) return;
+
+  const res = await fetch(
+    `https://api.digyaanshshrishti.com/api/users/admin-login-as-user/${userId}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+
+  const out = await res.json();
+
+  if (out.success) {
+    // 🔐 BACKUP ORIGINAL ADMIN
+    localStorage.setItem(
+      "admin_backup",
+      JSON.stringify({
+        token: localStorage.getItem("token"),
+        user: JSON.parse(localStorage.getItem("user")),
+      })
+    );
+
+    // 👉 SWITCH TO USER
+    localStorage.setItem("token", out.token);
+    localStorage.setItem("user", JSON.stringify(out.user));
+
+    // 🚀 REDIRECT TO USER DASHBOARD
+    window.location.replace("/userdashboard");
+  } else {
+    alert(out.message);
+  }
+};
+
 
   // ============= HANDLE EDIT CHANGE ============
   const handleEditChange = (field, value) => {
@@ -627,6 +668,15 @@ const updateAllRoles = async (role) => {
   >
     View
   </button>
+
+  <button
+  onClick={() => loginAsUser(u._id)}
+  className="action-btn"
+  style={{ background: "green", color: "white" }}
+>
+  Login
+</button>
+
         </td>
 
         <td>
