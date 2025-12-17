@@ -257,6 +257,50 @@ router.delete("/delete-all-users", async (req, res) => {
   }
 });
 
+// UPDATE VISIBILITY (ON / OFF)
+router.put("/update-visibility/:id", async (req, res) => {
+  try {
+    const { visibility } = req.body;
+
+    if (!["on", "off"].includes(visibility)) {
+      return res.json({ success: false, message: "Invalid value" });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { visibility },
+      { new: true }
+    );
+
+    res.json({ success: true, user });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+});
+
+// UPDATE ALL USERS VISIBILITY
+router.put("/update-all-visibility", async (req, res) => {
+  try {
+    const { visibility } = req.body;
+
+    if (!["on", "off"].includes(visibility)) {
+      return res.json({ success: false, message: "Invalid value" });
+    }
+
+    const result = await User.updateMany(
+      { designation: { $ne: "Admin" } },
+      { visibility }
+    );
+
+    res.json({
+      success: true,
+      updated: result.modifiedCount,
+    });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+});
+
 
 
 // ================= ADMIN LOGIN AS USER =================

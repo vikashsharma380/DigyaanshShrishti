@@ -126,6 +126,11 @@ const adminBackup = JSON.parse(localStorage.getItem("admin_backup"));
   useEffect(() => {
     const id = currentUser._id || stored.id || stored._id;
     if (!id) return;
+if (currentUser.visibility !== "on") {
+  setData([]);
+  setFiltered([]);
+  return;
+}
 
     const apiPath =
       roleType === "nightguard"
@@ -355,10 +360,30 @@ const adminBackup = JSON.parse(localStorage.getItem("admin_backup"));
             ))}
           </select>
 
-          <button className="btn" onClick={downloadExcel}>📥 Download Excel</button>
+{currentUser?.access === "active" && (
+  <button className="btn" onClick={downloadExcel}>
+    📥 Download Excel
+  </button>
+)}
+
 
           {canModify && <button className="btn" onClick={() => setShowAddForm(true)}>➕ Add New</button>}
         </div>
+{currentUser?.visibility !== "on" && (
+  <div
+    style={{
+      background: "#ffe0e0",
+      color: "#b00020",
+      padding: "14px",
+      borderRadius: "8px",
+      marginBottom: "15px",
+      fontWeight: "600",
+      textAlign: "center",
+    }}
+  >
+    🚫 Access disabled by Admin. Data is hidden.
+  </div>
+)}
 
         {/* TABLE */}
         <table className="styled-table">

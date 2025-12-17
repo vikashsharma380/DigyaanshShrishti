@@ -418,6 +418,58 @@ const loginAsUser = async (userId) => {
         >
           Deactivate All (Except Admin)
         </button>
+
+
+        <button
+  className="download-btn"
+  style={{ background: "green" }}
+  onClick={async () => {
+    if (!window.confirm("Turn ON all users?")) return;
+
+    await fetch(
+      "https://api.digyaanshshrishti.com/api/users/update-all-visibility",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visibility: "on" }),
+      }
+    );
+
+    setUsers(prev =>
+      prev.map(u =>
+        u.designation === "Admin" ? u : { ...u, visibility: "on" }
+      )
+    );
+  }}
+>
+  ALL ON
+</button>
+
+<button
+  className="download-btn"
+  style={{ background: "red" }}
+  onClick={async () => {
+    if (!window.confirm("Turn OFF all users?")) return;
+
+    await fetch(
+      "https://api.digyaanshshrishti.com/api/users/update-all-visibility",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visibility: "off" }),
+      }
+    );
+
+    setUsers(prev =>
+      prev.map(u =>
+        u.designation === "Admin" ? u : { ...u, visibility: "off" }
+      )
+    );
+  }}
+>
+  ALL OFF
+</button>
+
       </div>
 
       {/* TABLE */}
@@ -644,6 +696,35 @@ const loginAsUser = async (userId) => {
           >
             {u.access}
           </button>
+
+         <div
+  onClick={async () => {
+    const newValue = u.visibility === "on" ? "off" : "on";
+
+    const res = await fetch(
+      `https://api.digyaanshshrishti.com/api/users/update-visibility/${u._id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visibility: newValue }),
+      }
+    );
+
+    const out = await res.json();
+    if (out.success) {
+      setUsers((prev) =>
+        prev.map((user) =>
+          user._id === u._id ? { ...user, visibility: newValue } : user
+        )
+      );
+    }
+  }}
+  className={`toggle-switch ${u.visibility === "on" ? "on" : "off"}`}
+>
+  <div className="toggle-thumb"></div>
+</div>
+
+
         </td>
 
         <td>{u.createdAt?.slice(0, 10)}</td>
@@ -950,6 +1031,41 @@ input:focus {
 .create-user-btn:active {
   transform: scale(0.95);
 }
+  .toggle-switch {
+  width: 46px;
+  height: 24px;
+  border-radius: 30px;
+  background: #cfd6e1;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.toggle-switch.on {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+}
+
+.toggle-switch.off {
+  background: #d32f2f;
+}
+
+.toggle-thumb {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  left: 2px;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.toggle-switch.on .toggle-thumb {
+  transform: translateX(22px);
+}
+
 
 
 `}</style>
