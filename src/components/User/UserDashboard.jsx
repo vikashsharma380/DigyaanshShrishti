@@ -359,7 +359,12 @@ if (currentUser?.access !== "active") {
             ))}
           </select>
 
-          <button className="btn" onClick={downloadExcel}>📥 Download Excel</button>
+{currentUser?.access === "active" && (
+  <button className="btn" onClick={downloadExcel}>
+    📥 Download Excel
+  </button>
+)}
+
 
           {canModify && <button className="btn" onClick={() => setShowAddForm(true)}>➕ Add New</button>}
         </div>
