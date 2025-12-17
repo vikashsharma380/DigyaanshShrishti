@@ -126,11 +126,7 @@ const adminBackup = JSON.parse(localStorage.getItem("admin_backup"));
   useEffect(() => {
     const id = currentUser._id || stored.id || stored._id;
     if (!id) return;
-if (currentUser?.access !== "active") {
-    setData([]);
-    setFiltered([]);
-    return;
-  }
+
     const apiPath =
       roleType === "nightguard"
         ? "nightguard/supervisor-data"
