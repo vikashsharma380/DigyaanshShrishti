@@ -1,176 +1,233 @@
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const Security = () => (
-  <>
-    <Navbar />
-    <main
-      style={{
-        padding: "110px 20px",
-        background: "linear-gradient(135deg, #f8f6ff 0%, #f0ebff 100%)",
-      }}
-    >
-      <div style={{ maxWidth: 1100, margin: "auto" }}>
-        <img
-          src="https://igssecurity.com/wp-content/uploads/2022/08/security-surveillance-systems.jpg"
-          style={{
-            width: "100%",
-            borderRadius: 20,
-            boxShadow: "0 16px 40px rgba(45, 90, 123, 0.25)",
-            border: "1px solid rgba(45, 90, 123, 0.1)",
-            marginBottom: 40,
-          }}
-        />
+const Security = () => {
+  const [current, setCurrent] = useState(0);
 
-        <h1
-          style={{
-            marginTop: 0,
-            marginBottom: 28,
-            fontSize: 46,
-            fontWeight: 700,
-            color: "#1a1a2e",
-            letterSpacing: "-0.5px",
-          }}
-        >
-          Security & Surveillance Services
-        </h1>
+  const images = [
+    "https://igssecurity.com/wp-content/uploads/2022/08/security-surveillance-systems.jpg",
+    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&h=600&fit=crop",
+  ];
 
-        <p
-          style={{
-            fontSize: 18,
-            lineHeight: 1.9,
-            color: "#555",
-            marginBottom: 18,
-            fontWeight: 500,
-          }}
-        >
-          We offer professional{" "}
-          <strong style={{ color: "#2d5a7b", fontWeight: 600 }}>
-            security and surveillance solutions
-          </strong>{" "}
-          to protect people, property, and assets. Our services combine trained
-          manpower with modern technology for maximum safety.
-        </p>
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
-        <p
-          style={{
-            fontSize: 18,
-            lineHeight: 1.9,
-            color: "#555",
-            marginBottom: 32,
-            padding: "24px 28px",
-            background: "rgba(45, 90, 123, 0.05)",
-            borderLeft: "4px solid #2d5a7b",
-            borderRadius: "6px",
-          }}
-        >
-          Our security personnel are trained in discipline, emergency response,
-          and surveillance protocols.
-        </p>
-
-        <h2
-          style={{
-            marginTop: 50,
-            fontSize: 36,
-            fontWeight: 700,
-            color: "#1a1a2e",
-            marginBottom: 28,
-            borderBottom: "3px solid #2d5a7b",
-            paddingBottom: 16,
-            display: "inline-block",
-          }}
-        >
-          Security Solutions Offered
-        </h2>
-
-        <ul
-          style={{
-            fontSize: 18,
-            lineHeight: 2.2,
-            paddingLeft: 25,
-            marginTop: 24,
-            marginBottom: 32,
-            color: "#444",
-          }}
-        >
-          <li
-            style={{ marginBottom: 12, position: "relative", paddingLeft: 12 }}
+  return (
+    <>
+      <Navbar />
+      <main
+        style={{
+          padding: "150px 20px 60px 20px",
+          background: "linear-gradient(135deg, #f8f6ff 0%, #f0ebff 100%)",
+        }}
+      >
+        <div style={{ maxWidth: 1100, margin: "auto" }}>
+          <h1
+            style={{
+              marginTop: 0,
+              marginBottom: 28,
+              fontSize: 46,
+              fontWeight: 700,
+              color: "#1a1a2e",
+              letterSpacing: "-0.5px",
+            }}
           >
-            <span
-              style={{
-                position: "absolute",
-                left: -22,
-                color: "#2d5a7b",
-                fontWeight: "bold",
-              }}
-            >
-              •
-            </span>
-            Trained security guards
-          </li>
-          <li
-            style={{ marginBottom: 12, position: "relative", paddingLeft: 12 }}
+            Security & Surveillance Services
+          </h1>
+
+          <p
+            style={{
+              fontSize: 18,
+              lineHeight: 1.9,
+              color: "#555",
+              marginBottom: 18,
+              fontWeight: 500,
+            }}
           >
-            <span
-              style={{
-                position: "absolute",
-                left: -22,
-                color: "#2d5a7b",
-                fontWeight: "bold",
-              }}
-            >
-              •
-            </span>
-            CCTV installation & monitoring
-          </li>
-          <li
-            style={{ marginBottom: 12, position: "relative", paddingLeft: 12 }}
+            We offer professional{" "}
+            <strong style={{ color: "#2d5a7b", fontWeight: 600 }}>
+              security and surveillance solutions
+            </strong>{" "}
+            to protect people, property, and assets. Our services combine
+            trained manpower with modern technology for maximum safety.
+          </p>
+
+          <p
+            style={{
+              fontSize: 18,
+              lineHeight: 1.9,
+              color: "#555",
+              marginBottom: 32,
+            }}
           >
-            <span
-              style={{
-                position: "absolute",
-                left: -22,
-                color: "#2d5a7b",
-                fontWeight: "bold",
-              }}
-            >
-              •
-            </span>
-            Access control systems
-          </li>
-          <li
-            style={{ marginBottom: 12, position: "relative", paddingLeft: 12 }}
+            Our security personnel are trained in discipline, emergency
+            response, and surveillance protocols.
+          </p>
+
+          {/* IMAGE SLIDER */}
+          <div
+            style={{
+              margin: "50px 0",
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
-            <span
+            <div
               style={{
-                position: "absolute",
-                left: -22,
-                color: "#2d5a7b",
-                fontWeight: "bold",
+                position: "relative",
+                width: "100%",
+                maxWidth: 780,
+                borderRadius: 18,
+                boxShadow: "0 16px 40px rgba(45, 90, 123, 0.25)",
+                border: "1px solid rgba(45, 90, 123, 0.1)",
+                overflow: "hidden",
+                height: 400,
               }}
             >
-              •
-            </span>
-            Residential & commercial security
-          </li>
-          <li style={{ position: "relative", paddingLeft: 12 }}>
-            <span
+              {images.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt="Security Services"
+                  style={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    opacity: idx === current ? 1 : 0,
+                    transition: "opacity 0.8s ease-in-out",
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
+          <h2
+            style={{
+              marginTop: 60,
+              fontSize: 36,
+              fontWeight: 700,
+              color: "#1a1a2e",
+              marginBottom: 28,
+              borderBottom: "3px solid #2d5a7b",
+              paddingBottom: 16,
+              display: "inline-block",
+            }}
+          >
+            Security Solutions Offered
+          </h2>
+
+          <ul
+            style={{
+              fontSize: 18,
+              lineHeight: 2.2,
+              paddingLeft: 25,
+              marginTop: 24,
+              marginBottom: 32,
+              color: "#444",
+            }}
+          >
+            <li
               style={{
-                position: "absolute",
-                left: -22,
-                color: "#2d5a7b",
-                fontWeight: "bold",
+                marginBottom: 12,
+                position: "relative",
+                paddingLeft: 12,
               }}
             >
-              •
-            </span>
-            24/7 monitoring support
-          </li>
-        </ul>
-      </div>
-    </main>
-    <Footer />
-  </>
-);
+              <span
+                style={{
+                  position: "absolute",
+                  left: -22,
+                  color: "#2d5a7b",
+                  fontWeight: "bold",
+                }}
+              >
+                •
+              </span>
+              Trained security guards
+            </li>
+            <li
+              style={{
+                marginBottom: 12,
+                position: "relative",
+                paddingLeft: 12,
+              }}
+            >
+              <span
+                style={{
+                  position: "absolute",
+                  left: -22,
+                  color: "#2d5a7b",
+                  fontWeight: "bold",
+                }}
+              >
+                •
+              </span>
+              CCTV installation & monitoring
+            </li>
+            <li
+              style={{
+                marginBottom: 12,
+                position: "relative",
+                paddingLeft: 12,
+              }}
+            >
+              <span
+                style={{
+                  position: "absolute",
+                  left: -22,
+                  color: "#2d5a7b",
+                  fontWeight: "bold",
+                }}
+              >
+                •
+              </span>
+              Access control systems
+            </li>
+            <li
+              style={{
+                marginBottom: 12,
+                position: "relative",
+                paddingLeft: 12,
+              }}
+            >
+              <span
+                style={{
+                  position: "absolute",
+                  left: -22,
+                  color: "#2d5a7b",
+                  fontWeight: "bold",
+                }}
+              >
+                •
+              </span>
+              Residential & commercial security
+            </li>
+            <li style={{ position: "relative", paddingLeft: 12 }}>
+              <span
+                style={{
+                  position: "absolute",
+                  left: -22,
+                  color: "#2d5a7b",
+                  fontWeight: "bold",
+                }}
+              >
+                •
+              </span>
+              24/7 monitoring support
+            </li>
+          </ul>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+};
 
 export default Security;
