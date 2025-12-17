@@ -13,22 +13,26 @@ router.post("/send", async (req, res) => {
       return res.json({ success: false, message: "Message required" });
     }
 
+    // ✅ BROADCAST (ALL USERS)
     if (!userId) {
-      const allUsers = await User.find({});
-      await Promise.all(
-        allUsers.map((u) =>
-          Notification.create({ userId: u._id, message })
-        )
-      );
-      return res.json({ success: true, message: "Broadcast sent!" });
+      const note = await Notification.create({
+        message,
+        userId: null, // 👈 IMPORTANT
+      });
+
+      return res.json({ success: true, notification: note });
     }
 
+    // ✅ SINGLE USER
     const note = await Notification.create({ userId, message });
     res.json({ success: true, notification: note });
+
   } catch (err) {
+    console.error(err);
     res.json({ success: false, message: "Error sending notification" });
   }
 });
+
 
 
 // ---------- GET ALL SENT (ADMIN) ----------
@@ -56,17 +60,21 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 
-// ---------- USER NOTIFICATIONS (LAST ME) ----------
 router.get("/user/:userId", async (req, res) => {
   try {
-    const list = await Notification.find({ userId: req.params.userId })
-      .sort({ createdAt: -1 });
+    const list = await Notification.find({
+      $or: [
+        { userId: req.params.userId }, // personal
+        { userId: null },              // broadcast
+      ],
+    }).sort({ createdAt: -1 });
 
     res.json({ success: true, notifications: list });
-  } catch {
+  } catch (err) {
     res.json({ success: false, message: "Error fetching notifications" });
   }
 });
+
 
 
 export default router;

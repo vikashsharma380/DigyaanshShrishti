@@ -1,5 +1,7 @@
 import express from "express";
 import User from "../models/User.js";
+import jwt from "jsonwebtoken";
+
 import { formatPostcssSourceMap } from "vite";
 const router = express.Router();
 router.post("/create", async (req, res) => {
@@ -252,6 +254,68 @@ router.delete("/delete-all-users", async (req, res) => {
       success: false,
       message: "Failed to delete users",
     });
+  }
+});
+
+
+
+// ================= ADMIN LOGIN AS USER =================
+router.post("/admin-login-as-user/:id", async (req, res) => {
+  try {
+    // ⚠️ Yahan ideally admin auth middleware hona chahiye
+    // Abhi simple check kar rahe hain
+
+    const adminToken = req.headers.authorization?.split(" ")[1];
+    if (!adminToken) {
+      return res.status(401).json({ success: false, message: "No token" });
+    }
+
+    const decoded = jwt.verify(adminToken, "MY_SECRET_KEY");
+
+    const adminUser = await User.findById(decoded.id);
+    if (!adminUser || adminUser.designation !== "Admin") {
+      return res
+        .status(403)
+        .json({ success: false, message: "Not allowed" });
+    }
+
+    // 🎯 Target user
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    // ✅ Create USER token
+    const token = jwt.sign(
+      {
+        id: user._id,
+        designation: user.designation,
+        impersonatedBy: adminUser._id, // ⭐ optional
+      },
+      "MY_SECRET_KEY",
+      { expiresIn: "2h" }
+    );
+
+    res.json({
+      success: true,
+      token,
+      user:{
+        _id: user._id,
+    name: user.name,
+    mobile: user.mobile,
+
+    designation: user.designation, // 🔥 FORCE USER MODE
+
+    block: user.block,
+    access: user.access,
+    email: user.email,
+    district: user.district,
+    roleType: user.roleType,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
