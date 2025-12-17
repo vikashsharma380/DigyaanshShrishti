@@ -112,7 +112,7 @@ const [showNotifications, setShowNotifications] = useState(false);
   const id = currentUser._id || stored.id || stored._id;
   if (!id) return;
 
-  fetch(`https://api.digyaanshshrishti.com/api/notifications/${id}`)
+  fetch(`https://api.digyaanshshrishti.com/api/notifications/user/${id}`)
     .then(res => res.json())
     .then(out => {
       if (out.success) {
