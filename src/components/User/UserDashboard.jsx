@@ -310,31 +310,7 @@ const adminBackup = JSON.parse(localStorage.getItem("admin_backup"));
     </button>
   )}
 
-  <h1 className="title">
-    {roleType === "nightguard"
-      ? "Night Guard Dashboard"
-      : "Sweeper Dashboard"}
-  </h1>
-
-  <div className="profile" onClick={() => setShowProfile(true)}>
-    <span>👤 {currentUser?.name}</span>
-    <button
-      className="logout-btn"
-      onClick={(e) => {
-        e.stopPropagation();
-        handleLogout();
-      }}
-    >
-      Logout
-    </button>
-  </div>
-
-  <div className="notification-box" onClick={() => setShowNotifications(prev => !prev)}>
-    <span className="bell-icon">🔔</span>
-    {notifications.length > 0 && (
-      <span className="notif-count">{notifications.length}</span>
-    )}
-  </div>
+  
         <h1 className="title">
           {roleType === "nightguard" ? "Night Guard Dashboard" : "Sweeper Dashboard"}
         </h1>
