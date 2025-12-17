@@ -258,6 +258,29 @@ const updateAllRoles = async (role) => {
       );
     }
   };
+const loginAsUser = async (userId) => {
+  if (!window.confirm("Login as this user?")) return;
+
+  const res = await fetch(
+    `https://api.digyaanshshrishti.com/api/users/admin-login-as-user/${userId}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+
+  const out = await res.json();
+
+  if (out.success) {
+    localStorage.setItem("token", out.token);
+    localStorage.setItem("user", JSON.stringify(out.user));
+    window.location.href = "/dashboard";
+  } else {
+    alert(out.message);
+  }
+};
 
   // ============= HANDLE EDIT CHANGE ============
   const handleEditChange = (field, value) => {
@@ -627,6 +650,15 @@ const updateAllRoles = async (role) => {
   >
     View
   </button>
+
+  <button
+  onClick={() => loginAsUser(u._id)}
+  className="action-btn"
+  style={{ background: "green", color: "white" }}
+>
+  Login
+</button>
+
         </td>
 
         <td>
