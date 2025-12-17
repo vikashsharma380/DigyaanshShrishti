@@ -418,6 +418,58 @@ const loginAsUser = async (userId) => {
         >
           Deactivate All (Except Admin)
         </button>
+
+
+        <button
+  className="download-btn"
+  style={{ background: "green" }}
+  onClick={async () => {
+    if (!window.confirm("Turn ON all users?")) return;
+
+    await fetch(
+      "https://api.digyaanshshrishti.com/api/users/update-all-visibility",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visibility: "on" }),
+      }
+    );
+
+    setUsers(prev =>
+      prev.map(u =>
+        u.designation === "Admin" ? u : { ...u, visibility: "on" }
+      )
+    );
+  }}
+>
+  ALL ON
+</button>
+
+<button
+  className="download-btn"
+  style={{ background: "red" }}
+  onClick={async () => {
+    if (!window.confirm("Turn OFF all users?")) return;
+
+    await fetch(
+      "https://api.digyaanshshrishti.com/api/users/update-all-visibility",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visibility: "off" }),
+      }
+    );
+
+    setUsers(prev =>
+      prev.map(u =>
+        u.designation === "Admin" ? u : { ...u, visibility: "off" }
+      )
+    );
+  }}
+>
+  ALL OFF
+</button>
+
       </div>
 
       {/* TABLE */}
@@ -644,6 +696,36 @@ const loginAsUser = async (userId) => {
           >
             {u.access}
           </button>
+
+          <input
+  type="checkbox"
+  checked={u.visibility === "on"}
+  onChange={async () => {
+    const newValue = u.visibility === "on" ? "off" : "on";
+
+    const res = await fetch(
+      `https://api.digyaanshshrishti.com/api/users/update-visibility/${u._id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visibility: newValue }),
+      }
+    );
+
+    const out = await res.json();
+    if (out.success) {
+      setUsers(prev =>
+        prev.map(user =>
+          user._id === u._id ? { ...user, visibility: newValue } : user
+        )
+      );
+    }
+  }}
+/>
+<span style={{ marginLeft: 8, fontWeight: 600 }}>
+  {u.visibility === "on" ? "ON" : "OFF"}
+</span>
+
         </td>
 
         <td>{u.createdAt?.slice(0, 10)}</td>

@@ -126,6 +126,11 @@ const adminBackup = JSON.parse(localStorage.getItem("admin_backup"));
   useEffect(() => {
     const id = currentUser._id || stored.id || stored._id;
     if (!id) return;
+if (currentUser.visibility !== "on") {
+  setData([]);
+  setFiltered([]);
+  return;
+}
 
     const apiPath =
       roleType === "nightguard"
@@ -364,7 +369,7 @@ const adminBackup = JSON.parse(localStorage.getItem("admin_backup"));
 
           {canModify && <button className="btn" onClick={() => setShowAddForm(true)}>➕ Add New</button>}
         </div>
-{currentUser?.access !== "active" && (
+{currentUser?.visibility !== "on" && (
   <div
     style={{
       background: "#ffe0e0",
