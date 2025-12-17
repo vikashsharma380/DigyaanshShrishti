@@ -17,7 +17,12 @@ const filteredUsers = users.filter((u) => {
     u.name?.toLowerCase().includes(q) ||
     u.email?.toLowerCase().includes(q) ||
     u.district?.toLowerCase().includes(q) ||
-    u.designation?.toLowerCase().includes(q)
+    u.designation?.toLowerCase().includes(q) ||
+    u.roleType?.toLowerCase().includes(q) ||
+    u.block?.toLowerCase().includes(q) ||
+    u.schoolName?.toLowerCase().includes(q)|| 
+    u.aadhaar?.toLowerCase().includes(q) ||
+    u.mobile?.toLowerCase().includes(q) 
   );
 });
 const uploadExcel = async (e) => {
