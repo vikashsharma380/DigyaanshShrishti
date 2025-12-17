@@ -274,13 +274,26 @@ const loginAsUser = async (userId) => {
   const out = await res.json();
 
   if (out.success) {
+    // 🔐 BACKUP ORIGINAL ADMIN
+    localStorage.setItem(
+      "admin_backup",
+      JSON.stringify({
+        token: localStorage.getItem("token"),
+        user: JSON.parse(localStorage.getItem("user")),
+      })
+    );
+
+    // 👉 SWITCH TO USER
     localStorage.setItem("token", out.token);
     localStorage.setItem("user", JSON.stringify(out.user));
-    window.location.href = "/dashboard";
+
+    // 🚀 REDIRECT TO USER DASHBOARD
+    window.location.replace("/userdashboard");
   } else {
     alert(out.message);
   }
 };
+
 
   // ============= HANDLE EDIT CHANGE ============
   const handleEditChange = (field, value) => {
