@@ -13,46 +13,50 @@ export default function AdminSendNotification() {
       .then((out) => out.success && setUsers(out.users));
   }, []);
 
- useEffect(() => {
-  const load = async () => {
-    const res = await fetch("https://api.digyaanshshrishti.com/api/notifications/admin/all");
+  useEffect(() => {
+    const load = async () => {
+      const res = await fetch(
+        "https://api.digyaanshshrishti.com/api/notifications/admin/all"
+      );
+      const out = await res.json();
+      if (out.success) setSentMessages(out.list);
+    };
+
+    load();
+  }, []);
+
+  const sendMessage = async () => {
+    if (!message.trim()) return alert("Please type a message!");
+
+    const payload = {
+      message,
+      userId: selectedUser === "all" ? null : selectedUser,
+    };
+
+    const res = await fetch(
+      "https://api.digyaanshshrishti.com/api/notifications/send",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }
+    );
+
     const out = await res.json();
-    if (out.success) setSentMessages(out.list);
+
+    if (out.success) {
+      alert("Notification Sent! 🚀");
+      setMessage("");
+      setSelectedUser("all");
+
+      // FETCH AGAIN FROM SERVER (ONLY THIS)
+      const updated = await fetch(
+        "https://api.digyaanshshrishti.com/api/notifications/admin/all"
+      ).then((res) => res.json());
+
+      if (updated.success) setSentMessages(updated.list);
+    }
   };
-
-  load();
-}, []);
-
-
-const sendMessage = async () => {
-  if (!message.trim()) return alert("Please type a message!");
-
-  const payload = {
-    message,
-    userId: selectedUser === "all" ? null : selectedUser,
-  };
-
-  const res = await fetch("https://api.digyaanshshrishti.com/api/notifications/send", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-
-  const out = await res.json();
-
-  if (out.success) {
-    alert("Notification Sent! 🚀");
-    setMessage("");
-    setSelectedUser("all");
-
-    // FETCH AGAIN FROM SERVER (ONLY THIS)
-    const updated = await fetch("https://api.digyaanshshrishti.com/api/notifications/admin/all")
-      .then((res) => res.json());
-
-    if (updated.success) setSentMessages(updated.list);
-  }
-};
-
 
   const deleteMsg = async (id) => {
     if (!window.confirm("Delete this message?")) return;
@@ -99,9 +103,7 @@ const sendMessage = async () => {
       </h2>
 
       {/* SELECT USER */}
-      <label
-        style={{ fontWeight: "600", fontSize: "18px", color: "#fff" }}
-      >
+      <label style={{ fontWeight: "600", fontSize: "18px", color: "#fff" }}>
         Select User
       </label>
 
@@ -129,7 +131,9 @@ const sendMessage = async () => {
       </select>
 
       {/* MESSAGE BOX */}
-      <label style={{ fontWeight: "600", fontSize: "18px", color: "#000000ff" }}>
+      <label
+        style={{ fontWeight: "600", fontSize: "18px", color: "#000000ff" }}
+      >
         Message
       </label>
       <textarea
@@ -165,12 +169,8 @@ const sendMessage = async () => {
           marginTop: "20px",
           transition: "0.25s",
         }}
-        onMouseEnter={(e) =>
-          (e.target.style.transform = "scale(1.03)")
-        }
-        onMouseLeave={(e) =>
-          (e.target.style.transform = "scale(1)")
-        }
+        onMouseEnter={(e) => (e.target.style.transform = "scale(1.03)")}
+        onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
         onClick={sendMessage}
       >
         🚀 Send Notification
@@ -180,7 +180,7 @@ const sendMessage = async () => {
       <h3
         style={{
           fontSize: "24px",
-          color: "black",
+          // color: "black",
           marginTop: "35px",
           color: "#fff",
           borderBottom: "2px solid rgba(255,255,255,0.3)",
@@ -196,43 +196,44 @@ const sendMessage = async () => {
         </p>
       )}
 
-{[...new Map(sentMessages.map(item => [item.message, item])).values()].map((m) => (
-  <div
-    key={m._id}
-    style={{
-      background: "rgba(255,255,255,0.15)",
-      padding: "14px",
-      borderRadius: "12px",
-      marginTop: "12px",
-      border: "1px solid rgba(255,255,255,0.2)",
-    }}
-  >
-    <strong style={{ fontSize: "17px", color: "#000000ff" }}>
-      {m.message}
-    </strong>
-    <br />
-    <small style={{ color: "#000000ff" }}>
-      {new Date(m.createdAt).toLocaleString()}
-    </small>
+      {[
+        ...new Map(sentMessages.map((item) => [item.message, item])).values(),
+      ].map((m) => (
+        <div
+          key={m._id}
+          style={{
+            background: "rgba(255,255,255,0.15)",
+            padding: "14px",
+            borderRadius: "12px",
+            marginTop: "12px",
+            border: "1px solid rgba(255,255,255,0.2)",
+          }}
+        >
+          <strong style={{ fontSize: "17px", color: "#000000ff" }}>
+            {m.message}
+          </strong>
+          <br />
+          <small style={{ color: "#000000ff" }}>
+            {new Date(m.createdAt).toLocaleString()}
+          </small>
 
-    <button
-      style={{
-        float: "right",
-        background: "red",
-        color: "white",
-        border: "none",
-        padding: "6px 12px",
-        borderRadius: "6px",
-        cursor: "pointer",
-        marginTop: "8px",
-      }}
-      onClick={() => deleteMsg(m._id)}
-    >
-      Delete
-    </button>
-  </div>
-))}
-
+          <button
+            style={{
+              float: "right",
+              background: "red",
+              color: "white",
+              border: "none",
+              padding: "6px 12px",
+              borderRadius: "6px",
+              cursor: "pointer",
+              marginTop: "8px",
+            }}
+            onClick={() => deleteMsg(m._id)}
+          >
+            Delete
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
