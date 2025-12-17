@@ -697,10 +697,8 @@ const loginAsUser = async (userId) => {
             {u.access}
           </button>
 
-          <input
-  type="checkbox"
-  checked={u.visibility === "on"}
-  onChange={async () => {
+         <div
+  onClick={async () => {
     const newValue = u.visibility === "on" ? "off" : "on";
 
     const res = await fetch(
@@ -714,17 +712,18 @@ const loginAsUser = async (userId) => {
 
     const out = await res.json();
     if (out.success) {
-      setUsers(prev =>
-        prev.map(user =>
+      setUsers((prev) =>
+        prev.map((user) =>
           user._id === u._id ? { ...user, visibility: newValue } : user
         )
       );
     }
   }}
-/>
-<span style={{ marginLeft: 8, fontWeight: 600 }}>
-  {u.visibility === "on" ? "ON" : "OFF"}
-</span>
+  className={`toggle-switch ${u.visibility === "on" ? "on" : "off"}`}
+>
+  <div className="toggle-thumb"></div>
+</div>
+
 
         </td>
 
@@ -1032,6 +1031,41 @@ input:focus {
 .create-user-btn:active {
   transform: scale(0.95);
 }
+  .toggle-switch {
+  width: 46px;
+  height: 24px;
+  border-radius: 30px;
+  background: #cfd6e1;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.toggle-switch.on {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+}
+
+.toggle-switch.off {
+  background: #d32f2f;
+}
+
+.toggle-thumb {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  left: 2px;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.toggle-switch.on .toggle-thumb {
+  transform: translateX(22px);
+}
+
 
 
 `}</style>
