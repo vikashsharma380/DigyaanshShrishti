@@ -17,15 +17,20 @@ import UserDashboard from "./components/User/UserDashboard";
 import ExcelUpload from "./components/ExcelUpload";
 import AdminSweeperData from "./components/AdminSweeperData";
 import UserList from "./components/UserList";
- import ChangePassword from "./components/ChangePassword";
+import ChangePassword from "./components/ChangePassword";
 // ⭐ Experience Certificate Component
 import DeepakExperience from "./components/ExperienceCertificate";
-
 
 import AdminNightGuardData from "./components/AdminNightGuardData";
 import NightGuardExcelUpload from "./components/ExcelUploadNightGuard";
 import AdminSendNotification from "./components/AdminSendNotification";
 import AddDesignation from "./components/NewDesignation";
+import Manpower from "./pages/Manpower";
+import BSDM from "./pages/BSDM";
+import Construction from "./pages/Construction";
+import Security from "./pages/Security";
+import IT from "./pages/IT";
+import Housekeeping from "./pages/Housekeeping";
 function Home() {
   return (
     <>
@@ -57,13 +62,17 @@ function App() {
         <Route path="/admin/sweeper-data" element={<AdminSweeperData />} />
 
         <Route path="/upload-excel" element={<ExcelUpload />} />
-        <Route path="/admin/nightguard-data" element={<AdminNightGuardData />} />
-<Route path="/upload-nightguard" element={<NightGuardExcelUpload />} />
-<Route path="/admin/send-notification" element={<AdminSendNotification />} />
+        <Route
+          path="/admin/nightguard-data"
+          element={<AdminNightGuardData />}
+        />
+        <Route path="/upload-nightguard" element={<NightGuardExcelUpload />} />
+        <Route
+          path="/admin/send-notification"
+          element={<AdminSendNotification />}
+        />
 
-
-<Route path="/add-designation" element={<AddDesignation />} />
-
+        <Route path="/add-designation" element={<AddDesignation />} />
 
         {/* ⭐ NEW ROUTE FIX ⭐ */}
         <Route
@@ -71,10 +80,14 @@ function App() {
           element={<DeepakExperience />}
         />
         <Route path="/form/create-user" element={<CreateUserForm />} />
-       
 
-<Route path="/change-password" element={<ChangePassword />} />
-
+        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/service/housekeeping" element={<Housekeeping />} />
+        <Route path="/service/it" element={<IT />} />
+        <Route path="/service/security" element={<Security />} />
+        <Route path="/service/construction" element={<Construction />} />
+        <Route path="/service/bsdm" element={<BSDM />} />
+        <Route path="/service/manpower" element={<Manpower />} />
       </Routes>
     </BrowserRouter>
   );
