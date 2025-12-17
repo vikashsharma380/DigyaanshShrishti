@@ -255,4 +255,53 @@ router.delete("/delete-all-users", async (req, res) => {
   }
 });
 
+
+
+// ================= ADMIN LOGIN AS USER =================
+router.post("/admin-login-as-user/:id", async (req, res) => {
+  try {
+    // ⚠️ Yahan ideally admin auth middleware hona chahiye
+    // Abhi simple check kar rahe hain
+
+    const adminToken = req.headers.authorization?.split(" ")[1];
+    if (!adminToken) {
+      return res.status(401).json({ success: false, message: "No token" });
+    }
+
+    const decoded = jwt.verify(adminToken, "MY_SECRET_KEY");
+
+    const adminUser = await User.findById(decoded.id);
+    if (!adminUser || adminUser.designation !== "Admin") {
+      return res
+        .status(403)
+        .json({ success: false, message: "Not allowed" });
+    }
+
+    // 🎯 Target user
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    // ✅ Create USER token
+    const token = jwt.sign(
+      {
+        id: user._id,
+        impersonatedBy: adminUser._id, // ⭐ optional
+      },
+      "MY_SECRET_KEY",
+      { expiresIn: "2h" }
+    );
+
+    res.json({
+      success: true,
+      token,
+      user,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 export default router;
