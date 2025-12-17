@@ -1,30 +1,63 @@
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const BSDM = () => {
+  const [current, setCurrent] = useState(0);
+
+  const images = [
+    "https://www.author.thinkwithniche.com/allimages/project/thumb_d3fd5bihar-skill-development-mission-registration.jpg",
+    "https://www.electronicsforu.com/wp-contents/uploads/2020/07/Skill-Development.jpg",
+    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop",
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <Navbar />
 
       <main
         style={{
-          padding: "110px 20px",
+          padding: "150px 20px 60px 20px",
           background: "linear-gradient(135deg, #f8f6ff 0%, #f0ebff 100%)",
         }}
       >
         <div style={{ maxWidth: 1100, margin: "auto" }}>
-          {/* HERO */}
-          <img
-            src="https://www.author.thinkwithniche.com/allimages/project/thumb_d3fd5bihar-skill-development-mission-registration.jpg"
-            alt="BSDM Project"
+          {/* HERO SLIDER */}
+          <div
             style={{
+              position: "relative",
               width: "100%",
               borderRadius: 20,
               marginBottom: 40,
               boxShadow: "0 16px 40px rgba(45, 90, 123, 0.25)",
               border: "1px solid rgba(45, 90, 123, 0.1)",
+              overflow: "hidden",
+              height: 400,
             }}
-          />
+          >
+            {images.map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                alt="BSDM Project"
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  opacity: idx === current ? 1 : 0,
+                  transition: "opacity 0.8s ease-in-out",
+                }}
+              />
+            ))}
+          </div>
 
           <h1
             style={{
@@ -109,19 +142,6 @@ const BSDM = () => {
             training quality. We work closely with certified trainers and
             assessment agencies to deliver measurable outcomes.
           </p>
-
-          {/* IMAGE */}
-          <img
-            src="https://www.electronicsforu.com/wp-contents/uploads/2020/07/Skill-Development.jpg"
-            alt="Skill Training"
-            style={{
-              width: "100%",
-              borderRadius: 20,
-              margin: "50px 0",
-              boxShadow: "0 16px 40px rgba(45, 90, 123, 0.25)",
-              border: "1px solid rgba(45, 90, 123, 0.1)",
-            }}
-          />
 
           {/* BENEFITS */}
           <h2
