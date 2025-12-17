@@ -10,8 +10,8 @@ const ContactSection = () => {
     },
     {
       title: "Email",
-      value: "digyaanshshrishti@gmail.com",
-      link: "mailto:digyaanshshrishti@gmail.com",
+      value: "contact@digyaanshshrishti.com",
+      link: "mailto:contact@digyaanshshrishti.com",
       icon: "📧",
     },
     {
@@ -42,31 +42,33 @@ const ContactSection = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    const res = await fetch("https://api.digyaanshshrishti.com/api/contact/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const res = await fetch(
+        "https://api.digyaanshshrishti.com/api/contact/create",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
 
-    const out = await res.json();
+      const out = await res.json();
 
-    if (out.success) {
-      setSubmitted(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      if (out.success) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", subject: "", message: "" });
 
-      setTimeout(() => setSubmitted(false), 2500);
-    } else {
-      alert("Failed to send message");
+        setTimeout(() => setSubmitted(false), 2500);
+      } else {
+        alert("Failed to send message");
+      }
+    } catch (err) {
+      alert("Server error!");
     }
-  } catch (err) {
-    alert("Server error!");
-  }
-};
-
+  };
 
   return (
     <>
