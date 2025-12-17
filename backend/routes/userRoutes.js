@@ -289,6 +289,7 @@ router.post("/admin-login-as-user/:id", async (req, res) => {
     const token = jwt.sign(
       {
         id: user._id,
+        designation: user.designation,
         impersonatedBy: adminUser._id, // ⭐ optional
       },
       "MY_SECRET_KEY",
@@ -298,7 +299,19 @@ router.post("/admin-login-as-user/:id", async (req, res) => {
     res.json({
       success: true,
       token,
-      user,
+      user:{
+        _id: user._id,
+    name: user.name,
+    mobile: user.mobile,
+
+    designation: user.designation, // 🔥 FORCE USER MODE
+
+    block: user.block,
+    access: user.access,
+    email: user.email,
+    district: user.district,
+    roleType: user.roleType,
+      },
     });
   } catch (err) {
     console.error(err);
