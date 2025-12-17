@@ -12,6 +12,7 @@ export default function UserDashboard() {
   const [showProfile, setShowProfile] = useState(false);
   const [notifications, setNotifications] = useState([]);
 const [showNotifications, setShowNotifications] = useState(false);
+const adminBackup = JSON.parse(localStorage.getItem("admin_backup"));
 
 
   // ⭐ role + permission derived state
@@ -285,6 +286,55 @@ const [showNotifications, setShowNotifications] = useState(false);
     <div className="dashboard-bg">
       {/* TOPBAR */}
       <div className="topbar modern-topbar">
+        {/* 🔙 BACK TO ADMIN (ONLY WHEN IMPERSONATING) */}
+  {adminBackup && (
+    <button
+      onClick={() => {
+        localStorage.setItem("token", adminBackup.token);
+        localStorage.setItem("user", JSON.stringify(adminBackup.user));
+        localStorage.removeItem("admin_backup");
+        window.location.replace("/dashboard");
+      }}
+      style={{
+        background: "#ff9800",
+        color: "#fff",
+        border: "none",
+        padding: "8px 14px",
+        borderRadius: "6px",
+        cursor: "pointer",
+        fontWeight: "600",
+        marginRight: "15px",
+      }}
+    >
+      ⬅ Back to Admin
+    </button>
+  )}
+
+  <h1 className="title">
+    {roleType === "nightguard"
+      ? "Night Guard Dashboard"
+      : "Sweeper Dashboard"}
+  </h1>
+
+  <div className="profile" onClick={() => setShowProfile(true)}>
+    <span>👤 {currentUser?.name}</span>
+    <button
+      className="logout-btn"
+      onClick={(e) => {
+        e.stopPropagation();
+        handleLogout();
+      }}
+    >
+      Logout
+    </button>
+  </div>
+
+  <div className="notification-box" onClick={() => setShowNotifications(prev => !prev)}>
+    <span className="bell-icon">🔔</span>
+    {notifications.length > 0 && (
+      <span className="notif-count">{notifications.length}</span>
+    )}
+  </div>
         <h1 className="title">
           {roleType === "nightguard" ? "Night Guard Dashboard" : "Sweeper Dashboard"}
         </h1>
