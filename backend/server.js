@@ -45,6 +45,8 @@ import notificationRoutes from "./routes/notification.js";
 import designationRoutes from "./routes/designationRoutes.js";
 
 app.use("/api/designations", designationRoutes);
+import bsdmRoutes from "./routes/bsdmRoutes.js";
+app.use("/api/bsdm", bsdmRoutes);
 
 app.use("/api/notifications", notificationRoutes);
 

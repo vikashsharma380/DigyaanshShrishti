@@ -747,22 +747,30 @@ const deleteMessage = async (id) => {
   <div style={{ maxWidth: "700px" }}>
     <h2 className="section-title">BSDM Slider Images</h2>
 
-    <input
-      type="file"
-      accept="image/*"
-      onChange={async (e) => {
-        const fd = new FormData();
-        fd.append("image", e.target.files[0]);
+   <input
+  type="file"
+  accept="image/*"
+  onChange={async (e) => {
+    console.log("FILE:", e.target.files[0]); // 👈 ADD THIS
 
-        const res = await fetch("/api/bsdm/add-image", {
-          method: "POST",
-          body: fd,
-        });
+    const fd = new FormData();
+    fd.append("image", e.target.files[0]);
 
-        const out = await res.json();
-        if (out.success) setBsdmImages(out.images);
-      }}
-    />
+    const res = await fetch(
+      "https://api.digyaanshshrishti.com/api/bsdm/add-image",
+      {
+        method: "POST",
+        body: fd,
+      }
+    );
+
+    const out = await res.json();
+    console.log("RESPONSE:", out);
+
+    if (out.success) setBsdmImages(out.images);
+  }}
+/>
+
 
     <div style={{ marginTop: 20 }}>
       {bsdmImages.map((img, i) => (
