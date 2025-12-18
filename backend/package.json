@@ -4,10 +4,13 @@
   "type": "module",
   "main": "server.js",
   "dependencies": {
+    "aws-sdk": "^2.1693.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.19.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^7.4.0"
+    "mongoose": "^7.4.0",
+    "multer": "^2.0.2",
+    "multer-s3": "^3.0.1"
   }
 }
