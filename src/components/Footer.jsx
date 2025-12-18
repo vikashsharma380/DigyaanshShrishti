@@ -37,9 +37,9 @@ const Footer = () => {
             DIGYAANSH SHRISHTI MAINTENANCE PVT. LTD.
           </h2>
           <p>
-            Providing professional services across housekeeping, IT,
-            construction, manpower, security, and government skill development.
-            Delivering reliability, trust, and excellence in every project.
+            Providing Professional Services Across Housekeeping, IT,
+            Construction, Manpower, Security, And Government Skill Development.
+            Delivering Reliability, Trust, And Excellence In Every Project.
           </p>
 
           <div className="footer-social">
