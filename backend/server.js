@@ -47,6 +47,9 @@ import designationRoutes from "./routes/designationRoutes.js";
 app.use("/api/designations", designationRoutes);
 import bsdmRoutes from "./routes/bsdmRoutes.js";
 app.use("/api/bsdm", bsdmRoutes);
+import pageImagesRoutes from "./routes/pageImages.js";
+
+app.use("/api/page-images", pageImagesRoutes);
 
 app.use("/api/notifications", notificationRoutes);
 

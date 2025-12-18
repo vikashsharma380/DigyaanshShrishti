@@ -44,12 +44,19 @@ useEffect(() => {
 }, []);
 
 
-useEffect(() => {
-fetch("https://api.digyaanshshrishti.com/api/bsdm")
-    .then(res => res.json())
-    .then(d => setBsdmImages(d?.heroImages || []));
-}, []);
+// useEffect(() => {
+// fetch("https://api.digyaanshshrishti.com/api/bsdm")
+//     .then(res => res.json())
+//     .then(d => setBsdmImages(d?.heroImages || []));
+// }, []);
+const [page, setPage] = useState("bsdm");
+const [images, setImages] = useState([]);
 
+useEffect(() => {
+  fetch(`https://api.digyaanshshrishti.com/api/page-images/${page}`)
+    .then((res) => res.json())
+    .then((data) => setImages(data.images));
+}, [page]);
 
 const toggleRole = async (user) => {
   const newRole = user.roleType === "nightguard" ? "sweeper" : "nightguard";
@@ -268,7 +275,8 @@ const deleteMessage = async (id) => {
     { id: "reports", label: "Reports", icon: "📈" },
     { id: "settings", label: "Settings", icon: "⚙️" },
     { id: "designations", label: "Designations", icon: "🏷️" },
-{ id: "bsdm", label: "BSDM Page", icon: "🖼️" },
+{ id: "pages", label: "Page Images", icon: "🖼️" }
+
 
 
   ];
@@ -743,37 +751,50 @@ const deleteMessage = async (id) => {
     </ul>
   </div>
 )}
-{activeNav === "bsdm" && (
+{activeNav === "pages" && (
   <div style={{ maxWidth: "700px" }}>
-    <h2 className="section-title">BSDM Slider Images</h2>
+    <h2 className="section-title">Page Slider Images</h2>
 
-   <input
-  type="file"
-  accept="image/*"
-  onChange={async (e) => {
-    console.log("FILE:", e.target.files[0]); // 👈 ADD THIS
+    {/* PAGE SELECT */}
+    <select
+      value={page}
+      onChange={(e) => setPage(e.target.value)}
+      style={{ padding: 10, marginBottom: 15, width: "100%" }}
+    >
+      <option value="bsdm">BSDM</option>
+      <option value="construction">Construction</option>
+      <option value="housekeeping">Housekeeping</option>
+      <option value="security">Security</option>
+      <option value="manpower">Manpower</option>
+    </select>
 
-    const fd = new FormData();
-    fd.append("image", e.target.files[0]);
+    {/* UPLOAD IMAGE */}
+    <input
+      type="file"
+      accept="image/*"
+      onChange={async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
 
-    const res = await fetch(
-      "https://api.digyaanshshrishti.com/api/bsdm/add-image",
-      {
-        method: "POST",
-        body: fd,
-      }
-    );
+        const fd = new FormData();
+        fd.append("image", file);
 
-    const out = await res.json();
-    console.log("RESPONSE:", out);
+        const res = await fetch(
+          `https://api.digyaanshshrishti.com/api/page-images/${page}/add-image`,
+          {
+            method: "POST",
+            body: fd,
+          }
+        );
 
-    if (out.success) setBsdmImages(out.images);
-  }}
-/>
+        const out = await res.json();
+        if (out.success) setImages(out.images);
+      }}
+    />
 
-
+    {/* IMAGE LIST */}
     <div style={{ marginTop: 20 }}>
-      {bsdmImages.map((img, i) => (
+      {images.map((img, i) => (
         <div key={i} style={{ marginBottom: 15 }}>
           <img
             src={img}
@@ -789,15 +810,17 @@ const deleteMessage = async (id) => {
             onClick={async () => {
               if (!window.confirm("Delete image?")) return;
 
-              const res = await fetch("https://api.digyaanshshrishti.com/api/bsdm/remove-image", {
-  method: "DELETE",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ imageUrl: img }),
-});
-
+              const res = await fetch(
+                `https://api.digyaanshshrishti.com/api/page-images/${page}/remove-image`,
+                {
+                  method: "DELETE",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ imageUrl: img }),
+                }
+              );
 
               const out = await res.json();
-              if (out.success) setBsdmImages(out.images);
+              if (out.success) setImages(out.images);
             }}
             style={{
               marginTop: 5,
@@ -816,6 +839,7 @@ const deleteMessage = async (id) => {
     </div>
   </div>
 )}
+
 
 
       </div>
