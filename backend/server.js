@@ -50,6 +50,8 @@ app.use("/api/bsdm", bsdmRoutes);
 import pageImagesRoutes from "./routes/pageImages.js";
 
 app.use("/api/page-images", pageImagesRoutes);
+import galleryRoutes from "./routes/galleryRoutes.js";
+app.use("/api/gallery", galleryRoutes);
 
 app.use("/api/notifications", notificationRoutes);
 

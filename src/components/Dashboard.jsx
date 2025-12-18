@@ -275,7 +275,8 @@ const deleteMessage = async (id) => {
     { id: "reports", label: "Reports", icon: "📈" },
     { id: "settings", label: "Settings", icon: "⚙️" },
     { id: "designations", label: "Designations", icon: "🏷️" },
-{ id: "pages", label: "Page Images", icon: "🖼️" }
+{ id: "pages", label: "Page Images", icon: "🖼️" },
+{ id: "gallery", label: "Gallery Manager", icon: "🖼️" }
 
 
 
@@ -896,6 +897,63 @@ const deleteMessage = async (id) => {
 
   </div>
 )}
+
+{activeNav === "gallery" && (
+  <div style={{ maxWidth: 800 }}>
+    <h2 className="section-title">Gallery Manager</h2>
+
+    {/* ADD COMPANY */}
+    <h3>Add Company Highlight</h3>
+    <input id="c-title" placeholder="Title" />
+    <textarea id="c-desc" placeholder="Description" />
+
+    <button
+      onClick={async () => {
+        const title = document.getElementById("c-title").value;
+        const desc = document.getElementById("c-desc").value;
+
+        const res = await fetch("/api/gallery/company", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, desc }),
+        });
+        alert("Added");
+      }}
+    >
+      Add
+    </button>
+
+    <hr />
+
+    {/* ADD TEAM */}
+    <h3>Add Team Member</h3>
+
+    <input id="t-name" placeholder="Name" />
+    <input id="t-role" placeholder="Role" />
+    <textarea id="t-info" placeholder="Info" />
+    <input id="t-img" type="file" />
+
+    <button
+      onClick={async () => {
+        const fd = new FormData();
+        fd.append("name", document.getElementById("t-name").value);
+        fd.append("role", document.getElementById("t-role").value);
+        fd.append("info", document.getElementById("t-info").value);
+        fd.append("image", document.getElementById("t-img").files[0]);
+
+        await fetch("/api/gallery/team", {
+          method: "POST",
+          body: fd,
+        });
+
+        alert("Team member added");
+      }}
+    >
+      Add Team Member
+    </button>
+  </div>
+)}
+
 
 
 
