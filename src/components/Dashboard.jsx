@@ -912,7 +912,7 @@ const deleteMessage = async (id) => {
         const title = document.getElementById("c-title").value;
         const desc = document.getElementById("c-desc").value;
 
-        const res = await fetch("/api/gallery/company", {
+        const res = await fetch("https://api.digyaanshshrishti.com/api/gallery/company", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ title, desc }),
