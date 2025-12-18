@@ -766,77 +766,134 @@ const deleteMessage = async (id) => {
       <option value="housekeeping">Housekeeping</option>
       <option value="security">Security</option>
       <option value="manpower">Manpower</option>
+      <option value="it">IT</option>
     </select>
 
     {/* UPLOAD IMAGE */}
-    <input
-      type="file"
-      accept="image/*"
-      onChange={async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
+   {/* UPLOAD BOX */}
+<label
+  style={{
+    display: "block",
+    border: "2px dashed #aaa",
+    borderRadius: 14,
+    padding: 30,
+    textAlign: "center",
+    cursor: "pointer",
+    background: "#fafafa",
+    transition: "all 0.3s ease",
+    marginBottom: 25,
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.borderColor = "#2d5a7b";
+    e.currentTarget.style.background = "#f0f6fb";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.borderColor = "#aaa";
+    e.currentTarget.style.background = "#fafafa";
+  }}
+>
+  <div style={{ fontSize: 40 }}>📤</div>
+  <h3 style={{ margin: "10px 0", color: "#333" }}>
+    Upload Slider Image
+  </h3>
+  <p style={{ color: "#666", fontSize: 14 }}>
+    Click to select image (JPG, PNG, WEBP)
+  </p>
 
-        const fd = new FormData();
-        fd.append("image", file);
+  <input
+    type="file"
+    accept="image/*"
+    hidden
+    onChange={async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
 
-        const res = await fetch(
-          `https://api.digyaanshshrishti.com/api/page-images/${page}/add-image`,
-          {
-            method: "POST",
-            body: fd,
-          }
-        );
+      const fd = new FormData();
+      fd.append("image", file);
 
-        const out = await res.json();
-        if (out.success) setImages(out.images);
-      }}
-    />
+      const res = await fetch(
+        `https://api.digyaanshshrishti.com/api/page-images/${page}/add-image`,
+        {
+          method: "POST",
+          body: fd,
+        }
+      );
+
+      const out = await res.json();
+      if (out.success) setImages(out.images);
+    }}
+  />
+</label>
+
 
     {/* IMAGE LIST */}
-    <div style={{ marginTop: 20 }}>
-      {images.map((img, i) => (
-        <div key={i} style={{ marginBottom: 15 }}>
-          <img
-            src={img}
-            style={{
-              width: "100%",
-              height: 180,
-              objectFit: "cover",
-              borderRadius: 10,
-            }}
-          />
+   {/* IMAGE GRID */}
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+    gap: 20,
+  }}
+>
+  {images.map((img, i) => (
+    <div
+      key={i}
+      style={{
+        position: "relative",
+        borderRadius: 14,
+        overflow: "hidden",
+        boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
+        background: "#fff",
+      }}
+    >
+      <img
+        src={img}
+        alt=""
+        style={{
+          width: "100%",
+          height: 160,
+          objectFit: "cover",
+          display: "block",
+        }}
+      />
 
-          <button
-            onClick={async () => {
-              if (!window.confirm("Delete image?")) return;
+      {/* DELETE BUTTON */}
+      <button
+        onClick={async () => {
+          if (!window.confirm("Delete image?")) return;
 
-              const res = await fetch(
-                `https://api.digyaanshshrishti.com/api/page-images/${page}/remove-image`,
-                {
-                  method: "DELETE",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ imageUrl: img }),
-                }
-              );
+          const res = await fetch(
+            `https://api.digyaanshshrishti.com/api/page-images/${page}/remove-image`,
+            {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ imageUrl: img }),
+            }
+          );
 
-              const out = await res.json();
-              if (out.success) setImages(out.images);
-            }}
-            style={{
-              marginTop: 5,
-              background: "red",
-              color: "white",
-              border: "none",
-              padding: "5px 12px",
-              borderRadius: 5,
-              cursor: "pointer",
-            }}
-          >
-            Delete
-          </button>
-        </div>
-      ))}
+          const out = await res.json();
+          if (out.success) setImages(out.images);
+        }}
+        style={{
+          position: "absolute",
+          top: 10,
+          right: 10,
+          background: "rgba(255,0,0,0.85)",
+          color: "#fff",
+          border: "none",
+          borderRadius: "50%",
+          width: 32,
+          height: 32,
+          cursor: "pointer",
+          fontSize: 16,
+        }}
+      >
+        ✕
+      </button>
     </div>
+  ))}
+</div>
+
   </div>
 )}
 

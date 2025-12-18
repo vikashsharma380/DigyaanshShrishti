@@ -4,12 +4,13 @@ import Footer from "../components/Footer";
 
 const IT = () => {
   const [current, setCurrent] = useState(0);
+  const [images, setImages] = useState([]);
+useEffect(() => {
+  fetch("https://api.digyaanshshrishti.com/api/page-images/it")
+    .then(res => res.json())
+    .then(data => setImages(data.images || []));
+}, []);
 
-  const images = [
-    "https://tosinso.com/files/get/cd5673e1-36cc-49bd-acd4-9f2d4354ee75",
-    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop",
-  ];
 
   useEffect(() => {
     const interval = setInterval(() => {

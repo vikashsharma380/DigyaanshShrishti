@@ -3,13 +3,18 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Housekeeping = () => {
-  const [current, setCurrent] = useState(0);
+  
 
-  const images = [
-    "https://insights.workwave.com/wp-content/uploads/2019/07/iStock-906777508-e1564417323957.jpg",
-    "https://images.unsplash.com/photo-1563453392212-d0c3472b9212?w=1200&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1584622180556-40bfb1c13204?w=1200&h=600&fit=crop",
-  ];
+   const [images, setImages] = useState([]);
+  const [current, setCurrent] = useState(0);
+  
+  useEffect(() => {
+  fetch("https://api.digyaanshshrishti.com/api/page-images/housekeeping")
+      .then(res => res.json())
+      .then(data => {
+        if (data?.heroImages) setImages(data.heroImages);
+      });
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {

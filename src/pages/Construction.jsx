@@ -3,13 +3,13 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Construction = () => {
+ const [images, setImages] = useState([]);
   const [current, setCurrent] = useState(0);
-
-  const images = [
-    "https://wallpaperaccess.com/full/8432871.jpg",
-    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=1200&h=600&fit=crop",
-  ];
+useEffect(() => {
+  fetch("https://api.digyaanshshrishti.com/api/page-images/construction")
+    .then(res => res.json())
+    .then(data => setImages(data.images || []));
+}, []);
 
   useEffect(() => {
     const interval = setInterval(() => {

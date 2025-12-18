@@ -4,12 +4,14 @@ import Footer from "../components/Footer";
 
 const Manpower = () => {
   const [current, setCurrent] = useState(0);
+  const [images, setImages] = useState([]);
 
-  const images = [
-    "https://broadwayshr.com/wp-content/uploads/2023/03/manpower-planning-1-e1677669474556.jpg",
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop",
-  ];
+ useEffect(() => {
+  fetch("https://api.digyaanshshrishti.com/api/page-images/manpower")
+    .then(res => res.json())
+    .then(data => setImages(data.images || []));
+}, []);
+
 
   useEffect(() => {
     const interval = setInterval(() => {
