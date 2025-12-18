@@ -38,32 +38,35 @@ useEffect(() => {
         <div style={{ maxWidth: 1100, margin: "auto" }}>
           {/* HERO SLIDER */}
           <div
-            style={{
-              position: "relative",
-              width: "100%",
-              borderRadius: 20,
-              marginBottom: 40,
-              boxShadow: "0 16px 40px rgba(45, 90, 123, 0.25)",
-              border: "1px solid rgba(45, 90, 123, 0.1)",
-              overflow: "hidden",
-              height: 400,
-            }}
-          >
+  style={{
+    position: "relative",
+    width: "100%",
+    height: 400,
+    borderRadius: 20,
+    marginBottom: 40,
+    overflow: "hidden",
+    backgroundColor: "#000", // empty gaps hide karne ke liye
+  }}
+>
+
             {images.map((img, idx) => (
-              <img
-                key={idx}
-                src={img}
-                alt="BSDM Project"
-                style={{
-                  position: "absolute",
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  opacity: idx === current ? 1 : 0,
-                  transition: "opacity 0.8s ease-in-out",
-                }}
-              />
-            ))}
+  <img
+    key={idx}
+    src={img}
+    alt="BSDM Project"
+    style={{
+      position: "absolute",
+      inset: 0,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",        // full cover
+      objectPosition: "center",  // center focus
+      opacity: idx === current ? 1 : 0,
+      transition: "opacity 1s ease-in-out",
+    }}
+  />
+))}
+
           </div>
 
           <h1
