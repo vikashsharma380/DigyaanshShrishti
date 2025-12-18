@@ -45,7 +45,7 @@ useEffect(() => {
 
 
 useEffect(() => {
-  fetch("/api/bsdm")
+fetch("https://api.digyaanshshrishti.com/api/bsdm")
     .then(res => res.json())
     .then(d => setBsdmImages(d?.heroImages || []));
 }, []);

@@ -9,7 +9,7 @@ const BSDM = () => {
 const [current, setCurrent] = useState(0);
 
 useEffect(() => {
-  fetch("/api/bsdm")
+fetch("https://api.digyaanshshrishti.com/api/bsdm")
     .then(res => res.json())
     .then(data => {
       if (data?.heroImages) setImages(data.heroImages);
