@@ -11,7 +11,6 @@ const upload = multer({
 
     acl: "public-read",
     key(req, file, cb) {
-    key(req, file, cb) {
       cb(null, `bsdm/${Date.now()}-${file.originalname}`);
     },
   }),
