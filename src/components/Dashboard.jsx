@@ -941,7 +941,7 @@ const deleteMessage = async (id) => {
         fd.append("info", document.getElementById("t-info").value);
         fd.append("image", document.getElementById("t-img").files[0]);
 
-        await fetch("/api/gallery/team", {
+        await fetch("https://api.digyaanshshrishti.com/api/gallery/team", {
           method: "POST",
           body: fd,
         });
