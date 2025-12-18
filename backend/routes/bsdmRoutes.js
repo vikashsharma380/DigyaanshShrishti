@@ -14,6 +14,15 @@ router.post(
   "/add-image",
   upload.single("image"),
   async (req, res) => {
+    console.log("REQ.FILE =>", req.file); // 🔥 VERY IMPORTANT
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "File upload failed (req.file undefined)",
+      });
+    }
+
     const page = (await BsdmPage.findOne()) || new BsdmPage();
 
     page.heroImages.push(req.file.location);
@@ -22,6 +31,7 @@ router.post(
     res.json({ success: true, images: page.heroImages });
   }
 );
+
 
 // REMOVE image
 router.delete("/remove-image", async (req, res) => {
