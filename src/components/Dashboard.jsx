@@ -10,6 +10,9 @@ const [showNotifications, setShowNotifications] = useState(false);
 const [selectedDistrict, setSelectedDistrict] = useState("");
 const [selectedBlock, setSelectedBlock] = useState("");
 const [openStates, setOpenStates] = useState({});
+const [data, setData] = useState(null);
+const [heroImage, setHeroImage] = useState(null);
+const [sectionImage, setSectionImage] = useState(null);
 
 const [designations, setDesignations] = useState([]);
 useEffect(() => {
@@ -40,6 +43,11 @@ useEffect(() => {
 }, []);
 
 
+useEffect(() => {
+  fetch("/api/bsdm")
+    .then(res => res.json())
+    .then(setData);
+}, []);
 
 
 const toggleRole = async (user) => {
@@ -259,6 +267,7 @@ const deleteMessage = async (id) => {
     { id: "reports", label: "Reports", icon: "📈" },
     { id: "settings", label: "Settings", icon: "⚙️" },
     { id: "designations", label: "Designations", icon: "🏷️" },
+{ id: "bsdm", label: "BSDM Page", icon: "🖼️" },
 
 
   ];
@@ -731,6 +740,98 @@ const deleteMessage = async (id) => {
         </li>
       ))}
     </ul>
+  </div>
+)}
+
+{activeNav === "bsdm" && (
+  <div style={{ maxWidth: "700px" }}>
+    <h2 className="section-title">BSDM Page Image Management</h2>
+
+    {/* HERO IMAGE */}
+    <div style={{ marginBottom: "30px" }}>
+      <h3>Hero Image</h3>
+
+      {data?.heroImage && (
+        <img
+          src={data.heroImage}
+          alt="Hero"
+          style={{
+            width: "100%",
+            maxHeight: "250px",
+            objectFit: "cover",
+            borderRadius: "10px",
+            marginBottom: "10px",
+          }}
+        />
+      )}
+
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => setHeroImage(e.target.files[0])}
+      />
+    </div>
+
+    {/* SECTION IMAGE */}
+    <div style={{ marginBottom: "30px" }}>
+      <h3>Section Image</h3>
+
+      {data?.sectionImage && (
+        <img
+          src={data.sectionImage}
+          alt="Section"
+          style={{
+            width: "100%",
+            maxHeight: "250px",
+            objectFit: "cover",
+            borderRadius: "10px",
+            marginBottom: "10px",
+          }}
+        />
+      )}
+
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => setSectionImage(e.target.files[0])}
+      />
+    </div>
+
+    <button
+      onClick={async () => {
+        if (!heroImage && !sectionImage) {
+          alert("Select at least one image");
+          return;
+        }
+
+        const formData = new FormData();
+        if (heroImage) formData.append("heroImage", heroImage);
+        if (sectionImage) formData.append("sectionImage", sectionImage);
+
+        const res = await fetch("/api/bsdm/update", {
+          method: "PUT",
+          body: formData,
+        });
+
+        const out = await res.json();
+        if (out.success) {
+          alert("BSDM Images Updated");
+          setData(out.page);
+          setHeroImage(null);
+          setSectionImage(null);
+        }
+      }}
+      style={{
+        padding: "12px 24px",
+        background: "linear-gradient(135deg,#2d5a7b,#1e3f52)",
+        color: "white",
+        border: "none",
+        borderRadius: "8px",
+        cursor: "pointer",
+      }}
+    >
+      Save Images
+    </button>
   </div>
 )}
 
