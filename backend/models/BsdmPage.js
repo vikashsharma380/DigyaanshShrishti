@@ -1,11 +1,8 @@
 import mongoose from "mongoose";
 
-const bsdmPageSchema = new mongoose.Schema(
-  {
-    heroImage: String,
-    sectionImage: String,
-  },
-  { timestamps: true }
-);
+const bsdmSchema = new mongoose.Schema({
+  heroImages: [String],   // 🔥 slider images
+});
 
-export default mongoose.model("BsdmPage", bsdmPageSchema);
+export default mongoose.model("BsdmPage", bsdmSchema);
+
