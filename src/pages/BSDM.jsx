@@ -3,20 +3,27 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const BSDM = () => {
-  const [current, setCurrent] = useState(0);
 
-  const images = [
-    "https://www.author.thinkwithniche.com/allimages/project/thumb_d3fd5bihar-skill-development-mission-registration.jpg",
-    "https://www.electronicsforu.com/wp-contents/uploads/2020/07/Skill-Development.jpg",
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop",
-  ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+ const [images, setImages] = useState([]);
+const [current, setCurrent] = useState(0);
+
+useEffect(() => {
+  fetch("/api/bsdm")
+    .then(res => res.json())
+    .then(data => {
+      if (data?.heroImages) setImages(data.heroImages);
+    });
+}, []);
+
+useEffect(() => {
+  if (!images.length) return;
+  const interval = setInterval(() => {
+    setCurrent((prev) => (prev + 1) % images.length);
+  }, 5000);
+  return () => clearInterval(interval);
+}, [images]);
+
 
   return (
     <>

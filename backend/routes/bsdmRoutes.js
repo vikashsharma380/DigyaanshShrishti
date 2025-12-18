@@ -5,32 +5,34 @@ import BsdmPage from "../models/BsdmPage.js";
 const router = express.Router();
 
 // GET page data
-router.get("/", async (req, res) => {
-  const data = await BsdmPage.findOne();
-  res.json(data);
+router.get("/bsdm", async (req, res) => {
+  const page = await BsdmPage.findOne();
+  res.json(page);
 });
 
+
 // UPDATE images
-router.put(
-  "/update",
-  upload.fields([
-    { name: "heroImage", maxCount: 1 },
-    { name: "sectionImage", maxCount: 1 },
-  ]),
+router.post(
+  "/bsdm/add-image",
+  upload.single("image"),
   async (req, res) => {
-    let page = await BsdmPage.findOne();
-    if (!page) page = new BsdmPage();
+    const page = await BsdmPage.findOne() || new BsdmPage();
 
-    if (req.files.heroImage) {
-      page.heroImage = req.files.heroImage[0].location;
-    }
-    if (req.files.sectionImage) {
-      page.sectionImage = req.files.sectionImage[0].location;
-    }
-
+    page.heroImages.push(req.file.location);
     await page.save();
-    res.json({ success: true, page });
+
+    res.json({ success: true, images: page.heroImages });
   }
 );
+router.delete("/bsdm/remove-image", async (req, res) => {
+  const { imageUrl } = req.body;
+
+  const page = await BsdmPage.findOne();
+  page.heroImages = page.heroImages.filter(i => i !== imageUrl);
+  await page.save();
+
+  res.json({ success: true, images: page.heroImages });
+});
+
 
 export default router;

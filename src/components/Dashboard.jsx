@@ -13,6 +13,7 @@ const [openStates, setOpenStates] = useState({});
 const [data, setData] = useState(null);
 const [heroImage, setHeroImage] = useState(null);
 const [sectionImage, setSectionImage] = useState(null);
+const [bsdmImages, setBsdmImages] = useState([]);
 
 const [designations, setDesignations] = useState([]);
 useEffect(() => {
@@ -46,7 +47,7 @@ useEffect(() => {
 useEffect(() => {
   fetch("/api/bsdm")
     .then(res => res.json())
-    .then(setData);
+    .then(d => setBsdmImages(d?.heroImages || []));
 }, []);
 
 
@@ -742,98 +743,71 @@ const deleteMessage = async (id) => {
     </ul>
   </div>
 )}
-
 {activeNav === "bsdm" && (
   <div style={{ maxWidth: "700px" }}>
-    <h2 className="section-title">BSDM Page Image Management</h2>
+    <h2 className="section-title">BSDM Slider Images</h2>
 
-    {/* HERO IMAGE */}
-    <div style={{ marginBottom: "30px" }}>
-      <h3>Hero Image</h3>
+    <input
+      type="file"
+      accept="image/*"
+      onChange={async (e) => {
+        const fd = new FormData();
+        fd.append("image", e.target.files[0]);
 
-      {data?.heroImage && (
-        <img
-          src={data.heroImage}
-          alt="Hero"
-          style={{
-            width: "100%",
-            maxHeight: "250px",
-            objectFit: "cover",
-            borderRadius: "10px",
-            marginBottom: "10px",
-          }}
-        />
-      )}
-
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setHeroImage(e.target.files[0])}
-      />
-    </div>
-
-    {/* SECTION IMAGE */}
-    <div style={{ marginBottom: "30px" }}>
-      <h3>Section Image</h3>
-
-      {data?.sectionImage && (
-        <img
-          src={data.sectionImage}
-          alt="Section"
-          style={{
-            width: "100%",
-            maxHeight: "250px",
-            objectFit: "cover",
-            borderRadius: "10px",
-            marginBottom: "10px",
-          }}
-        />
-      )}
-
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setSectionImage(e.target.files[0])}
-      />
-    </div>
-
-    <button
-      onClick={async () => {
-        if (!heroImage && !sectionImage) {
-          alert("Select at least one image");
-          return;
-        }
-
-        const formData = new FormData();
-        if (heroImage) formData.append("heroImage", heroImage);
-        if (sectionImage) formData.append("sectionImage", sectionImage);
-
-        const res = await fetch("/api/bsdm/update", {
-          method: "PUT",
-          body: formData,
+        const res = await fetch("/api/bsdm/add-image", {
+          method: "POST",
+          body: fd,
         });
 
         const out = await res.json();
-        if (out.success) {
-          alert("BSDM Images Updated");
-          setData(out.page);
-          setHeroImage(null);
-          setSectionImage(null);
-        }
+        if (out.success) setBsdmImages(out.images);
       }}
-      style={{
-        padding: "12px 24px",
-        background: "linear-gradient(135deg,#2d5a7b,#1e3f52)",
-        color: "white",
-        border: "none",
-        borderRadius: "8px",
-        cursor: "pointer",
-      }}
-    >
-      Save Images
-    </button>
+    />
+
+    <div style={{ marginTop: 20 }}>
+      {bsdmImages.map((img, i) => (
+        <div key={i} style={{ marginBottom: 15 }}>
+          <img
+            src={img}
+            style={{
+              width: "100%",
+              height: 180,
+              objectFit: "cover",
+              borderRadius: 10,
+            }}
+          />
+
+          <button
+            onClick={async () => {
+              if (!window.confirm("Delete image?")) return;
+
+              const res = await fetch("/api/bsdm/remove-image", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ imageUrl: img }),
+              });
+
+              const out = await res.json();
+              if (out.success) setBsdmImages(out.images);
+            }}
+            style={{
+              marginTop: 5,
+              background: "red",
+              color: "white",
+              border: "none",
+              padding: "5px 12px",
+              borderRadius: 5,
+              cursor: "pointer",
+            }}
+          >
+            Delete
+          </button>
+        </div>
+      ))}
+    </div>
   </div>
 )}
+
 
       </div>
     </div>
