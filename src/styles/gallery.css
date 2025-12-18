@@ -40,7 +40,7 @@
   display: flex;
   gap: 24px;
   width: max-content;
-  animation: infiniteScroll 22s linear infinite;
+  animation: infiniteScroll 5s linear infinite;
   will-change: transform;
 }
 
