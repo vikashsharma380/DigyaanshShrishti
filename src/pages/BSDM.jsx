@@ -2,6 +2,13 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const BSDM = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch("/api/bsdm")
+      .then(res => res.json())
+      .then(setData);
+  }, []);
   return (
     <>
       <Navbar />
@@ -14,17 +21,13 @@ const BSDM = () => {
       >
         <div style={{ maxWidth: 1100, margin: "auto" }}>
           {/* HERO */}
-          <img
-            src="https://www.author.thinkwithniche.com/allimages/project/thumb_d3fd5bihar-skill-development-mission-registration.jpg"
-            alt="BSDM Project"
-            style={{
-              width: "100%",
-              borderRadius: 20,
-              marginBottom: 40,
-              boxShadow: "0 16px 40px rgba(45, 90, 123, 0.25)",
-              border: "1px solid rgba(45, 90, 123, 0.1)",
-            }}
-          />
+         {data?.heroImage && (
+            <img
+              src={data.heroImage}
+              alt="BSDM Project"
+              style={{ width: "100%", borderRadius: 20 }}
+            />
+          )}
 
           <h1
             style={{
@@ -110,18 +113,13 @@ const BSDM = () => {
             assessment agencies to deliver measurable outcomes.
           </p>
 
-          {/* IMAGE */}
-          <img
-            src="https://www.electronicsforu.com/wp-contents/uploads/2020/07/Skill-Development.jpg"
-            alt="Skill Training"
-            style={{
-              width: "100%",
-              borderRadius: 20,
-              margin: "50px 0",
-              boxShadow: "0 16px 40px rgba(45, 90, 123, 0.25)",
-              border: "1px solid rgba(45, 90, 123, 0.1)",
-            }}
-          />
+          {data?.sectionImage && (
+            <img
+              src={data.sectionImage}
+              alt="Skill Training"
+              style={{ width: "100%", borderRadius: 20, margin: "50px 0" }}
+            />
+          )}
 
           {/* BENEFITS */}
           <h2
