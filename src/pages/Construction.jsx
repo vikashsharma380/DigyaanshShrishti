@@ -1,14 +1,30 @@
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Construction = () => {
+  const [current, setCurrent] = useState(0);
+
+  const images = [
+    "https://wallpaperaccess.com/full/8432871.jpg",
+    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=1200&h=600&fit=crop",
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <Navbar />
 
       <main
         style={{
-          padding: "120px 20px",
+          padding: "150px 20px 60px 20px",
           background: "linear-gradient(135deg, #f8f6ff 0%, #f0ebff 100%)",
         }}
       >
@@ -61,7 +77,7 @@ const Construction = () => {
             accountability, and long-term value.
           </p>
 
-          {/* IMAGE (CONTROLLED SIZE) */}
+          {/* IMAGE SLIDER */}
           <div
             style={{
               margin: "45px 0",
@@ -69,18 +85,34 @@ const Construction = () => {
               justifyContent: "center",
             }}
           >
-            <img
-              src="https://wallpaperaccess.com/full/8432871.jpg"
-              alt="Construction Services"
+            <div
               style={{
+                position: "relative",
                 width: "100%",
                 maxWidth: 780,
-                height: "auto",
                 borderRadius: 18,
                 boxShadow: "0 16px 40px rgba(45, 90, 123, 0.25)",
                 border: "1px solid rgba(45, 90, 123, 0.1)",
+                overflow: "hidden",
+                height: 400,
               }}
-            />
+            >
+              {images.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt="Construction Services"
+                  style={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    opacity: idx === current ? 1 : 0,
+                    transition: "opacity 0.8s ease-in-out",
+                  }}
+                />
+              ))}
+            </div>
           </div>
 
           {/* SECTION */}
