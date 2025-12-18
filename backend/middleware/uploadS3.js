@@ -7,7 +7,8 @@ import s3 from "../config/s3.js";
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: digyaansh-bsdm-images,
+   bucket: "digyaansh-bsdm-images",
+
     acl: "public-read",
     key(req, file, cb) {
       cb(null, `bsdm/${Date.now()}-${file.originalname}`);
