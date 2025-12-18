@@ -31,6 +31,7 @@ import Construction from "./pages/Construction";
 import Security from "./pages/Security";
 import IT from "./pages/IT";
 import Housekeeping from "./pages/Housekeeping";
+import Gallery from "./components/gallery";
 function Home() {
   return (
     <>
@@ -38,6 +39,7 @@ function Home() {
       <HeroSection />
       <ServicesSection />
       <AboutSection />
+      <Gallery />
       <ContactSection />
       <Footer />
     </>

@@ -1,0 +1,128 @@
+.gallery-section {
+  background: #ffffff;
+  padding: 90px 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.gallery-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.gallery-header h2 {
+  font-size: 34px;
+  font-weight: 700;
+  color: #222;
+}
+
+.gallery-header p {
+  margin-top: 12px;
+  color: #555;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* SCROLL AREA */
+.scroll-wrapper {
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+/* TRUE INFINITE TRACK */
+.scroll-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: infiniteScroll 22s linear infinite;
+  will-change: transform;
+}
+
+/* COMPANY INFO CARD */
+.info-card {
+  min-width: 320px;
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 14px;
+  padding: 26px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.info-card h3 {
+  font-size: 20px;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.info-card p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* TEAM MEMBER CARD */
+.member-card {
+  min-width: 300px;
+  background: #f9fafb;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.member-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.member-card h3 {
+  font-size: 19px;
+  color: #111;
+}
+
+.member-card span {
+  display: block;
+  margin: 6px 0 10px;
+  font-size: 14px;
+  color: #777;
+}
+
+.member-card p {
+  font-size: 14.5px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* 🔁 TRUE INFINITE ANIMATION */
+@keyframes infiniteScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .gallery-header h2 {
+    font-size: 26px;
+  }
+
+  .info-card,
+  .member-card {
+    min-width: 260px;
+  }
+
+  .scroll-track {
+    animation-duration: 28s; /* mobile me thoda slow */
+  }
+}
