@@ -789,11 +789,12 @@ const deleteMessage = async (id) => {
             onClick={async () => {
               if (!window.confirm("Delete image?")) return;
 
-              const res = await fetch("/api/bsdm/remove-image", {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ imageUrl: img }),
-              });
+              const res = await fetch("https://api.digyaanshshrishti.com/api/bsdm/remove-image", {
+  method: "DELETE",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ imageUrl: img }),
+});
+
 
               const out = await res.json();
               if (out.success) setBsdmImages(out.images);
