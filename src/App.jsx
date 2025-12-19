@@ -32,6 +32,8 @@ import Security from "./pages/Security";
 import IT from "./pages/IT";
 import Housekeeping from "./pages/Housekeeping";
 import Gallery from "./components/gallery";
+import WhatsAppButton from "./components/WhatsAppButton";
+import EmailButton from "./components/EmailButton";
 function Home() {
   return (
     <>
@@ -91,6 +93,8 @@ function App() {
         <Route path="/service/bsdm" element={<BSDM />} />
         <Route path="/service/manpower" element={<Manpower />} />
       </Routes>
+      <EmailButton />
+      <WhatsAppButton />
     </BrowserRouter>
   );
 }

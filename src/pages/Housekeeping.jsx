@@ -3,36 +3,39 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Housekeeping = () => {
-  
-
-   const [images, setImages] = useState([]);
-  const [current, setCurrent] = useState(0);
-  
   useEffect(() => {
-  fetch("https://api.digyaanshshrishti.com/api/page-images/housekeeping")
-      .then(res => res.json())
-      .then(data => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
+  const [images, setImages] = useState([]);
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    fetch("https://api.digyaanshshrishti.com/api/page-images/housekeeping")
+      .then((res) => res.json())
+      .then((data) => {
         if (data?.heroImages) setImages(data.heroImages);
       });
   }, []);
 
- {images.length > 0 &&
-  images.map((img, idx) => (
-    <img
-      key={idx}
-      src={img}
-      alt="Manpower Services"
-      style={{
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        objectFit: "cover",
-        opacity: idx === current ? 1 : 0,
-        transition: "opacity 0.8s ease-in-out",
-      }}
-    />
-  ))}
-
+  {
+    images.length > 0 &&
+      images.map((img, idx) => (
+        <img
+          key={idx}
+          src={img}
+          alt="Manpower Services"
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: idx === current ? 1 : 0,
+            transition: "opacity 0.8s ease-in-out",
+          }}
+        />
+      ));
+  }
 
   return (
     <>
@@ -109,21 +112,22 @@ const Housekeeping = () => {
                 height: 400,
               }}
             >
-            {images.length > 0 && images.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  alt="Housekeeping Services"
-                  style={{
-                    position: "absolute",
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    opacity: idx === current ? 1 : 0,
-                    transition: "opacity 0.6s ease-in-out",
-                  }}
-                />
-              ))}
+              {images.length > 0 &&
+                images.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt="Housekeeping Services"
+                    style={{
+                      position: "absolute",
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      opacity: idx === current ? 1 : 0,
+                      transition: "opacity 0.6s ease-in-out",
+                    }}
+                  />
+                ))}
             </div>
           </div>
 
@@ -240,6 +244,25 @@ const Housekeeping = () => {
                 •
               </span>
               Trained manpower with supervision
+            </li>
+            <li
+              style={{
+                marginBottom: 12,
+                position: "relative",
+                paddingLeft: 12,
+              }}
+            >
+              <span
+                style={{
+                  position: "absolute",
+                  left: -22,
+                  color: "#2d5a7b",
+                  fontWeight: "bold",
+                }}
+              >
+                •
+              </span>
+              School Cleaning & Management Services
             </li>
           </ul>
 
