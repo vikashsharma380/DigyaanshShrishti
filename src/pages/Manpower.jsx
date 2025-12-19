@@ -13,12 +13,16 @@ const Manpower = () => {
 }, []);
 
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+ useEffect(() => {
+  if (images.length === 0) return;
+
+  const interval = setInterval(() => {
+    setCurrent((prev) => (prev + 1) % images.length);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, [images]);
+
 
   return (
     <>
@@ -92,7 +96,7 @@ const Manpower = () => {
                 height: 400,
               }}
             >
-              {images.map((img, idx) => (
+           {images.length > 0 && images.map((img, idx) => (
                 <img
                   key={idx}
                   src={img}
