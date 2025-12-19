@@ -3,30 +3,30 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const BSDM = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
 
+  const [images, setImages] = useState([]);
+  const [current, setCurrent] = useState(0);
 
- const [images, setImages] = useState([]);
-const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    fetch("https://api.digyaanshshrishti.com/api/bsdm")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.heroImages) setImages(data.heroImages);
+      });
+  }, []);
 
-useEffect(() => {
-fetch("https://api.digyaanshshrishti.com/api/bsdm")
-    .then(res => res.json())
-    .then(data => {
-      if (data?.heroImages) setImages(data.heroImages);
-    });
-}, []);
+  useEffect(() => {
+    if (images.length === 0) return;
 
-useEffect(() => {
-  if (images.length === 0) return;
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 5000);
 
-  const interval = setInterval(() => {
-    setCurrent((prev) => (prev + 1) % images.length);
-  }, 5000);
-
-  return () => clearInterval(interval);
-}, [images]);
-
-
+    return () => clearInterval(interval);
+  }, [images]);
 
   return (
     <>
@@ -41,35 +41,34 @@ useEffect(() => {
         <div style={{ maxWidth: 1100, margin: "auto" }}>
           {/* HERO SLIDER */}
           <div
-  style={{
-    position: "relative",
-    width: "100%",
-    height: 400,
-    borderRadius: 20,
-    marginBottom: 40,
-    overflow: "hidden",
-    backgroundColor: "#000", // empty gaps hide karne ke liye
-  }}
->
-
-        {images.length > 0 && images.map((img, idx) => (
-  <img
-    key={idx}
-    src={img}
-    alt="BSDM Project"
-    style={{
-      position: "absolute",
-      inset: 0,
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",        // full cover
-      objectPosition: "center",  // center focus
-      opacity: idx === current ? 1 : 0,
-      transition: "opacity 1s ease-in-out",
-    }}
-  />
-))}
-
+            style={{
+              position: "relative",
+              width: "100%",
+              height: 400,
+              borderRadius: 20,
+              marginBottom: 40,
+              overflow: "hidden",
+              backgroundColor: "#000", // empty gaps hide karne ke liye
+            }}
+          >
+            {images.length > 0 &&
+              images.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt="BSDM Project"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover", // full cover
+                    objectPosition: "center", // center focus
+                    opacity: idx === current ? 1 : 0,
+                    transition: "opacity 1s ease-in-out",
+                  }}
+                />
+              ))}
           </div>
 
           <h1

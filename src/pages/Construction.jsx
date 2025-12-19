@@ -3,24 +3,27 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Construction = () => {
- const [images, setImages] = useState([]);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
+  const [images, setImages] = useState([]);
   const [current, setCurrent] = useState(0);
-useEffect(() => {
-  fetch("https://api.digyaanshshrishti.com/api/page-images/construction")
-    .then(res => res.json())
-    .then(data => setImages(data.images || []));
-}, []);
+  useEffect(() => {
+    fetch("https://api.digyaanshshrishti.com/api/page-images/construction")
+      .then((res) => res.json())
+      .then((data) => setImages(data.images || []));
+  }, []);
 
- useEffect(() => {
-  if (images.length === 0) return;
+  useEffect(() => {
+    if (images.length === 0) return;
 
-  const interval = setInterval(() => {
-    setCurrent((prev) => (prev + 1) % images.length);
-  }, 5000);
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 5000);
 
-  return () => clearInterval(interval);
-}, [images]);
-
+    return () => clearInterval(interval);
+  }, [images]);
 
   return (
     <>
@@ -101,21 +104,22 @@ useEffect(() => {
                 height: 400,
               }}
             >
-          {images.length > 0 && images.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  alt="Construction Services"
-                  style={{
-                    position: "absolute",
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    opacity: idx === current ? 1 : 0,
-                    transition: "opacity 0.6s ease-in-out",
-                  }}
-                />
-              ))}
+              {images.length > 0 &&
+                images.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt="Construction Services"
+                    style={{
+                      position: "absolute",
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      opacity: idx === current ? 1 : 0,
+                      transition: "opacity 0.6s ease-in-out",
+                    }}
+                  />
+                ))}
             </div>
           </div>
 

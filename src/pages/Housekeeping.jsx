@@ -3,6 +3,10 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Housekeeping = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
   const [images, setImages] = useState([]);
   const [current, setCurrent] = useState(0);
 
