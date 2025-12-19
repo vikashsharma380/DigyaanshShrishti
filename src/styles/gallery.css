@@ -40,7 +40,7 @@
   display: flex;
   gap: 24px;
   width: max-content;
-  animation: infiniteScroll 18s linear infinite;
+  animation: infiniteScroll 22s linear infinite;
   will-change: transform;
 }
 
@@ -123,6 +123,6 @@
   }
 
   .scroll-track {
-    animation-duration: 18s; /* mobile me thoda slow */
+    animation-duration: 22s; /* mobile me thoda slow */
   }
 }
