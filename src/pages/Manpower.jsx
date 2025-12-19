@@ -107,7 +107,7 @@ const Manpower = () => {
                     height: "100%",
                     objectFit: "cover",
                     opacity: idx === current ? 1 : 0,
-                    transition: "opacity 0.8s ease-in-out",
+                    transition: "opacity 0.6s ease-in-out",
                   }}
                 />
               ))}

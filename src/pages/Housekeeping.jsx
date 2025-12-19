@@ -16,12 +16,23 @@ const Housekeeping = () => {
       });
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+ {images.length > 0 &&
+  images.map((img, idx) => (
+    <img
+      key={idx}
+      src={img}
+      alt="Manpower Services"
+      style={{
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        opacity: idx === current ? 1 : 0,
+        transition: "opacity 0.8s ease-in-out",
+      }}
+    />
+  ))}
+
 
   return (
     <>
@@ -98,7 +109,7 @@ const Housekeeping = () => {
                 height: 400,
               }}
             >
-              {images.map((img, idx) => (
+            {images.length > 0 && images.map((img, idx) => (
                 <img
                   key={idx}
                   src={img}
@@ -109,7 +120,7 @@ const Housekeeping = () => {
                     height: "100%",
                     objectFit: "cover",
                     opacity: idx === current ? 1 : 0,
-                    transition: "opacity 0.8s ease-in-out",
+                    transition: "opacity 0.6s ease-in-out",
                   }}
                 />
               ))}

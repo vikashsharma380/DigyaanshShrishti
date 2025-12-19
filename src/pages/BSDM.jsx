@@ -17,12 +17,15 @@ fetch("https://api.digyaanshshrishti.com/api/bsdm")
 }, []);
 
 useEffect(() => {
-  if (!images.length) return;
+  if (images.length === 0) return;
+
   const interval = setInterval(() => {
     setCurrent((prev) => (prev + 1) % images.length);
   }, 5000);
+
   return () => clearInterval(interval);
 }, [images]);
+
 
 
   return (
@@ -49,7 +52,7 @@ useEffect(() => {
   }}
 >
 
-            {images.map((img, idx) => (
+        {images.length > 0 && images.map((img, idx) => (
   <img
     key={idx}
     src={img}

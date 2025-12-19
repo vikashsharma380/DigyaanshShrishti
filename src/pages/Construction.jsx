@@ -11,12 +11,16 @@ useEffect(() => {
     .then(data => setImages(data.images || []));
 }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+ useEffect(() => {
+  if (images.length === 0) return;
+
+  const interval = setInterval(() => {
+    setCurrent((prev) => (prev + 1) % images.length);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, [images]);
+
 
   return (
     <>
@@ -97,7 +101,7 @@ useEffect(() => {
                 height: 400,
               }}
             >
-              {images.map((img, idx) => (
+          {images.length > 0 && images.map((img, idx) => (
                 <img
                   key={idx}
                   src={img}
@@ -108,7 +112,7 @@ useEffect(() => {
                     height: "100%",
                     objectFit: "cover",
                     opacity: idx === current ? 1 : 0,
-                    transition: "opacity 0.8s ease-in-out",
+                    transition: "opacity 0.6s ease-in-out",
                   }}
                 />
               ))}
