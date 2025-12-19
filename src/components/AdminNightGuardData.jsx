@@ -22,6 +22,7 @@ export default function AdminNightGuardData() {
     accountNumber: "",
     ifsc: "",
     salary: "",
+    utrNumber: "",
   });
 
   const navigate = useNavigate();
@@ -178,6 +179,7 @@ export default function AdminNightGuardData() {
         accountNumber: "",
         ifsc: "",
         salary: "",
+        utrNumber: "",
       });
     }
   };
@@ -286,6 +288,7 @@ export default function AdminNightGuardData() {
                 <th>Account No</th>
                 <th>IFSC</th>
                 <th>Salary</th>
+                 <th>utrNumber</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
@@ -358,6 +361,16 @@ export default function AdminNightGuardData() {
                     </td>
 
                     <td>
+                      <input
+                        className="input-edit"
+                        value={editRow.utrNumber}
+                        onChange={(e) =>
+                          handleEditChange("utrNumber", e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td>
                       <button onClick={saveEdit} className="btn-blue">
                         Save
                       </button>
@@ -372,6 +385,36 @@ export default function AdminNightGuardData() {
                     <td>{item.accountNumber}</td>
                     <td>{item.ifsc}</td>
                     <td>{item.salary}</td>
+                    <td>
+  {item.utrNumber ? (
+    <span
+      style={{
+        padding: "6px 12px",
+        borderRadius: "18px",
+        background: "#d1e7dd",
+        color: "#0f5132",
+        fontWeight: "600",
+        fontSize: "13px",
+      }}
+    >
+      {item.utrNumber}
+    </span>
+  ) : (
+    <span
+      style={{
+        padding: "6px 12px",
+        borderRadius: "18px",
+        background: "#f8d7da",
+        color: "#842029",
+        fontWeight: "600",
+        fontSize: "13px",
+      }}
+    >
+      Pending
+    </span>
+  )}
+</td>
+
 
                     <td>
                       <button
@@ -457,6 +500,14 @@ export default function AdminNightGuardData() {
               value={addForm.salary}
               onChange={(e) =>
                 setAddForm({ ...addForm, salary: e.target.value })
+              }
+            />
+
+            <label>UTR Number</label>
+            <input
+              value={addForm.utrNumber}
+              onChange={(e) =>
+                setAddForm({ ...addForm, utrNumber: e.target.value })
               }
             />
 

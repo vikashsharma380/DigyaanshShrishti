@@ -391,7 +391,7 @@ if (currentUser.visibility !== "on") {
             <tr>
               <th>#</th><th>Block</th><th>School</th><th>{roleType === "nightguard" ? "Guard Name" : "Sweeper"}</th>
               {roleType !== "nightguard" && <th>Toilets</th>}
-<th>Account No</th><th>IFSC</th><th>Salary</th><th>Edit</th><th>Delete</th>
+<th>Account No</th><th>IFSC</th><th>Salary</th> <th>Payment</th><th>Edit</th><th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -411,8 +411,50 @@ if (currentUser.visibility !== "on") {
                     <td><input value={editForm.toilets} onChange={(e) => setEditForm({...editForm, toilets: e.target.value})} /></td>
                     <td><input value={editForm.accountNumber} onChange={(e) => setEditForm({...editForm, accountNumber: e.target.value})} /></td>
                     <td><input value={editForm.ifsc} onChange={(e) => setEditForm({...editForm, ifsc: e.target.value})} /></td>
-                    <td><input value={editForm.salary} onChange={(e) => setEditForm({...editForm, salary: e.target.value})} /></td>
-                    <td><button onClick={saveEdit}>💾 Save</button></td>
+                    <td>
+  <input
+    value={editForm.salary}
+    onChange={(e) =>
+      setEditForm({ ...editForm, salary: e.target.value })
+    }
+  />
+</td>
+
+{/* PAYMENT STATUS (READ ONLY) */}
+<td>
+  {editForm.utrNumber ? (
+    <span
+      style={{
+        padding: "5px 12px",
+        borderRadius: "16px",
+        background: "#d1e7dd",
+        color: "#0f5132",
+        fontWeight: "600",
+        fontSize: "13px",
+      }}
+    >
+      {editForm.utrNumber}
+    </span>
+  ) : (
+    <span
+      style={{
+        padding: "5px 12px",
+        borderRadius: "16px",
+        background: "#f8d7da",
+        color: "#842029",
+        fontWeight: "600",
+        fontSize: "13px",
+      }}
+    >
+      Pending
+    </span>
+  )}
+</td>
+
+<td>
+  <button onClick={saveEdit}>💾 Save</button>
+</td>
+
                   </>
                 ) : (
                   <>
@@ -424,6 +466,36 @@ if (currentUser.visibility !== "on") {
                     <td>{row.accountNumber}</td>
                     <td>{row.ifsc}</td>
                     <td>{row.salary}</td>
+                    <td>
+  {row.utrNumber ? (
+    <span
+      style={{
+        padding: "5px 12px",
+        borderRadius: "16px",
+        background: "#d1e7dd",
+        color: "#0f5132",
+        fontWeight: "600",
+        fontSize: "13px",
+      }}
+    >
+      {row.utrNumber}
+    </span>
+  ) : (
+    <span
+      style={{
+        padding: "5px 12px",
+        borderRadius: "16px",
+        background: "#f8d7da",
+        color: "#842029",
+        fontWeight: "600",
+        fontSize: "13px",
+      }}
+    >
+      Pending
+    </span>
+  )}
+</td>
+
                     {canModify && <td><button onClick={() => startEdit(row)}>✏ Edit</button></td>}
                     {canModify && <td><button onClick={() => deleteRow(row._id)} style={{background:"red",color:"white"}}>🗑 Delete</button></td>}
                   </>
