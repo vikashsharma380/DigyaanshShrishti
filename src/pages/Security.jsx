@@ -4,19 +4,24 @@ import Footer from "../components/Footer";
 
 const Security = () => {
   const [current, setCurrent] = useState(0);
+  const [images, setImages] = useState([]);
+useEffect(() => {
+  fetch("https://api.digyaanshshrishti.com/api/page-images/security")
+    .then(res => res.json())
+    .then(data => setImages(data.images || []));
+}, []);
 
-  const images = [
-    "https://igssecurity.com/wp-content/uploads/2022/08/security-surveillance-systems.jpg",
-    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&h=600&fit=crop",
-  ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+useEffect(() => {
+  if (images.length === 0) return;
+
+  const interval = setInterval(() => {
+    setCurrent((prev) => (prev + 1) % images.length);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, [images]);
+
 
   return (
     <>
@@ -90,7 +95,7 @@ const Security = () => {
                 height: 400,
               }}
             >
-              {images.map((img, idx) => (
+{images.length > 0 && images.map((img, idx) => (
                 <img
                   key={idx}
                   src={img}
@@ -101,7 +106,7 @@ const Security = () => {
                     height: "100%",
                     objectFit: "cover",
                     opacity: idx === current ? 1 : 0,
-                    transition: "opacity 0.8s ease-in-out",
+                    transition: "opacity 0.6s ease-in-out",
                   }}
                 />
               ))}

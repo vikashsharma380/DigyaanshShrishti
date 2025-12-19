@@ -14,6 +14,11 @@ const [data, setData] = useState(null);
 const [heroImage, setHeroImage] = useState(null);
 const [sectionImage, setSectionImage] = useState(null);
 const [bsdmImages, setBsdmImages] = useState([]);
+const [companyList, setCompanyList] = useState([]);
+const [teamList, setTeamList] = useState([]);
+
+const [editCompany, setEditCompany] = useState(null);
+const [editTeam, setEditTeam] = useState(null);
 
 const [designations, setDesignations] = useState([]);
 useEffect(() => {
@@ -44,12 +49,19 @@ useEffect(() => {
 }, []);
 
 
-useEffect(() => {
-  fetch("/api/bsdm")
-    .then(res => res.json())
-    .then(d => setBsdmImages(d?.heroImages || []));
-}, []);
+// useEffect(() => {
+// fetch("https://api.digyaanshshrishti.com/api/bsdm")
+//     .then(res => res.json())
+//     .then(d => setBsdmImages(d?.heroImages || []));
+// }, []);
+const [page, setPage] = useState("bsdm");
+const [images, setImages] = useState([]);
 
+useEffect(() => {
+  fetch(`https://api.digyaanshshrishti.com/api/page-images/${page}`)
+    .then((res) => res.json())
+    .then((data) => setImages(data.images));
+}, [page]);
 
 const toggleRole = async (user) => {
   const newRole = user.roleType === "nightguard" ? "sweeper" : "nightguard";
@@ -255,6 +267,17 @@ const deleteMessage = async (id) => {
       count: 2,
     },
   ];
+useEffect(() => {
+  if (activeNav === "gallery") {
+    fetch("https://api.digyaanshshrishti.com/api/gallery/company")
+      .then(res => res.json())
+      .then(setCompanyList);
+
+    fetch("https://api.digyaanshshrishti.com/api/gallery/team")
+      .then(res => res.json())
+      .then(setTeamList);
+  }
+}, [activeNav]);
 
   // ================================
   // SIDEBAR ITEMS
@@ -268,7 +291,9 @@ const deleteMessage = async (id) => {
     { id: "reports", label: "Reports", icon: "📈" },
     { id: "settings", label: "Settings", icon: "⚙️" },
     { id: "designations", label: "Designations", icon: "🏷️" },
-{ id: "bsdm", label: "BSDM Page", icon: "🖼️" },
+{ id: "pages", label: "Page Images", icon: "🖼️" },
+{ id: "gallery", label: "Gallery Manager", icon: "🖼️" }
+
 
 
   ];
@@ -743,78 +768,349 @@ const deleteMessage = async (id) => {
     </ul>
   </div>
 )}
-{activeNav === "bsdm" && (
+{activeNav === "pages" && (
   <div style={{ maxWidth: "700px" }}>
-    <h2 className="section-title">BSDM Slider Images</h2>
+    <h2 className="section-title">Page Slider Images</h2>
 
-   <input
-  type="file"
-  accept="image/*"
-  onChange={async (e) => {
-    console.log("FILE:", e.target.files[0]); // 👈 ADD THIS
+    {/* PAGE SELECT */}
+    <select
+      value={page}
+      onChange={(e) => setPage(e.target.value)}
+      style={{ padding: 10, marginBottom: 15, width: "100%" }}
+    >
+      <option value="bsdm">BSDM</option>
+      <option value="construction">Construction</option>
+      <option value="housekeeping">Housekeeping</option>
+      <option value="security">Security</option>
+      <option value="manpower">Manpower</option>
+      <option value="it">IT</option>
+    </select>
 
-    const fd = new FormData();
-    fd.append("image", e.target.files[0]);
-
-    const res = await fetch(
-      "https://api.digyaanshshrishti.com/api/bsdm/add-image",
-      {
-        method: "POST",
-        body: fd,
-      }
-    );
-
-    const out = await res.json();
-    console.log("RESPONSE:", out);
-
-    if (out.success) setBsdmImages(out.images);
+    {/* UPLOAD IMAGE */}
+   {/* UPLOAD BOX */}
+<label
+  style={{
+    display: "block",
+    border: "2px dashed #aaa",
+    borderRadius: 14,
+    padding: 30,
+    textAlign: "center",
+    cursor: "pointer",
+    background: "#fafafa",
+    transition: "all 0.3s ease",
+    marginBottom: 25,
   }}
-/>
+  onMouseEnter={(e) => {
+    e.currentTarget.style.borderColor = "#2d5a7b";
+    e.currentTarget.style.background = "#f0f6fb";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.borderColor = "#aaa";
+    e.currentTarget.style.background = "#fafafa";
+  }}
+>
+  <div style={{ fontSize: 40 }}>📤</div>
+  <h3 style={{ margin: "10px 0", color: "#333" }}>
+    Upload Slider Image
+  </h3>
+  <p style={{ color: "#666", fontSize: 14 }}>
+    Click to select image (JPG, PNG, WEBP)
+  </p>
+
+  <input
+    type="file"
+    accept="image/*"
+    hidden
+    onChange={async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const fd = new FormData();
+      fd.append("image", file);
+
+      const res = await fetch(
+        `https://api.digyaanshshrishti.com/api/page-images/${page}/add-image`,
+        {
+          method: "POST",
+          body: fd,
+        }
+      );
+
+      const out = await res.json();
+      if (out.success) setImages(out.images);
+    }}
+  />
+</label>
 
 
-    <div style={{ marginTop: 20 }}>
-      {bsdmImages.map((img, i) => (
-        <div key={i} style={{ marginBottom: 15 }}>
-          <img
-            src={img}
+    {/* IMAGE LIST */}
+   {/* IMAGE GRID */}
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+    gap: 20,
+  }}
+>
+  {images.map((img, i) => (
+    <div
+      key={i}
+      style={{
+        position: "relative",
+        borderRadius: 14,
+        overflow: "hidden",
+        boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
+        background: "#fff",
+      }}
+    >
+      <img
+        src={img}
+        alt=""
+        style={{
+          width: "100%",
+          height: 160,
+          objectFit: "cover",
+          display: "block",
+        }}
+      />
+
+      {/* DELETE BUTTON */}
+      <button
+        onClick={async () => {
+          if (!window.confirm("Delete image?")) return;
+
+          const res = await fetch(
+            `https://api.digyaanshshrishti.com/api/page-images/${page}/remove-image`,
+            {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ imageUrl: img }),
+            }
+          );
+
+          const out = await res.json();
+          if (out.success) setImages(out.images);
+        }}
+        style={{
+          position: "absolute",
+          top: 10,
+          right: 10,
+          background: "rgba(255,0,0,0.85)",
+          color: "#fff",
+          border: "none",
+          borderRadius: "50%",
+          width: 32,
+          height: 32,
+          cursor: "pointer",
+          fontSize: 16,
+        }}
+      >
+        ✕
+      </button>
+    </div>
+  ))}
+</div>
+
+  </div>
+)}
+
+{activeNav === "gallery" && (
+  <div style={{ maxWidth: 900 }}>
+    <h2 className="section-title">Gallery Manager</h2>
+
+    {/* ================= COMPANY SECTION ================= */}
+    <div style={{ background: "#fff", padding: 20, borderRadius: 10 }}>
+      <h3>Company Highlights</h3>
+
+      {/* ADD / EDIT */}
+      <input
+        placeholder="Title"
+        value={editCompany?.title || ""}
+        onChange={(e) =>
+          setEditCompany({ ...editCompany, title: e.target.value })
+        }
+        style={{ width: "100%", padding: 8, marginBottom: 8 }}
+      />
+
+      <textarea
+        placeholder="Description"
+        value={editCompany?.desc || ""}
+        onChange={(e) =>
+          setEditCompany({ ...editCompany, desc: e.target.value })
+        }
+        style={{ width: "100%", padding: 8 }}
+      />
+
+      <button
+        style={{ marginTop: 10 }}
+        onClick={async () => {
+          const res = await fetch(
+            editCompany?._id
+              ? `https://api.digyaanshshrishti.com/api/gallery/company/${editCompany._id}`
+              : "https://api.digyaanshshrishti.com/api/gallery/company",
+            {
+              method: editCompany?._id ? "PUT" : "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(editCompany),
+            }
+          );
+          const out = await res.json();
+          if (out.success) {
+            setEditCompany(null);
+            fetch("https://api.digyaanshshrishti.com/api/gallery/company")
+              .then(res => res.json())
+              .then(setCompanyList);
+          }
+        }}
+      >
+        {editCompany?._id ? "Update" : "Add"}
+      </button>
+
+      {/* LIST */}
+      <ul style={{ marginTop: 20 }}>
+        {companyList.map((c) => (
+          <li
+            key={c._id}
             style={{
-              width: "100%",
-              height: 180,
-              objectFit: "cover",
-              borderRadius: 10,
-            }}
-          />
-
-          <button
-            onClick={async () => {
-              if (!window.confirm("Delete image?")) return;
-
-              const res = await fetch("/api/bsdm/remove-image", {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ imageUrl: img }),
-              });
-
-              const out = await res.json();
-              if (out.success) setBsdmImages(out.images);
-            }}
-            style={{
-              marginTop: 5,
-              background: "red",
-              color: "white",
-              border: "none",
-              padding: "5px 12px",
-              borderRadius: 5,
-              cursor: "pointer",
+              background: "#f5f5f5",
+              padding: 10,
+              marginBottom: 8,
+              borderRadius: 6,
             }}
           >
-            Delete
-          </button>
-        </div>
-      ))}
+            <strong>{c.title}</strong>
+            <p>{c.desc}</p>
+
+            <button onClick={() => setEditCompany(c)}>Edit</button>
+            <button
+              style={{ marginLeft: 10, color: "red" }}
+              onClick={async () => {
+                if (!window.confirm("Delete?")) return;
+                await fetch(
+                  `https://api.digyaanshshrishti.com/api/gallery/company/${c._id}`,
+                  { method: "DELETE" }
+                );
+                setCompanyList(companyList.filter(x => x._id !== c._id));
+              }}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <hr style={{ margin: "40px 0" }} />
+
+    {/* ================= TEAM SECTION ================= */}
+    <div style={{ background: "#fff", padding: 20, borderRadius: 10 }}>
+      <h3>Team Members</h3>
+
+      <input
+        placeholder="Name"
+        value={editTeam?.name || ""}
+        onChange={(e) =>
+          setEditTeam({ ...editTeam, name: e.target.value })
+        }
+        style={{ width: "100%", padding: 8, marginBottom: 8 }}
+      />
+
+      <input
+        placeholder="Role"
+        value={editTeam?.role || ""}
+        onChange={(e) =>
+          setEditTeam({ ...editTeam, role: e.target.value })
+        }
+        style={{ width: "100%", padding: 8, marginBottom: 8 }}
+      />
+
+      <textarea
+        placeholder="Info"
+        value={editTeam?.info || ""}
+        onChange={(e) =>
+          setEditTeam({ ...editTeam, info: e.target.value })
+        }
+        style={{ width: "100%", padding: 8 }}
+      />
+
+      {!editTeam?._id && (
+        <input
+          type="file"
+          onChange={(e) =>
+            setEditTeam({ ...editTeam, image: e.target.files[0] })
+          }
+        />
+      )}
+
+      <button
+        style={{ marginTop: 10 }}
+        onClick={async () => {
+          const fd = new FormData();
+          Object.entries(editTeam).forEach(([k, v]) =>
+            fd.append(k, v)
+          );
+
+          await fetch(
+            editTeam?._id
+              ? `https://api.digyaanshshrishti.com/api/gallery/team/${editTeam._id}`
+              : "https://api.digyaanshshrishti.com/api/gallery/team",
+            {
+              method: editTeam?._id ? "PUT" : "POST",
+              body: fd,
+            }
+          );
+
+          setEditTeam(null);
+          fetch("https://api.digyaanshshrishti.com/api/gallery/team")
+            .then(res => res.json())
+            .then(setTeamList);
+        }}
+      >
+        {editTeam?._id ? "Update" : "Add"}
+      </button>
+
+      {/* LIST */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 15, marginTop: 20 }}>
+        {teamList.map((m) => (
+          <div
+            key={m._id}
+            style={{
+              border: "1px solid #ddd",
+              padding: 10,
+              borderRadius: 8,
+            }}
+          >
+            <img
+              src={m.img}
+              style={{ width: "100%", height: 140, objectFit: "cover" }}
+            />
+            <h4>{m.name}</h4>
+            <small>{m.role}</small>
+            <p>{m.info}</p>
+
+            <button onClick={() => setEditTeam(m)}>Edit</button>
+            <button
+              style={{ marginLeft: 8, color: "red" }}
+              onClick={async () => {
+                if (!window.confirm("Delete?")) return;
+                await fetch(
+                  `https://api.digyaanshshrishti.com/api/gallery/team/${m._id}`,
+                  { method: "DELETE" }
+                );
+                setTeamList(teamList.filter(x => x._id !== m._id));
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 )}
+
+
+
 
 
       </div>

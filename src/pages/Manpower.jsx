@@ -4,19 +4,25 @@ import Footer from "../components/Footer";
 
 const Manpower = () => {
   const [current, setCurrent] = useState(0);
+  const [images, setImages] = useState([]);
 
-  const images = [
-    "https://broadwayshr.com/wp-content/uploads/2023/03/manpower-planning-1-e1677669474556.jpg",
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop",
-  ];
+ useEffect(() => {
+  fetch("https://api.digyaanshshrishti.com/api/page-images/manpower")
+    .then(res => res.json())
+    .then(data => setImages(data.images || []));
+}, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+
+ useEffect(() => {
+  if (images.length === 0) return;
+
+  const interval = setInterval(() => {
+    setCurrent((prev) => (prev + 1) % images.length);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, [images]);
+
 
   return (
     <>
@@ -90,7 +96,7 @@ const Manpower = () => {
                 height: 400,
               }}
             >
-              {images.map((img, idx) => (
+           {images.length > 0 && images.map((img, idx) => (
                 <img
                   key={idx}
                   src={img}
@@ -101,7 +107,7 @@ const Manpower = () => {
                     height: "100%",
                     objectFit: "cover",
                     opacity: idx === current ? 1 : 0,
-                    transition: "opacity 0.8s ease-in-out",
+                    transition: "opacity 0.6s ease-in-out",
                   }}
                 />
               ))}

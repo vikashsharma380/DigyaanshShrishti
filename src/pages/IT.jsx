@@ -4,19 +4,23 @@ import Footer from "../components/Footer";
 
 const IT = () => {
   const [current, setCurrent] = useState(0);
+  const [images, setImages] = useState([]);
+useEffect(() => {
+  fetch("https://api.digyaanshshrishti.com/api/page-images/it")
+    .then(res => res.json())
+    .then(data => setImages(data.images || []));
+}, []);
 
-  const images = [
-    "https://tosinso.com/files/get/cd5673e1-36cc-49bd-acd4-9f2d4354ee75",
-    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop",
-  ];
+useEffect(() => {
+  if (images.length === 0) return;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  const interval = setInterval(() => {
+    setCurrent((prev) => (prev + 1) % images.length);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, [images]);
+
 
   return (
     <>
@@ -91,7 +95,7 @@ const IT = () => {
                 height: 400,
               }}
             >
-              {images.map((img, idx) => (
+        {images.length > 0 && images.map((img, idx) => (
                 <img
                   key={idx}
                   src={img}
@@ -102,7 +106,7 @@ const IT = () => {
                     height: "100%",
                     objectFit: "cover",
                     opacity: idx === current ? 1 : 0,
-                    transition: "opacity 0.8s ease-in-out",
+                    transition: "opacity 0.6s ease-in-out",
                   }}
                 />
               ))}

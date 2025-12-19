@@ -3,20 +3,27 @@ import upload from "../middleware/uploadS3.js";
 import BsdmPage from "../models/BsdmPage.js";
 
 const router = express.Router();
-
 // GET page data
-router.get("/bsdm", async (req, res) => {
+router.get("/", async (req, res) => {
   const page = await BsdmPage.findOne();
   res.json(page);
 });
 
-
-// UPDATE images
+// ADD image
 router.post(
-  "/bsdm/add-image",
+  "/add-image",
   upload.single("image"),
   async (req, res) => {
-    const page = await BsdmPage.findOne() || new BsdmPage();
+    console.log("REQ.FILE =>", req.file); // 🔥 VERY IMPORTANT
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "File upload failed (req.file undefined)",
+      });
+    }
+
+    const page = (await BsdmPage.findOne()) || new BsdmPage();
 
     page.heroImages.push(req.file.location);
     await page.save();
@@ -24,7 +31,10 @@ router.post(
     res.json({ success: true, images: page.heroImages });
   }
 );
-router.delete("/bsdm/remove-image", async (req, res) => {
+
+
+// REMOVE image
+router.delete("/remove-image", async (req, res) => {
   const { imageUrl } = req.body;
 
   const page = await BsdmPage.findOne();
