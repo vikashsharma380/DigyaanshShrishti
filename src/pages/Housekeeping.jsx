@@ -14,10 +14,11 @@ useEffect(() => {
     .then((res) => res.json())
     .then((data) => {
       console.log("HOUSEKEEPING API DATA 👉", data);
-      setImages(data?.heroImages || []);
+      setImages(data?.images || []);
     })
     .catch(err => console.error("API ERROR ❌", err));
 }, []);
+
 
 
   useEffect(() => {
