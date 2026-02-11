@@ -6,7 +6,7 @@ import { formatPostcssSourceMap } from "vite";
 const router = express.Router();
 router.post("/create", async (req, res) => {
   try {
-    const { name, mobile, password } = req.body;
+    const { name, mobile, password,email } = req.body;
 
     if (!mobile || !password) {
       return res.json({

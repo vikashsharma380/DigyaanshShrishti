@@ -75,6 +75,7 @@ useEffect(() => {
     accountNumber: "",
     ifsc: "",
     salary: "",
+   utrNumber: "",
   });
 
   const navigate = useNavigate();
@@ -340,6 +341,8 @@ const downloadExcel = () => {
                 <th>Account No.</th>
                 <th>IFSC</th>
                 <th>Salary</th>
+                <th>utrNumber</th>
+
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
@@ -430,6 +433,18 @@ const downloadExcel = () => {
                         }
                       />
                     </td>
+ <td>
+  <input
+    className="input-edit"
+    placeholder="Leave blank = Pending"
+    value={editRow.utrNumber || ""}
+    onChange={(e) =>
+      handleEditChange("utrNumber", e.target.value)
+    }
+  />
+</td>
+
+
 
                     <td>
                       <button onClick={saveEdit} className="btn-blue">
@@ -448,6 +463,37 @@ const downloadExcel = () => {
                     <td>{item.accountNumber}</td>
                     <td>{item.ifsc}</td>
                     <td>{item.salary}</td>
+                   <td>
+  {item.utrNumber ? (
+    <span
+      style={{
+        padding: "6px 12px",
+        borderRadius: "18px",
+        background: "#d1e7dd",
+        color: "#0f5132",
+        fontWeight: "600",
+        fontSize: "13px",
+      }}
+    >
+      {item.utrNumber}
+    </span>
+  ) : (
+    <span
+      style={{
+        padding: "6px 12px",
+        borderRadius: "18px",
+        background: "#f8d7da",
+        color: "#842029",
+        fontWeight: "600",
+        fontSize: "13px",
+      }}
+    >
+      Pending
+    </span>
+  )}
+</td>
+
+
 
                     <td>
                       <button
@@ -549,6 +595,16 @@ const downloadExcel = () => {
                 setAddForm({ ...addForm, salary: Number(e.target.value) })
               }
             />
+
+            <label>UTR Number (leave blank if pending)</label>
+<input
+  placeholder="Enter UTR if payment done"
+  value={addForm.utrNumber}
+  onChange={(e) =>
+    setAddForm({ ...addForm, utrNumber: e.target.value })
+  }
+/>
+
 
             {/* BUTTONS */}
             <div className="popup-actions">

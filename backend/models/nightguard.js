@@ -9,6 +9,11 @@ const NightGuardSchema = new mongoose.Schema({
   accountNumber: String,
   ifsc: String,
   salary: Number,
+   utrNumber: {
+  type: String,
+  default: "",   
+},
+
   createdAt: { type: Date, default: Date.now }
 });
 

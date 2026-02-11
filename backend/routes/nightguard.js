@@ -18,6 +18,8 @@ router.post("/upload-excel", async (req, res) => {
       accountNumber: String(row["Account Number"] || "").trim(),
       ifsc: row["IFSC Code"] || "",
       salary: parseInt(row["Salary"]) || 0,
+      utrNumber: row["UTR Number"] || "",
+
     }));
 
     await NightGuard.insertMany(formatted);

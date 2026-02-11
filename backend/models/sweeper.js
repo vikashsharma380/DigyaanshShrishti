@@ -8,7 +8,13 @@ const sweeperSchema = new mongoose.Schema({
   toilets: Number,
   accountNumber: String,
   ifsc: String,
-  salary: Number
+  salary: Number,
+  utrNumber: {
+  type: String,
+  default: "",   
+},
+
+
 });
 
 const Sweeper = mongoose.models.Sweeper || mongoose.model("Sweeper", sweeperSchema);

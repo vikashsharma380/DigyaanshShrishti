@@ -52,6 +52,9 @@ router.post("/upload-excel", async (req, res) => {
         accountNumber: row["Account Number"]?.toString().trim(),
         ifsc: row["IFSC Code"]?.trim(),
         salary: parseInt(row["Salary"]) || 0,
+        utrNumber: row["UTR Number"] || "",
+
+
       };
     });
 
@@ -151,6 +154,7 @@ router.get("/download/district/:district", async (req, res) => {
       "Account Number": item.accountNumber,
       "IFSC Code": item.ifsc,
       "Salary": item.salary,
+      "UTR Number": item.utrNumber || "Pending",
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(excelData);

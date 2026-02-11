@@ -9,33 +9,47 @@ const Housekeeping = () => {
 
   const [images, setImages] = useState([]);
   const [current, setCurrent] = useState(0);
+useEffect(() => {
+  fetch("https://api.digyaanshshrishti.com/api/page-images/housekeeping")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("HOUSEKEEPING API DATA 👉", data);
+      setImages(data?.images || []);
+    })
+    .catch(err => console.error("API ERROR ❌", err));
+}, []);
+
+
 
   useEffect(() => {
-    fetch("https://api.digyaanshshrishti.com/api/page-images/housekeeping")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.heroImages) setImages(data.heroImages);
-      });
-  }, []);
+  if (images.length === 0) return;
 
-  {
-    images.length > 0 &&
-      images.map((img, idx) => (
-        <img
-          key={idx}
-          src={img}
-          alt="Manpower Services"
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            opacity: idx === current ? 1 : 0,
-            transition: "opacity 0.8s ease-in-out",
-          }}
-        />
-      ));
-  }
+  const interval = setInterval(() => {
+    setCurrent((prev) => (prev + 1) % images.length);
+  }, 3000);
+
+  return () => clearInterval(interval);
+}, [images]);
+
+
+  // {
+  //   images.length > 0 &&
+  //     images.map((img, idx) => (
+  //       <img
+  //         key={idx}
+  //         src={img}
+  //         alt="Manpower Services"
+  //         style={{
+  //           position: "absolute",
+  //           width: "100%",
+  //           height: "100%",
+  //           objectFit: "cover",
+  //           opacity: idx === current ? 1 : 0,
+  //           transition: "opacity 0.8s ease-in-out",
+  //         }}
+  //       />
+  //     ));
+  // }
 
   return (
     <>
