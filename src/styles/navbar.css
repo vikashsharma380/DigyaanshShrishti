@@ -7,7 +7,7 @@
   background: rgba(250, 247, 242, 0.92);
   z-index: 1000;
   border-bottom: 1px solid rgba(15, 30, 45, 0.08);
-  box-shadow: 0 10px 24px rgba(15, 30, 45, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 30, 45, 0.09);
 }
 
 /* Inner container */
@@ -82,7 +82,9 @@
   border-radius: 10px;
   border: 1px solid #111;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease,
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
     background 0.2s ease;
   display: inline-flex;
   align-items: center;
