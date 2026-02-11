@@ -36,6 +36,14 @@ const ServicesSection = () => {
       path: "/service/construction",
     },
     {
+      title: "Warehouse & Hospitality",
+      description:
+        "Integrated warehouse operations, logistics support, and hospitality staffing for smooth daily operations.",
+      image:
+        "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1200&q=80",
+      path: "/service/warehouse-hospitality",
+    },
+    {
       title: "BSDM Project",
       description:
         "Government skill development and training services under BSDM guidelines.",

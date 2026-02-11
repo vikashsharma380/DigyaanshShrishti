@@ -31,6 +31,7 @@ import Construction from "./pages/Construction";
 import Security from "./pages/Security";
 import IT from "./pages/IT";
 import Housekeeping from "./pages/Housekeeping";
+import WarehouseHospitality from "./pages/WarehouseHospitality";
 import Gallery from "./components/gallery";
 import WhatsAppButton from "./components/WhatsAppButton";
 import EmailButton from "./components/EmailButton";
@@ -92,6 +93,10 @@ function App() {
         <Route path="/service/construction" element={<Construction />} />
         <Route path="/service/bsdm" element={<BSDM />} />
         <Route path="/service/manpower" element={<Manpower />} />
+        <Route
+          path="/service/warehouse-hospitality"
+          element={<WarehouseHospitality />}
+        />
       </Routes>
       <EmailButton />
       <WhatsAppButton />
