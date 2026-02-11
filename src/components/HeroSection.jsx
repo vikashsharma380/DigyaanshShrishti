@@ -11,18 +11,19 @@ const HeroSection = () => {
           </div>
 
           <h1 className="hero-title">
-            Delivering <span>Quality Services</span> You Can Trust
+            Delivering <span className="hero-highlight">Quality Services</span> You
+            Can Trust
           </h1>
 
           <p className="hero-subtext">
             From housekeeping and manpower to IT solutions, construction,
-            security, and skill development—our expertise helps organisations
+            security, and skill development&mdash;our expertise helps organisations
             operate smoothly and efficiently.
           </p>
 
           <div className="hero-buttons">
             <a href="#services" className="btn-primary big">
-              Explore Services →
+              Explore Services &rarr;
             </a>
           </div>
 
@@ -50,10 +51,24 @@ const HeroSection = () => {
           <div className="floating-box box4"></div>
 
           <div className="hero-card">
-            <div>
-              <div className="mini-box"></div>
-              <h3>Trusted Services</h3>
-              <p>Serving multiple industries with excellence</p>
+            <div className="hero-card-slider">
+              <div className="hero-card-track">
+                <div className="hero-card-slide">
+                  <div className="mini-box"></div>
+                  <h3>Trusted Services</h3>
+                  <p>Serving multiple industries with excellence</p>
+                </div>
+                <div className="hero-card-slide">
+                  <div className="mini-box"></div>
+                  <h3>Verified Workforce</h3>
+                  <p>Background-checked staff with ongoing training</p>
+                </div>
+                <div className="hero-card-slide">
+                  <div className="mini-box"></div>
+                  <h3>On-Time Delivery</h3>
+                  <p>Clear SLAs and responsive support teams</p>
+                </div>
+              </div>
             </div>
             <div className="dots">
               <span></span>
