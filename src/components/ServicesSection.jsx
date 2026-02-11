@@ -36,12 +36,20 @@ const ServicesSection = () => {
       path: "/service/construction",
     },
     {
-      title: "Warehouse & Hospitality",
+      title: "Warehouse Operations",
       description:
-        "Integrated warehouse operations, logistics support, and hospitality staffing for smooth daily operations.",
+        "Inventory handling, loading-unloading, storage management, and warehouse support staffing.",
       image:
-        "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1200&q=80",
-      path: "/service/warehouse-hospitality",
+        "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80",
+      path: "/service/warehouse",
+    },
+    {
+      title: "Hospitality Services",
+      description:
+        "Guest support, housekeeping assistance, and front-desk operations for hospitality facilities.",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80",
+      path: "/service/hospitality",
     },
     {
       title: "BSDM Project",

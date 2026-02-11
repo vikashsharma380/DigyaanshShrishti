@@ -31,7 +31,8 @@ import Construction from "./pages/Construction";
 import Security from "./pages/Security";
 import IT from "./pages/IT";
 import Housekeeping from "./pages/Housekeeping";
-import WarehouseHospitality from "./pages/WarehouseHospitality";
+import Warehouse from "./pages/Warehouse";
+import Hospitality from "./pages/Hospitality";
 import Gallery from "./components/gallery";
 import WhatsAppButton from "./components/WhatsAppButton";
 import EmailButton from "./components/EmailButton";
@@ -93,10 +94,8 @@ function App() {
         <Route path="/service/construction" element={<Construction />} />
         <Route path="/service/bsdm" element={<BSDM />} />
         <Route path="/service/manpower" element={<Manpower />} />
-        <Route
-          path="/service/warehouse-hospitality"
-          element={<WarehouseHospitality />}
-        />
+        <Route path="/service/warehouse" element={<Warehouse />} />
+        <Route path="/service/hospitality" element={<Hospitality />} />
       </Routes>
       <EmailButton />
       <WhatsAppButton />

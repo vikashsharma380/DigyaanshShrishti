@@ -2,21 +2,30 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const WarehouseHospitality = () => {
+const fallbackImages = [
+  "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1465447142348-e9952c393450?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80",
+];
+
+const Warehouse = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
 
   const [current, setCurrent] = useState(0);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(fallbackImages);
 
   useEffect(() => {
-    fetch(
-      "https://api.digyaanshshrishti.com/api/page-images/warehouse-hospitality"
-    )
+    fetch("https://api.digyaanshshrishti.com/api/page-images/warehouse")
       .then((res) => res.json())
-      .then((data) => setImages(data.images || []))
-      .catch(() => setImages([]));
+      .then((data) => {
+        const remote = data?.images || [];
+        if (remote.length > 0) {
+          setImages(remote);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -49,7 +58,7 @@ const WarehouseHospitality = () => {
               letterSpacing: "-0.5px",
             }}
           >
-            Warehouse & Hospitality Services
+            Warehouse Operations Services
           </h1>
 
           <p
@@ -61,12 +70,11 @@ const WarehouseHospitality = () => {
               fontWeight: 500,
             }}
           >
-            We provide dependable{" "}
+            We deliver reliable{" "}
             <strong style={{ color: "#2d5a7b", fontWeight: 600 }}>
-              warehouse operations and hospitality support
+              warehouse operations and logistics support
             </strong>{" "}
-            tailored for businesses, hotels, and institutions that require
-            seamless daily management.
+            to keep inventory flow smooth and accurate.
           </p>
 
           <p
@@ -77,9 +85,8 @@ const WarehouseHospitality = () => {
               marginBottom: 32,
             }}
           >
-            Our trained teams handle inventory flow, storage management,
-            housekeeping support, and guest-facing operations with consistent
-            quality standards.
+            Our trained teams handle storage, loading-unloading, segregation,
+            and facility upkeep with clear SOPs and safety compliance.
           </p>
 
           {/* IMAGE SLIDER */}
@@ -107,7 +114,7 @@ const WarehouseHospitality = () => {
                   <img
                     key={idx}
                     src={img}
-                    alt="Warehouse and Hospitality Services"
+                    alt="Warehouse Services"
                     style={{
                       position: "absolute",
                       width: "100%",
@@ -133,7 +140,7 @@ const WarehouseHospitality = () => {
               display: "inline-block",
             }}
           >
-            Our Warehouse & Hospitality Solutions Include
+            Our Warehouse Solutions Include
           </h2>
 
           <ul
@@ -146,13 +153,7 @@ const WarehouseHospitality = () => {
               color: "#444",
             }}
           >
-            <li
-              style={{
-                marginBottom: 12,
-                position: "relative",
-                paddingLeft: 12,
-              }}
-            >
+            <li style={{ marginBottom: 12, position: "relative", paddingLeft: 12 }}>
               <span
                 style={{
                   position: "absolute",
@@ -165,13 +166,7 @@ const WarehouseHospitality = () => {
               </span>
               Inventory handling and stock movement
             </li>
-            <li
-              style={{
-                marginBottom: 12,
-                position: "relative",
-                paddingLeft: 12,
-              }}
-            >
+            <li style={{ marginBottom: 12, position: "relative", paddingLeft: 12 }}>
               <span
                 style={{
                   position: "absolute",
@@ -184,13 +179,7 @@ const WarehouseHospitality = () => {
               </span>
               Loading, unloading, and material segregation
             </li>
-            <li
-              style={{
-                marginBottom: 12,
-                position: "relative",
-                paddingLeft: 12,
-              }}
-            >
+            <li style={{ marginBottom: 12, position: "relative", paddingLeft: 12 }}>
               <span
                 style={{
                   position: "absolute",
@@ -203,25 +192,6 @@ const WarehouseHospitality = () => {
               </span>
               Storage, racking, and aisle upkeep
             </li>
-            <li
-              style={{
-                marginBottom: 12,
-                position: "relative",
-                paddingLeft: 12,
-              }}
-            >
-              <span
-                style={{
-                  position: "absolute",
-                  left: -22,
-                  color: "#2d5a7b",
-                  fontWeight: "bold",
-                }}
-              >
-                &bull;
-              </span>
-              Housekeeping and hospitality staffing
-            </li>
             <li style={{ position: "relative", paddingLeft: 12 }}>
               <span
                 style={{
@@ -233,7 +203,7 @@ const WarehouseHospitality = () => {
               >
                 &bull;
               </span>
-              Guest assistance and front-desk support
+              Safety compliance and process supervision
             </li>
           </ul>
         </div>
@@ -243,4 +213,4 @@ const WarehouseHospitality = () => {
   );
 };
 
-export default WarehouseHospitality;
+export default Warehouse;
