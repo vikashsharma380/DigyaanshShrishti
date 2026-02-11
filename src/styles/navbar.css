@@ -4,16 +4,17 @@
   top: 0;
   width: 100%;
   backdrop-filter: blur(12px);
-  background: rgb(255, 255, 255);
+  background: rgba(250, 247, 242, 0.92);
   z-index: 1000;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid rgba(15, 30, 45, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 30, 45, 0.08);
 }
 
 /* Inner container */
 .nav-container {
   max-width: 1200px;
   margin: auto;
-  padding: 16px 20px;
+  padding: 12px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,19 +25,16 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 700;
-  background: #444;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #1a1a1a;
   text-decoration: none;
   cursor: pointer;
 }
 
 /* Logo image */
 .logo-img {
-  height: 45px;
+  height: 38px;
   width: auto;
   object-fit: contain;
 }
@@ -50,32 +48,57 @@
 
 .nav-links a {
   text-decoration: none;
-  color: #444;
-  font-weight: 500;
-  transition: 0.3s;
+  color: #1f2a33;
+  font-weight: 600;
+  position: relative;
+  line-height: 1;
+  transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
-  color: #6e00ff;
+  color: #111;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: #c79b4b;
+  transition: width 0.2s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
 }
 
 /* Primary button */
-.btn-primary {
-  background: #000000ac !important;
-  color: #fff !important;
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
+.navbar .btn-primary {
+  background: #111;
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 10px;
+  border: 1px solid #111;
   cursor: pointer;
-  transition: 0.3s;
-  display: inline-block;
-  margin-top: -4px !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  height: 32px;
+  font-size: 14px;
+  margin-top: 0;
+  box-shadow: 0 10px 20px rgba(15, 30, 45, 0.15);
 }
 
-.btn-primary:hover {
-  background: #111 !important;
-  color: #fff !important;
-  transform: scale(1.05);
+.navbar .btn-primary:hover {
+  background: #0b0b0b;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(15, 30, 45, 0.2);
 }
 
 /* Mobile menu button */
@@ -107,8 +130,8 @@
 
   .mobile-menu {
     display: flex;
-    background: white;
-    border-bottom: 1px solid #ddd;
+    background: rgba(250, 247, 242, 0.98);
+    border-bottom: 1px solid rgba(15, 30, 45, 0.08);
     padding-bottom: 20px;
   }
 
